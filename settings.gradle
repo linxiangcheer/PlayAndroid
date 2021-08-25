@@ -1,0 +1,17 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url "https://www.jitpack.io" }
+        maven {
+            //信任这个库
+            allowInsecureProtocol = true
+            url "http://maven.aliyun.com/nexus/content/groups/public"
+        }
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "wanAndroid"
+include ':app'
+include ':common'
+include ':net'

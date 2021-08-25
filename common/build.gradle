@@ -40,4 +40,6 @@ dependencies {
      * 以下为Compose扩展库
      */
     api "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_compose_version"
+    //提供observeAsState等方法
+    api "androidx.compose.runtime:runtime-livedata:$compose_version"
 }

@@ -8,6 +8,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.linx.common.model.ThemeType
 
 /* Other default colors to override
 background = Color.White,
@@ -187,11 +188,3 @@ object CustomThemeManager {
 
 data class WrappedColor(val lightColors: Colors, val darkColors: Colors)
 
-enum class ThemeType {
-    Default,
-    Theme1,
-    Theme2,
-    Theme3,
-    Theme4,
-    Theme5
-}

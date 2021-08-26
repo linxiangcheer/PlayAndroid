@@ -23,12 +23,16 @@ import androidx.compose.ui.unit.sp
  */
 @Composable
 fun AppBar(
-    title: String,
+    title: String = "",
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     onLeftClick: () -> Unit = {},
     onRightClick: () -> Unit = {}
 ) {
+
+    if (title == "") {
+        return
+    }
 
     TopAppBar(
         backgroundColor = MaterialTheme.colors.primary

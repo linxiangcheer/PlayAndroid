@@ -7,65 +7,43 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.linx.wanandroid.navigation.NavScreen
-import com.linx.wanandroid.public.Page
+import com.linx.common.baseData.themeTypeState
+import com.linx.common.model.StatusBarTitleData
+import com.linx.wanandroid.navigation.MainCompose
 import com.linx.wanandroid.ui.theme.CustomThemeManager
-import com.linx.wanandroid.viewModel.MainViewModel
 
-val statusBarTitle = MutableLiveData<String>()
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val viewModel: MainViewModel = viewModel()
-
-            val typeState = viewModel.themeTypeState.value
-
-            val rememberTitle: String by statusBarTitle.observeAsState("首页")
+            val themeState = themeTypeState.value
 
             //状态栏
             window.statusBarColor = if (isSystemInDarkTheme()) {
-                CustomThemeManager.getWrappedColor(typeState).darkColors.primary
+                CustomThemeManager.getWrappedColor(themeState).darkColors.primary
             } else {
-                CustomThemeManager.getWrappedColor(typeState).lightColors.primary
+                CustomThemeManager.getWrappedColor(themeState).lightColors.primary
             }.toArgb()
 
             //底部导航栏
             window.navigationBarColor = if (isSystemInDarkTheme()) {
-                CustomThemeManager.getWrappedColor(typeState).darkColors.primary
+                CustomThemeManager.getWrappedColor(themeState).darkColors.primary
             } else {
-                CustomThemeManager.getWrappedColor(typeState).lightColors.primary
+                CustomThemeManager.getWrappedColor(themeState).lightColors.primary
             }.toArgb()
 
-            //内容
-            Page(rememberTitle, typeState, leftIcon = Icons.Default.Favorite, rightIcon = Icons.Default.Search) {
-                MainNavScreen()
+            //主题包裹
+            CustomThemeManager.WanAndroidTheme(themeState) {
+                //主界面
+                MainCompose()
             }
-
         }
-    }
 
-}
-
-/**
- * 内容
- */
-@Composable
-fun MainNavScreen() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = NavScreen.main) {
-        composable(NavScreen.main) { MainCompose(navController) }
-        composable(NavScreen.theme) { ThemeCompose() }
     }
 }

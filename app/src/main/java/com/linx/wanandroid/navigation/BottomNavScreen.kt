@@ -1,14 +1,9 @@
 package com.linx.wanandroid.navigation
 
-import android.text.style.TtsSpan
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -16,9 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
 import com.linx.common.baseData.statusBarTitle
-import com.linx.common.model.StatusBarTitleData
-import com.linx.wanandroid.HomeCompose
-import com.linx.wanandroid.ThemeCompose
+import com.linx.wanandroid.composable.HomeCompose
+import com.linx.wanandroid.composable.ThemeCompose
 import com.linx.wanandroid.public.AppBar
 import com.linx.wanandroid.public.BottomNavBar
 

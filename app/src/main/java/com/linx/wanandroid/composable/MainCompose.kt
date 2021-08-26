@@ -1,4 +1,4 @@
-package com.linx.wanandroid
+package com.linx.wanandroid.composable
 
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -14,13 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.linx.common.baseData.Nav
 import com.linx.common.baseData.statusBarTitle
 import com.linx.common.model.StatusBarTitleData
-import com.linx.wanandroid.navigation.NavScreen
-import com.linx.wanandroid.viewModel.MainViewModel
 
 /**
  * 首页页面

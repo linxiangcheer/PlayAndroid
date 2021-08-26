@@ -1,4 +1,4 @@
-package com.linx.wanandroid
+package com.linx.wanandroid.composable
 
 import android.util.Log
 import androidx.compose.foundation.background

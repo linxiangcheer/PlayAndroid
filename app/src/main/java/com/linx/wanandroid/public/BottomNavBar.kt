@@ -16,7 +16,10 @@ import com.linx.common.baseData.Nav
 //底部导航栏列表
 val items = listOf(
     Nav.BottomNavScreen.HomeScreen,
-    Nav.BottomNavScreen.ProjectScreen
+    Nav.BottomNavScreen.ProjectScreen,
+    Nav.BottomNavScreen.SquareScreen,
+    Nav.BottomNavScreen.PublicNumScreen,
+    Nav.BottomNavScreen.MineScreen
 )
 
 /**

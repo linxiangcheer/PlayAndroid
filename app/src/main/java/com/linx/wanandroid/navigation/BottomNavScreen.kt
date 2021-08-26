@@ -11,8 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
 import com.linx.common.baseData.statusBarTitle
-import com.linx.wanandroid.composable.HomeCompose
-import com.linx.wanandroid.composable.ThemeCompose
+import com.linx.wanandroid.composable.*
 import com.linx.wanandroid.public.AppBar
 import com.linx.wanandroid.public.BottomNavBar
 
@@ -57,6 +56,9 @@ private fun NavHost(navController: NavHostController, paddingValues: PaddingValu
         builder = {
             composable(Nav.BottomNavScreen.HomeScreen.route) { HomeCompose(navController) }
             composable(Nav.BottomNavScreen.ProjectScreen.route) { ThemeCompose() }
+            composable(Nav.BottomNavScreen.SquareScreen.route) { SquareCompose() }
+            composable(Nav.BottomNavScreen.PublicNumScreen.route) { PublicNumCompose() }
+            composable(Nav.BottomNavScreen.MineScreen.route) { MineCompose() }
         }
     )
 }

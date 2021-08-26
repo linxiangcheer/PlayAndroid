@@ -2,4 +2,7 @@
 <resources>
     <string name="bottom_home">首页</string>
     <string name="bottom_project">项目</string>
+    <string name="bottom_square">广场</string>
+    <string name="bottom_public_num">公众号</string>
+    <string name="bottom_mine">我的</string>
 </resources>

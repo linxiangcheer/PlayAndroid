@@ -26,8 +26,6 @@ fun HomeCompose(navController: NavController) {
 
     statusBarTitle.value = StatusBarTitleData("首页")
 
-    Log.d("xxx", "首页首页")
-
     Card(
         modifier = Modifier.padding(top = 10.dp, start = 10.dp, end = 10.dp).fillMaxWidth()
             .height(60.dp),

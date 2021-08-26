@@ -31,8 +31,6 @@ fun ThemeCompose() {
 
     statusBarTitle.value = StatusBarTitleData("主题", Icons.Default.Face)
 
-    Log.d("xxx", "主题主题")
-
     LazyColumn(
         modifier = Modifier.background(MaterialTheme.colors.background).fillMaxSize()
     ) {

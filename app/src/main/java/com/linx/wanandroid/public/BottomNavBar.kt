@@ -54,7 +54,6 @@ fun BottomNavBar(
                     }
                 }
             )
-            Log.d("xxx", "BottomNavBar")
         }
     }
 

@@ -26,6 +26,7 @@ object CustomThemeManager {
             primary = Default200,
             primaryVariant = Default700,
             secondary = DefaultSecondary,
+            secondaryVariant = Color.White,
             background = Color.Black,
             surface = Color.Black,
         )
@@ -34,6 +35,7 @@ object CustomThemeManager {
             primary = Default500,
             primaryVariant = Default700,
             secondary = DefaultSecondary,
+            secondaryVariant = Color.Black,
             background = Color.White,
             surface = DefaultOnPrimary
         )
@@ -44,6 +46,7 @@ object CustomThemeManager {
             primary = Theme1_200,
             primaryVariant = Theme1_700,
             secondary = Theme1Secondary,
+            secondaryVariant = Color.White,
             background = Color.Black,
             surface = Color.Black,
         )
@@ -52,6 +55,7 @@ object CustomThemeManager {
             primary = Theme1_500,
             primaryVariant = Theme1_700,
             secondary = Theme1Secondary,
+            secondaryVariant = Color.Black,
             background = Color.White,
             surface = Theme1OnPrimary
         )
@@ -62,6 +66,7 @@ object CustomThemeManager {
             primary = Theme2_200,
             primaryVariant = Theme2_700,
             secondary = Theme2Secondary,
+            secondaryVariant = Color.White,
             background = Color.Black,
             surface = Color.Black,
         )
@@ -70,6 +75,7 @@ object CustomThemeManager {
             primary = Theme2_500,
             primaryVariant = Theme2_700,
             secondary = Theme2Secondary,
+            secondaryVariant = Color.Black,
             background = Color.White,
             surface = Theme2OnPrimary
         )
@@ -80,6 +86,7 @@ object CustomThemeManager {
             primary = Theme3_200,
             primaryVariant = Theme3_700,
             secondary = Theme3Secondary,
+            secondaryVariant = Color.White,
             background = Color.Black,
             surface = Color.Black,
         )
@@ -88,6 +95,7 @@ object CustomThemeManager {
             primary = Theme3_500,
             primaryVariant = Theme3_700,
             secondary = Theme3Secondary,
+            secondaryVariant = Color.Black,
             background = Color.White,
             surface = Theme3OnPrimary
         )
@@ -98,6 +106,7 @@ object CustomThemeManager {
             primary = Theme4_200,
             primaryVariant = Theme4_700,
             secondary = Theme4Secondary,
+            secondaryVariant = Color.White,
             background = Color.Black,
             surface = Color.Black,
         )
@@ -106,6 +115,7 @@ object CustomThemeManager {
             primary = Theme4_500,
             primaryVariant = Theme4_700,
             secondary = Theme4Secondary,
+            secondaryVariant = Color.Black,
             background = Color.White,
             surface = Theme4OnPrimary
         )
@@ -117,6 +127,7 @@ object CustomThemeManager {
             primary = Theme5_200,
             primaryVariant = Theme5_700,
             secondary = Theme5Secondary,
+            secondaryVariant = Color.White,
             background = Color.Black,
             surface = Color.Black,
         )
@@ -125,8 +136,8 @@ object CustomThemeManager {
             primary = Theme5_500,
             primaryVariant = Theme5_700,
             secondary = Theme5Secondary,
+            secondaryVariant = Color.Black,
             background = Color.White,
-            onPrimary = Theme5OnPrimary,
             surface = Theme5OnPrimary
         )
     }

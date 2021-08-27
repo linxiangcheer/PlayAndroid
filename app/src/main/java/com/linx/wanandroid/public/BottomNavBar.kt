@@ -1,11 +1,17 @@
 package com.linx.wanandroid.public
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -35,12 +41,22 @@ fun BottomNavBar(
         val currentDestination = navBackStackEntry?.destination
         items.forEach { bottomNavScreen: Nav.BottomNavScreen ->
             BottomNavigationItem(
-                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                icon = {
+                    Icon(
+                        painterResource(bottomNavScreen.id),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                    )
+                },
+                //选中选项的颜色 (text\icon\波纹)
+                selectedContentColor = MaterialTheme.colors.primary,
+                //未选中选项的颜色 (text\icon\波纹)
+                unselectedContentColor = MaterialTheme.colors.secondaryVariant,
                 label = { Text(stringResource(bottomNavScreen.resourceId)) },
                 selected = currentDestination?.hierarchy?.any { it.route == bottomNavScreen.route } == true,
                 onClick = {
                     //判断是否是当前的route,如果是就不做处理
-                    if (Nav.bottomNavRoute.value.route == bottomNavScreen.route) {
+                    if (bottomNavScreen.route == Nav.bottomNavRoute.value.route) {
                         return@BottomNavigationItem
                     }
                     //记录当前的Item
@@ -55,7 +71,8 @@ fun BottomNavBar(
                         //重新选择以前选择的项目时，恢复状态
                         restoreState = true
                     }
-                }
+                },
+                modifier = Modifier.background(MaterialTheme.colors.background)
             )
         }
     }

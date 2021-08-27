@@ -33,9 +33,9 @@ class MainActivity : ComponentActivity() {
 
             //底部导航栏
             window.navigationBarColor = if (isSystemInDarkTheme()) {
-                CustomThemeManager.getWrappedColor(themeState).darkColors.primary
+                CustomThemeManager.getWrappedColor(themeState).darkColors.background
             } else {
-                CustomThemeManager.getWrappedColor(themeState).lightColors.primary
+                CustomThemeManager.getWrappedColor(themeState).lightColors.background
             }.toArgb()
 
             //主题包裹

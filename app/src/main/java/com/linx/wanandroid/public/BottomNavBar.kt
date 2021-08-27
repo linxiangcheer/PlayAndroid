@@ -1,12 +1,12 @@
 package com.linx.wanandroid.public
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -37,15 +37,33 @@ fun BottomNavBar(
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary
     ) {
+
         val navBackStackEntry by navController.currentBackStackEntryAsState()
+
         val currentDestination = navBackStackEntry?.destination
+
         items.forEach { bottomNavScreen: Nav.BottomNavScreen ->
+
+            //记录动画
+            val translationY = remember { androidx.compose.animation.core.Animatable(0F) }
+
+            //开启线程执行动画
+            LaunchedEffect(Nav.bottomNavRoute.value) {
+                if (bottomNavScreen.route == Nav.bottomNavRoute.value.route)
+                    translationY.animateTo(-4F)
+                else translationY.animateTo(0F)
+            }
+
             BottomNavigationItem(
                 icon = {
                     Icon(
                         painterResource(bottomNavScreen.id),
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(24.dp).offset(
+                            0.dp,
+                            //上下偏移
+                            translationY.value.dp
+                        ),
                     )
                 },
                 //选中选项的颜色 (text\icon\波纹)

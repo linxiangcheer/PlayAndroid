@@ -1,6 +1,5 @@
 package com.linx.wanandroid.public
 
-import android.util.Log
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -41,10 +40,11 @@ fun BottomNavBar(
                 selected = currentDestination?.hierarchy?.any { it.route == bottomNavScreen.route } == true,
                 onClick = {
                     //判断是否是当前的route,如果是就不做处理
-                    if (Nav.bottomNavRoute == bottomNavScreen.route) {
+                    if (Nav.bottomNavRoute.value.route == bottomNavScreen.route) {
                         return@BottomNavigationItem
                     }
-                    Nav.bottomNavRoute = bottomNavScreen.route
+                    //记录当前的Item
+                    Nav.bottomNavRoute.value = bottomNavScreen
 
                     navController.navigate(bottomNavScreen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {

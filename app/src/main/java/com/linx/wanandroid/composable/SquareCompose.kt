@@ -1,8 +1,13 @@
 package com.linx.wanandroid.composable
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.linx.common.baseData.statusBarTitle
-import com.linx.common.model.StatusBarTitleData
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 
 /**
  * 广场页面
@@ -10,6 +15,12 @@ import com.linx.common.model.StatusBarTitleData
 @Composable
 fun SquareCompose() {
 
-    statusBarTitle.value = StatusBarTitleData("广场")
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("广场", color = MaterialTheme.colors.primary)
+    }
 
 }

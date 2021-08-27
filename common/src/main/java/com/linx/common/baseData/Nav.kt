@@ -1,6 +1,8 @@
 package com.linx.common.baseData
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.linx.common.R
 
 /**
@@ -17,7 +19,7 @@ object Nav {
         object MineScreen: BottomNavScreen("mine", R.string.bottom_mine)
     }
 
-    //记录BottomNav当前的Route
-    var bottomNavRoute: String = BottomNavScreen.HomeScreen.route
+    //记录BottomNav当前的Item
+    val bottomNavRoute = mutableStateOf<BottomNavScreen>(BottomNavScreen.HomeScreen)
 
 }

@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.linx.common.baseData.statusBarTitle
 import com.linx.common.baseData.themeTypeState
 import com.linx.common.model.StatusBarTitleData
 import com.linx.common.model.ThemeType
@@ -29,8 +28,6 @@ import com.linx.common.model.ThemeType
  */
 @Composable
 fun ThemeCompose() {
-
-    statusBarTitle.value = StatusBarTitleData("主题", Icons.Default.Face, Icons.Default.Search)
 
     LazyColumn(
         modifier = Modifier.background(MaterialTheme.colors.background).fillMaxSize()

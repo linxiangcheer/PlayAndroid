@@ -3,6 +3,8 @@ package com.linx.wanandroid.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,7 +12,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
-import com.linx.common.baseData.statusBarTitle
 import com.linx.wanandroid.composable.*
 import com.linx.wanandroid.public.AppBar
 import com.linx.wanandroid.public.BottomNavBar
@@ -28,9 +29,7 @@ fun MainCompose() {
         contentColor = MaterialTheme.colors.background,
         //标题栏
         topBar = {
-            statusBarTitle.value.apply {
-                AppBar(title, leftIcon, rightIcon, onLeftClick, onRightClick)
-            }
+            MainTopABar(Nav.bottomNavRoute.value)
         },
         //底部导航栏
         bottomBar = {
@@ -61,6 +60,30 @@ private fun NavHost(navController: NavHostController, paddingValues: PaddingValu
             composable(Nav.BottomNavScreen.MineScreen.route) { MineCompose() }
         }
     )
+}
+
+/**
+ * 主页面的标题栏
+ */
+@Composable
+private fun MainTopABar(bottomNavScreen: Nav.BottomNavScreen) {
+    when(bottomNavScreen) {
+        Nav.BottomNavScreen.HomeScreen -> {
+            AppBar("首页", rightIcon = Icons.Default.Search)
+        }
+        Nav.BottomNavScreen.ProjectScreen -> {
+            AppBar("项目", Icons.Default.Face, Icons.Default.Search)
+        }
+        Nav.BottomNavScreen.SquareScreen -> {
+            AppBar("广场", Icons.Default.Send)
+        }
+        Nav.BottomNavScreen.PublicNumScreen -> {
+            AppBar("公众号", Icons.Default.ArrowForward)
+        }
+        Nav.BottomNavScreen.MineScreen -> {
+            AppBar("我的", Icons.Default.Add)
+        }
+    }
 }
 
 

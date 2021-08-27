@@ -1,6 +1,9 @@
 package com.linx.wanandroid
 
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -15,6 +18,7 @@ import com.linx.common.baseData.themeTypeState
 import com.linx.common.model.StatusBarTitleData
 import com.linx.wanandroid.navigation.MainCompose
 import com.linx.wanandroid.ui.theme.CustomThemeManager
+import com.linx.wanandroid.widget.TwoBackFinish
 
 class MainActivity : ComponentActivity() {
 
@@ -46,4 +50,8 @@ class MainActivity : ComponentActivity() {
         }
 
     }
+
+    //拦截返回按钮，点击两次才关闭app
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean = TwoBackFinish().execute(keyCode, this)
+
 }

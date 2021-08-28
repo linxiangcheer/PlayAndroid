@@ -1,24 +1,15 @@
 package com.linx.wanandroid
 
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.toArgb
-import androidx.lifecycle.MutableLiveData
 import com.linx.common.baseData.themeTypeState
-import com.linx.common.model.StatusBarTitleData
 import com.linx.wanandroid.navigation.MainCompose
 import com.linx.wanandroid.ui.theme.CustomThemeManager
-import com.linx.wanandroid.widget.TwoBackFinish
+import com.linx.common.widget.TwoBackFinish
 
 class MainActivity : ComponentActivity() {
 

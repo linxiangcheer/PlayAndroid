@@ -1,9 +1,9 @@
-package com.linx.wanandroid.widget
+package com.linx.common.widget
 
-import android.app.Activity
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import com.linx.common.baseData.Nav
 
 /**
  * 点击两次返回按钮关闭app
@@ -13,7 +13,6 @@ class TwoBackFinish {
     companion object {
         var mExitTime: Long = 0
     }
-
 
     fun execute(keyCode: Int, activity: ComponentActivity): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -25,7 +24,10 @@ class TwoBackFinish {
                     Toast.makeText(activity, "再按一次退出程序", Toast.LENGTH_SHORT).show()
                     mExitTime = System.currentTimeMillis()
                 }
-                else -> activity.finish()
+                else -> {
+                    Nav.twoBackFinishActivity = true
+                    activity.finish()
+                }
             }
             /**
              * 返回true防止事件进一步传播

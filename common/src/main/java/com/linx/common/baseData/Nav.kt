@@ -25,4 +25,7 @@ object Nav {
     //记录BottomNav当前的Item
     val bottomNavRoute = mutableStateOf<BottomNavScreen>(BottomNavScreen.HomeScreen)
 
+    //是否点击两次返回的activity
+    var twoBackFinishActivity = false
+
 }

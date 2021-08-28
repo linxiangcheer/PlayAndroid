@@ -6,7 +6,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,11 +35,13 @@ fun MainCompose() {
         },
         //底部导航栏
         bottomBar = {
-            BottomNavBar(navController)
+            BottomNavBar(Nav.bottomNavRoute.value, navController)
         },
         //内容
         content = { paddingValues: PaddingValues ->
             NavHost(navController, paddingValues)
+
+            OnTwoBackContent(navController)
         }
     )
 
@@ -82,6 +86,27 @@ private fun MainTopABar(bottomNavScreen: Nav.BottomNavScreen) {
         }
         Nav.BottomNavScreen.MineScreen -> {
             AppBar("我的", Icons.Default.Add)
+        }
+    }
+}
+
+/**
+ * 在主界面点击两次返回按钮,返回到手机桌面,再重新打开app,此时显示退出时的主界面
+ */
+@Composable
+private fun OnTwoBackContent(navController: NavHostController) {
+    if (Nav.twoBackFinishActivity) {
+        LaunchedEffect(Unit) {
+            navController.navigate(Nav.bottomNavRoute.value.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                //避免重建
+                launchSingleTop = true
+                //重新选择以前选择的项目时，恢复状态
+                restoreState = true
+            }
+            Nav.twoBackFinishActivity = false
         }
     }
 }

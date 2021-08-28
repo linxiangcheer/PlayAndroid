@@ -1,4 +1,4 @@
-package com.linx.wanandroid.composable
+package com.linx.playAndroid.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

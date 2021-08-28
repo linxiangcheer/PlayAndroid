@@ -1,4 +1,4 @@
-package com.linx.wanandroid
+package com.linx.playAndroid
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

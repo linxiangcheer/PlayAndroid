@@ -1,4 +1,4 @@
-package com.linx.wanandroid
+package com.linx.playAndroid
 
 import org.junit.Test
 

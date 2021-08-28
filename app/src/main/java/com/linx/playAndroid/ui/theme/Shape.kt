@@ -1,4 +1,4 @@
-package com.linx.wanandroid.ui.theme
+package com.linx.playAndroid.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

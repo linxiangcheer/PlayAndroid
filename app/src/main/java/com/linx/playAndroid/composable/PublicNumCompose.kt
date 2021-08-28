@@ -1,6 +1,5 @@
-package com.linx.wanandroid.composable
+package com.linx.playAndroid.composable
 
-import android.text.Layout
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize

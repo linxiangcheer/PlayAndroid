@@ -1,4 +1,4 @@
-package com.linx.wanandroid.ui.theme
+package com.linx.playAndroid.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

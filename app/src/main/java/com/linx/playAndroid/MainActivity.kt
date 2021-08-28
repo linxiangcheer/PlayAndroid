@@ -1,4 +1,4 @@
-package com.linx.wanandroid
+package com.linx.playAndroid
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -7,8 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.toArgb
 import com.linx.common.baseData.themeTypeState
-import com.linx.wanandroid.navigation.MainCompose
-import com.linx.wanandroid.ui.theme.CustomThemeManager
+import com.linx.playAndroid.navigation.MainCompose
+import com.linx.playAndroid.ui.theme.CustomThemeManager
 import com.linx.common.widget.TwoBackFinish
 
 class MainActivity : ComponentActivity() {

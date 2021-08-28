@@ -1,6 +1,5 @@
-package com.linx.wanandroid.public
+package com.linx.playAndroid.public
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
@@ -12,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.linx.common.baseData.Nav
 
 //底部导航栏列表

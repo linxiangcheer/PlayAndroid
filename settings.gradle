@@ -11,7 +11,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "wanAndroid"
+rootProject.name = "playAndroid"
 include ':app'
 include ':common'
 include ':net'

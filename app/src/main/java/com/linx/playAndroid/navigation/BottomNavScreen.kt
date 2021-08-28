@@ -1,4 +1,4 @@
-package com.linx.wanandroid.navigation
+package com.linx.playAndroid.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -14,9 +14,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
-import com.linx.wanandroid.composable.*
-import com.linx.wanandroid.public.AppBar
-import com.linx.wanandroid.public.BottomNavBar
+import com.linx.playAndroid.composable.*
+import com.linx.playAndroid.public.AppBar
+import com.linx.playAndroid.public.BottomNavBar
 
 
 /**

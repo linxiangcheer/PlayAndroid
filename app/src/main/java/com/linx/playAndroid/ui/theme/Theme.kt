@@ -1,6 +1,5 @@
-package com.linx.wanandroid.ui.theme
+package com.linx.playAndroid.ui.theme
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme

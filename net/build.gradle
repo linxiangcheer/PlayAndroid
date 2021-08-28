@@ -25,5 +25,10 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
 
-    //todo retrofit
+    //retrofit
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //okHttp
+    api "com.squareup.okhttp3:okhttp:$okhttp_version"
 }

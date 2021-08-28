@@ -7,9 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.toArgb
 import com.linx.common.baseData.themeTypeState
-import com.linx.playAndroid.navigation.MainCompose
 import com.linx.playAndroid.ui.theme.CustomThemeManager
 import com.linx.common.widget.TwoBackFinish
+import com.linx.playAndroid.composable.MainCompose
 
 class MainActivity : ComponentActivity() {
 

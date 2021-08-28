@@ -1,23 +1,19 @@
-package com.linx.playAndroid.navigation
+package com.linx.playAndroid.composable
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
-import com.linx.playAndroid.composable.*
+import com.linx.playAndroid.NavigationHost
 import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.BottomNavBar
-
 
 /**
  * 主界面
@@ -39,31 +35,12 @@ fun MainCompose() {
         },
         //内容
         content = { paddingValues: PaddingValues ->
-            NavHost(navController, paddingValues)
+            NavigationHost(navController, paddingValues)
 
             OnTwoBackContent(navController)
         }
     )
 
-}
-
-/**
- * 内容 导航
- */
-@Composable
-private fun NavHost(navController: NavHostController, paddingValues: PaddingValues) {
-    NavHost(
-        navController,
-        startDestination = Nav.BottomNavScreen.HomeScreen.route,
-        Modifier.padding(paddingValues),
-        builder = {
-            composable(Nav.BottomNavScreen.HomeScreen.route) { HomeCompose(navController) }
-            composable(Nav.BottomNavScreen.ProjectScreen.route) { ThemeCompose() }
-            composable(Nav.BottomNavScreen.SquareScreen.route) { SquareCompose() }
-            composable(Nav.BottomNavScreen.PublicNumScreen.route) { PublicNumCompose() }
-            composable(Nav.BottomNavScreen.MineScreen.route) { MineCompose() }
-        }
-    )
 }
 
 /**
@@ -110,11 +87,3 @@ private fun OnTwoBackContent(navController: NavHostController) {
         }
     }
 }
-
-
-
-
-
-
-
-

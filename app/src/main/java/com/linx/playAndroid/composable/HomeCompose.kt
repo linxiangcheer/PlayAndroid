@@ -128,7 +128,8 @@ private fun bottomCard(
 private fun centerCard(modifier: Modifier = Modifier, title: String) {
 
     Surface(
-        modifier = modifier.padding(top = 6.dp)
+        modifier = modifier.padding(top = 6.dp),
+        color = MaterialTheme.colors.background
     ) {
         Text(
             title,

@@ -27,7 +27,7 @@ object CustomThemeManager {
             secondary = DefaultSecondary,
             secondaryVariant = Color.White,
             background = Color.Black,
-            surface = Color.Black,
+            surface = Color.White,
         )
 
         val lightColors = lightColors(
@@ -47,7 +47,7 @@ object CustomThemeManager {
             secondary = Theme1Secondary,
             secondaryVariant = Color.White,
             background = Color.Black,
-            surface = Color.Black,
+            surface = Color.White,
         )
 
         val lightColors = lightColors(
@@ -67,7 +67,7 @@ object CustomThemeManager {
             secondary = Theme2Secondary,
             secondaryVariant = Color.White,
             background = Color.Black,
-            surface = Color.Black,
+            surface = Color.White,
         )
 
         val lightColors = lightColors(
@@ -87,7 +87,7 @@ object CustomThemeManager {
             secondary = Theme3Secondary,
             secondaryVariant = Color.White,
             background = Color.Black,
-            surface = Color.Black,
+            surface = Color.White,
         )
 
         val lightColors = lightColors(
@@ -107,7 +107,7 @@ object CustomThemeManager {
             secondary = Theme4Secondary,
             secondaryVariant = Color.White,
             background = Color.Black,
-            surface = Color.Black,
+            surface = Color.White,
         )
 
         val lightColors = lightColors(
@@ -128,7 +128,7 @@ object CustomThemeManager {
             secondary = Theme5Secondary,
             secondaryVariant = Color.White,
             background = Color.Black,
-            surface = Color.Black,
+            surface = Color.White,
         )
 
         val lightColors = lightColors(

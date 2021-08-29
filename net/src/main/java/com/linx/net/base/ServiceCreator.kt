@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit
  */
 object ServiceCreator {
 
-    private const val BASE_URL = "https://www.wanandroid.com"
-
     private val mOkClient: OkHttpClient = OkHttpClient.Builder()
             //完整请求超时时长，从发起到接受返回数据，默认0s
         .callTimeout(10, TimeUnit.SECONDS)
@@ -35,7 +33,7 @@ object ServiceCreator {
         })
         .build()
 
-    private val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(
+    private val retrofit = Retrofit.Builder().baseUrl(NetUrl.BASE_URL).addConverterFactory(
         GsonConverterFactory.create()
     ).client(mOkClient).build()
 

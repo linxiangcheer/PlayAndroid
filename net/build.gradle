@@ -31,4 +31,8 @@ dependencies {
 
     //okHttp
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    //paging3
+    api "androidx.paging:paging-runtime:$paging_version"
+    api "androidx.paging:paging-compose:$paging_compose_version"
 }

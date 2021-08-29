@@ -35,6 +35,9 @@ dependencies {
     api "androidx.activity:activity-compose:$activity_compose_version"
     api "androidx.navigation:navigation-compose:$navigation_version"
 
+    //刷新头
+    api "com.google.accompanist:accompanist-swiperefresh:$accompanist_pager"
+
     /**
      * compose提供有viewModel等其他方便的函数
      * 以下为Compose扩展库

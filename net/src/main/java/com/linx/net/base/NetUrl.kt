@@ -10,4 +10,7 @@ object NetUrl {
     //项目分类(指示器)
     const val PROJECT_TREE = "/project/tree/json"
 
+    //项目列表数据
+    const val PROJECT_LIST = "/project/list/{page}/json"
+
 }

@@ -1,5 +1,7 @@
 package com.linx.playAndroid.public
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -8,6 +10,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -29,7 +32,8 @@ fun HomeCard(
             .height(cardHeight),
         elevation = elevation,
         backgroundColor = MaterialTheme.colors.background,
-        shape = shape
+        shape = shape,
+        border = if (isSystemInDarkTheme()) BorderStroke(1.dp, Color.White) else null
     ) {
         content()
     }

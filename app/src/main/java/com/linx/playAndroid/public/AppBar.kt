@@ -31,7 +31,8 @@ fun AppBar(
     }
 
     TopAppBar(
-        backgroundColor = MaterialTheme.colors.primary
+        backgroundColor = MaterialTheme.colors.primary,
+        modifier = Modifier.height(54.dp)
     ) {
 
         Box(

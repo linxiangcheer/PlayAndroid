@@ -52,24 +52,21 @@ fun MainCompose() {
 @Composable
 private fun MainTopABar(bottomNavScreen: Nav.BottomNavScreen) {
     when(bottomNavScreen) {
+        //首页
         Nav.BottomNavScreen.HomeScreen -> {
             AppBar("首页", rightIcon = Icons.Default.Search)
         }
-        Nav.BottomNavScreen.ProjectScreen -> {
-//            val projectViewModel: ProjectViewModel = viewModel()
-//
-//            val projectTreeData = projectViewModel.projectTreeData.observeAsState()
-//
-//            //顶部指示器
-//            projectTreeData.value?.let { projectTab(it, projectViewModel) }
-//            AppBar("项目", Icons.Default.Face, Icons.Default.Search)
-        }
+        //项目
+        Nav.BottomNavScreen.ProjectScreen -> { }
+        //广场
         Nav.BottomNavScreen.SquareScreen -> {
             AppBar("广场", Icons.Default.Send)
         }
+        //公众号
         Nav.BottomNavScreen.PublicNumScreen -> {
             AppBar("公众号", Icons.Default.ArrowForward)
         }
+        //我的
         Nav.BottomNavScreen.MineScreen -> {
             AppBar("我的", Icons.Default.Add)
         }

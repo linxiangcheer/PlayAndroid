@@ -37,16 +37,19 @@ fun ProjectCompose(navController: NavController) {
  * [projects]指示器下方的内容
  */
 @Composable
-fun projectTab(data: List<ProjectTreeData>?, viewModel: ProjectViewModel) {
+private fun projectTab(data: List<ProjectTreeData>?, viewModel: ProjectViewModel) {
 
     if (data == null) {
-        Box(modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxWidth().height(50.dp)) {  }
+        Box(
+            modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxWidth()
+                .height(54.dp)
+        )
         return
     }
 
     ScrollableTabRow(
         selectedTabIndex = viewModel.projectTreeIndex.value,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().height(50.dp),
         edgePadding = 0.dp,
         backgroundColor = MaterialTheme.colors.primary
     ) {

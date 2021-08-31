@@ -29,6 +29,9 @@ dependencies {
     api "com.google.android.material:material:$material_version"
     api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
+    //Initializer初始化
+    api "androidx.startup:startup-runtime:$startup_version"
+
     api "androidx.compose.ui:ui:$compose_version"
     api "androidx.compose.material:material:$compose_version"
     api "androidx.compose.ui:ui-tooling-preview:$compose_version"

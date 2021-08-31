@@ -13,33 +13,52 @@ import java.util.concurrent.TimeUnit
 object ServiceCreator {
 
     private val mOkClient: OkHttpClient = OkHttpClient.Builder()
-            //完整请求超时时长，从发起到接受返回数据，默认0s
+        //完整请求超时时长，从发起到接受返回数据，默认0s
         .callTimeout(10, TimeUnit.SECONDS)
-            //与服务器建立链接的时长，默认10s
+        //与服务器建立链接的时长，默认10s
         .connectTimeout(10, TimeUnit.SECONDS)
-            //读取服务器返回数据的时长
+        //读取服务器返回数据的时长
         .readTimeout(10, TimeUnit.SECONDS)
-            //向服务器写入数据的时长，默认10s
+        //向服务器写入数据的时长，默认10s
         .writeTimeout(10, TimeUnit.SECONDS)
-            //是否重连
+        //是否重连
         .retryOnConnectionFailure(true)
-            //是否重定向
+        //是否重定向
         .followRedirects(false)
-            //cookie持久化处理
+        //cookie持久化处理
         .cookieJar(LocalCookieJar())
-            //添加网络拦截器，打印日志
+        //添加网络拦截器，打印日志
         .addNetworkInterceptor(KtHttpLogInterceptor {
             logLevel(KtHttpLogInterceptor.LogLevel.BODY)
         })
         .build()
 
-    private val retrofit = Retrofit.Builder().baseUrl(NetUrl.BASE_URL).addConverterFactory(
-        GsonConverterFactory.create()
-    ).client(mOkClient).build()
+    private var retrofit: Retrofit? = null
 
-    fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
+    private val retrofitBuilder = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(mOkClient)
+
+    /**
+     * 初始化配置
+     */
+    fun initConfig(baseUrl: String, okClient: OkHttpClient = mOkClient): ServiceCreator {
+        retrofit = retrofitBuilder.baseUrl(baseUrl).client(mOkClient).build()
+        return this
+    }
 
     //inline内联修饰符可以使用reified来修饰函数的泛型，让泛型具体化
-    inline fun <reified T> create(): T = create(T::class.java)
+    inline fun <reified T> getService(): T = create2(T::class.java)
+
+    /**
+     * 获取retrofit的service对象
+     */
+    fun <T> create2(serviceClazz: Class<T>): T {
+        if (retrofit == null) {
+            throw UninitializedPropertyAccessException("Retrofit必须初始化，需要配置baseUrl")
+        } else {
+            return retrofit!!.create(serviceClazz)
+        }
+    }
 
 }

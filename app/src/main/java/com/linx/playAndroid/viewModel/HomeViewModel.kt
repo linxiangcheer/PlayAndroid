@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.linx.common.base.BaseViewModel
-import com.linx.common.paging.CommonPagingSource
+import com.linx.net.paging.CommonPagingSource
 import com.linx.playAndroid.model.ArticleListData
 import com.linx.playAndroid.repo.HomeRepo
 import kotlinx.coroutines.flow.Flow

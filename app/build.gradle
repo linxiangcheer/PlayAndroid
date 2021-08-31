@@ -25,6 +25,8 @@ android {
     kotlinOptions {
         jvmTarget = java_version
         useIR = true
+        //NetRspKtx 使用了实验特性
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     buildFeatures {

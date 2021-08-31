@@ -6,6 +6,6 @@ import com.linx.playAndroid.service.HomeService
 object HomeRepo {
 
     //首页列表
-    suspend fun getHomeList(page: Int) = ServiceCreator.create<HomeService>().getHomeList(page)
+    suspend fun getHomeList(page: Int) = ServiceCreator.getService<HomeService>().getHomeList(page)
 
 }

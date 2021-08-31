@@ -7,6 +7,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -14,6 +16,7 @@ import com.linx.common.baseData.Nav
 import com.linx.playAndroid.NavigationHost
 import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.BottomNavBar
+import com.linx.playAndroid.viewModel.ProjectViewModel
 
 /**
  * 主界面
@@ -53,7 +56,13 @@ private fun MainTopABar(bottomNavScreen: Nav.BottomNavScreen) {
             AppBar("首页", rightIcon = Icons.Default.Search)
         }
         Nav.BottomNavScreen.ProjectScreen -> {
-            AppBar("项目", Icons.Default.Face, Icons.Default.Search)
+//            val projectViewModel: ProjectViewModel = viewModel()
+//
+//            val projectTreeData = projectViewModel.projectTreeData.observeAsState()
+//
+//            //顶部指示器
+//            projectTreeData.value?.let { projectTab(it, projectViewModel) }
+//            AppBar("项目", Icons.Default.Face, Icons.Default.Search)
         }
         Nav.BottomNavScreen.SquareScreen -> {
             AppBar("广场", Icons.Default.Send)

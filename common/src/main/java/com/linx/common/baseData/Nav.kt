@@ -28,4 +28,10 @@ object Nav {
     //是否点击两次返回的activity
     var twoBackFinishActivity = false
 
+    //项目页面指示器index
+    val projectTopBarIndex = mutableStateOf(0)
+
+    //广场页面指示器index
+    val squareTopBarIndex = mutableStateOf(0)
+
 }

@@ -11,6 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.linx.common.ext.transitionDate
 import com.linx.common.widget.sleepTime
 import com.linx.playAndroid.model.ArticleListData
+import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.HomeCard
 import com.linx.playAndroid.public.paging.ErrorPaging
 import com.linx.playAndroid.public.paging.pagingStateUtil
@@ -46,27 +48,29 @@ fun HomeCompose(navController: NavController) {
 
     val homeListData = homeViewModel.homeListData.collectAsLazyPagingItems()
 
-    SwipeRefresh(
-        state = refreshState,
-        onRefresh = {
-            //显示刷新头
-            refreshState.isRefreshing = true
-            homeViewModel.sleepTime(3000) {
-                refreshState.isRefreshing = false
+    Column(modifier = Modifier.fillMaxSize()) {
+        SwipeRefresh(
+            state = refreshState,
+            onRefresh = {
+                //显示刷新头
+                refreshState.isRefreshing = true
+                homeViewModel.sleepTime(3000) {
+                    refreshState.isRefreshing = false
+                }
             }
-        }
-    ) {
-        //首页列表数据
-        pagingStateUtil(homeListData, refreshState, homeViewModel) {
-            LazyColumn {
-                itemsIndexed(homeListData) { index, data ->
-                    HomeCard(120.dp) {
-                        HomeCardItemContent(data!!)
+        ) {
+            //首页列表数据
+            pagingStateUtil(homeListData, refreshState, homeViewModel) {
+                LazyColumn {
+                    itemsIndexed(homeListData) { index, data ->
+                        HomeCard(120.dp) {
+                            HomeCardItemContent(data!!)
+                        }
                     }
                 }
             }
-        }
 
+        }
     }
 
 }

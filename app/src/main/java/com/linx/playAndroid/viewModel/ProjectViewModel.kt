@@ -10,6 +10,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.linx.common.base.BaseViewModel
+import com.linx.common.baseData.Nav
 import com.linx.net.ext.*
 import com.linx.net.paging.CommonPagingSource
 import com.linx.playAndroid.model.ProjectListData
@@ -22,12 +23,9 @@ import kotlinx.coroutines.flow.Flow
  */
 class ProjectViewModel : BaseViewModel() {
 
-    //指示器index
-    val projectTreeIndex = mutableStateOf(0)
-
     //选中分类的cid
     private val indexCid
-        get() = projectTreeData.value?.get(projectTreeIndex.value)?.id ?: 0
+        get() = projectTreeData.value?.get(Nav.projectTopBarIndex.value)?.id ?: 0
 
     //项目页面顶部指示器
     private val _projectTreeData = MutableLiveData<List<ProjectTreeData>>()

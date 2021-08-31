@@ -22,7 +22,7 @@ fun NavigationHost(navController: NavHostController, paddingValues: PaddingValue
         builder = {
             composable(Nav.BottomNavScreen.HomeScreen.route) { HomeCompose(navController) }
             composable(Nav.BottomNavScreen.ProjectScreen.route) { ProjectCompose(navController) }
-            composable(Nav.BottomNavScreen.SquareScreen.route) { SquareCompose() }
+            composable(Nav.BottomNavScreen.SquareScreen.route) { SquareCompose(navController) }
             composable(Nav.BottomNavScreen.PublicNumScreen.route) { PublicNumCompose() }
             composable(Nav.BottomNavScreen.MineScreen.route) { ThemeCompose() }
         }

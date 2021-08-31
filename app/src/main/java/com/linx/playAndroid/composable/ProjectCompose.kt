@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,8 @@ import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.linx.common.base.BaseViewModel
+import com.linx.common.baseData.Nav
 import com.linx.common.ext.transitionDate
 import com.linx.common.widget.sleepTime
 import com.linx.playAndroid.model.ProjectListData
@@ -39,29 +42,17 @@ fun ProjectCompose(navController: NavController) {
 
     val projectViewModel: ProjectViewModel = viewModel()
 
-    initRequest(projectViewModel)
-
     //项目列表数据
     val projectListData = projectViewModel.projectListData.collectAsLazyPagingItems()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        //顶部指示器
-        ProjectTab(projectViewModel, projectListData)
-
-        //内容
-        ProjectContent(projectViewModel, projectListData)
+    //TopBar的Index改变
+    LaunchedEffect(Nav.projectTopBarIndex.value) {
+        projectListData.refresh()
     }
 
-}
+    //内容
+    ProjectContent(projectViewModel, projectListData)
 
-/**
- * 初始化网络请求内容
- */
-private fun initRequest(projectViewModel: ProjectViewModel) {
-    projectViewModel.apply {
-        //获取项目页面顶部指示器数据
-        getProjectTreeData()
-    }
 }
 
 /**
@@ -119,37 +110,37 @@ private fun topCard(author: String, desc: String) {
 @Composable
 private fun centerCard(envelopePic: String, title: String, desc: String) {
 
-        val painter = rememberImagePainter(data = envelopePic)
+    val painter = rememberImagePainter(data = envelopePic)
 
-        Image(
-            painter = painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(120.dp)
-                .padding(end = 4.dp)
+    Image(
+        painter = painter,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.size(120.dp)
+            .padding(end = 4.dp)
+    )
+
+    Column {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.h6,
+            maxLines = 2,
+            fontSize = 17.sp,
+            //超长以...结尾
+            overflow = TextOverflow.Ellipsis
         )
 
-        Column {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.h6,
-                maxLines = 2,
-                fontSize = 17.sp,
-                //超长以...结尾
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Text(
-                text = desc,
-                style = MaterialTheme.typography.body1,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 6.dp).weight(1f, true),
-                maxLines = 4,
-                fontSize = 14.sp,
-                //超长以...结尾
-                overflow = TextOverflow.Ellipsis
-            )
-        }
+        Text(
+            text = desc,
+            style = MaterialTheme.typography.body1,
+            color = Color.Gray,
+            modifier = Modifier.padding(top = 6.dp).weight(1f, true),
+            maxLines = 4,
+            fontSize = 14.sp,
+            //超长以...结尾
+            overflow = TextOverflow.Ellipsis
+        )
+    }
 }
 
 /**
@@ -203,53 +194,15 @@ private fun ProjectContent(
         }
     ) {
         pagingStateUtil(projectListData, refreshState, projectViewModel) {
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
                 itemsIndexed(projectListData) { index, item ->
                     HomeCard(180.dp) {
                         ProjectItemContent(item!!)
                     }
                 }
             }
-        }
-    }
-}
-
-/**
- * 项目页面顶部的指示器
- * [projects]指示器下方的内容
- */
-@Composable
-private fun ProjectTab(
-    viewModel: ProjectViewModel,
-    projectListData: LazyPagingItems<ProjectListData>
-) {
-
-    //项目指示器数据
-    val projectTreeData = viewModel.projectTreeData.observeAsState()
-
-    if (projectTreeData.value == null) {
-        Box(
-            modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxWidth()
-                .height(54.dp)
-        )
-        return
-    }
-
-    ScrollableTabRow(
-        selectedTabIndex = viewModel.projectTreeIndex.value,
-        modifier = Modifier.fillMaxWidth().height(50.dp),
-        edgePadding = 0.dp,
-        backgroundColor = MaterialTheme.colors.primary
-    ) {
-        projectTreeData.value!!.forEachIndexed { index, item ->
-            Tab(
-                text = { Text(item.name ?: "") },
-                selected = viewModel.projectTreeIndex.value == index,
-                onClick = {
-                    viewModel.projectTreeIndex.value = index
-                    projectListData.refresh()
-                }
-            )
         }
     }
 }

@@ -26,4 +26,14 @@ class SquareViewModel : BaseViewModel() {
         }
     }.flow.cachedIn(viewModelScope)
 
+    //问答列表
+    val questionAnswerData: Flow<PagingData<UserArticleListData>>
+        get() = _questionAnswerData
+
+    private val _questionAnswerData = Pager(PagingConfig(pageSize = 20)) {
+        CommonPagingSource { nextPage: Int ->
+            SquareRepo.getQuestionAnswer(nextPage)
+        }
+    }.flow.cachedIn(viewModelScope)
+
 }

@@ -2,8 +2,9 @@ package com.linx.playAndroid.model
 
 import androidx.annotation.Keep
 
+
 /**
- * 广场数据
+ * 广场/ 问答数据
  */
 @Keep
 data class UserArticleListData(

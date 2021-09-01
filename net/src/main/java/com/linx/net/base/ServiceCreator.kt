@@ -48,12 +48,12 @@ object ServiceCreator {
     }
 
     //inline内联修饰符可以使用reified来修饰函数的泛型，让泛型具体化
-    inline fun <reified T> getService(): T = create2(T::class.java)
+    inline fun <reified T> getService(): T = create(T::class.java)
 
     /**
      * 获取retrofit的service对象
      */
-    fun <T> create2(serviceClazz: Class<T>): T {
+    fun <T> create(serviceClazz: Class<T>): T {
         if (retrofit == null) {
             throw UninitializedPropertyAccessException("Retrofit必须初始化，需要配置baseUrl")
         } else {

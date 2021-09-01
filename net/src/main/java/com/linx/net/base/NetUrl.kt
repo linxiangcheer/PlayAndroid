@@ -19,4 +19,7 @@ object NetUrl {
     //问答
     const val WEN_DA = "/wenda/list/{page}/json"
 
+    //体系
+    const val SYSTEM = "/tree/json"
+
 }

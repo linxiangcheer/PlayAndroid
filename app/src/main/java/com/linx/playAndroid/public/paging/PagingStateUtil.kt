@@ -1,19 +1,15 @@
 package com.linx.playAndroid.public.paging
 
-import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.linx.common.widget.sleepTime
+import com.linx.playAndroid.public.ErrorComposable
 
 /**
  * 统一管理Paging数据状态的方法
@@ -74,7 +70,7 @@ private fun <T : Any> Error(
     refreshState: SwipeRefreshState
 ) {
     refreshState.isRefreshing = false
-    ErrorPaging {
+    ErrorComposable {
         pagingData.refresh()
     }
 }

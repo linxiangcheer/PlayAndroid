@@ -14,4 +14,7 @@ object SquareRepo {
     //获取问答列表数据
     suspend fun getQuestionAnswer(page: Int) = ServiceCreator.getService<SquareService>().getQuestionAnswers(page)
 
+    //获取体系数据
+    fun getSystem() = ServiceCreator.getService<SquareService>().getSystem()
+
 }

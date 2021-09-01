@@ -1,8 +1,8 @@
 package com.linx.playAndroid.public
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -17,10 +17,10 @@ import com.linx.playAndroid.public.paging.pagingStateUtil
 
 /**
  * 带刷新头的Card布局
- * 铺满
+ * LazyPagingItems<T>
  */
 @Composable
-fun <T: Any> SwipeRefreshContent(
+fun <T : Any> SwipeRefreshContent(
     viewModel: ViewModel,
     lazyPagingListData: LazyPagingItems<T>,
     cardHeight: Dp = 120.dp,
@@ -35,6 +35,8 @@ fun <T: Any> SwipeRefreshContent(
             onRefresh = {
                 //显示刷新头
                 refreshState.isRefreshing = true
+                //刷新数据
+                lazyPagingListData.refresh()
                 viewModel.sleepTime(3000) {
                     refreshState.isRefreshing = false
                 }
@@ -47,6 +49,54 @@ fun <T: Any> SwipeRefreshContent(
                         SimpleCard(cardHeight) {
                             content(data!!)
                         }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+/**
+ * 带刷新头的Card布局
+ * LazyPagingItems<T>
+ */
+@Composable
+fun <T : Any> SwipeRefreshContent(
+    viewModel: ViewModel,
+    listData: List<T>?,
+    cardHeight: Dp = 120.dp,
+    noData: () -> Unit = {},
+    content: @Composable (data: T) -> Unit
+) {
+
+    if (listData == null) {
+        ErrorComposable("暂无数据，请点击重试") {
+            noData()
+        }
+        return
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        val refreshState = rememberSwipeRefreshState(false)
+
+        SwipeRefresh(
+            state = refreshState,
+            onRefresh = {
+                //显示刷新头
+                refreshState.isRefreshing = true
+                //刷新数据
+                noData()
+                viewModel.sleepTime(3000) {
+                    refreshState.isRefreshing = false
+                }
+            }
+        ) {
+            LazyColumn {
+                itemsIndexed(listData) { index, data ->
+                    SimpleCard(cardHeight) {
+                        content(data)
                     }
                 }
             }

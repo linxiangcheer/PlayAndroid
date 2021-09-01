@@ -1,6 +1,7 @@
 package com.linx.playAndroid.model
 
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
 
 /**
@@ -42,3 +43,32 @@ data class UserArticleListData(
     val visible: Int,
     val zan: Int
 )
+
+/**
+ * 体系数据
+ */
+@Keep
+data class SystemData(
+    val children: List<Children?>?,
+    val courseId: Int,
+    val id: Int,
+    //体系大项名称
+    val name: String?,
+    val order: Int,
+    val parentChapterId: Int,
+    val userControlSetTop: Boolean,
+    val visible: Int
+) {
+    @Keep
+    data class Children(
+        val children: List<Any?>?,
+        val courseId: Int,
+        val id: Int,
+        //体系子项名称
+        val name: String?,
+        val order: Int,
+        val parentChapterId: Int,
+        val userControlSetTop: Boolean,
+        val visible: Int
+    )
+}

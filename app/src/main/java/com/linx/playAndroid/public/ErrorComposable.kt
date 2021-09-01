@@ -1,4 +1,4 @@
-package com.linx.playAndroid.public.paging
+package com.linx.playAndroid.public
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.linx.common.R
 
 /**
- * 加载失败页面
+ * 无数据时候的布局
  */
 @Composable
-fun ErrorPaging(block: () -> Unit) {
+fun ErrorComposable(title: String = "网络不佳，请点击重试", block: () -> Unit) {
 
     Column(
         modifier = Modifier.background(Color.White).fillMaxSize(),
@@ -33,7 +33,7 @@ fun ErrorPaging(block: () -> Unit) {
         )
 
         Button(modifier = Modifier.padding(8.dp), onClick = block) {
-            Text("网络不佳，请点击重试")
+            Text(title)
         }
     }
 

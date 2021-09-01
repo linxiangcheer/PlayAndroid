@@ -1,8 +1,10 @@
 package com.linx.playAndroid.service
 
 import com.linx.net.base.NetUrl
+import com.linx.net.model.BaseResponse
 import com.linx.net.paging.CommonalityPageModel
 import com.linx.playAndroid.model.UserArticleListData
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -19,5 +21,9 @@ interface SquareService {
     //问答数据
     @GET(NetUrl.WEN_DA)
     suspend fun getQuestionAnswers(@Path("page") page: Int): CommonalityPageModel<UserArticleListData>
+
+    //体系数据
+    @GET(NetUrl.SYSTEM)
+    fun getSystem(): Call<BaseResponse>
 
 }

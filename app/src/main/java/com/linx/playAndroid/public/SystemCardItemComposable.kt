@@ -1,9 +1,9 @@
 package com.linx.playAndroid.public
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +31,13 @@ fun SystemCardItemContent(title: String, list: List<SystemData.Children?>?) {
             fontSize = 17.sp,
             color = MaterialTheme.colors.secondaryVariant
         )
+
+        //标签
+        LabelCustom(itemGap = FlowBoxGap(6.dp)) {
+            list?.forEach { data ->
+                Button(onClick = {}) { Text(data?.name ?: "")}
+            }
+        }
 
 
     }

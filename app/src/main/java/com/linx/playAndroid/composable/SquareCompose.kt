@@ -38,7 +38,6 @@ fun SquareCompose(navController: NavController) {
         SwipeRefreshContent(
             squareViewModel,
             systemData.value,
-            130.dp,
             noData = { squareViewModel.getSystemData() },
         ) { data ->
             SystemCardItemContent(data.name ?: "", data.children)

@@ -39,3 +39,24 @@ fun SimpleCard(
     }
 
 }
+
+@Composable
+fun SimpleCard(
+    elevation: Dp = 3.dp,
+    shape: RoundedCornerShape = RoundedCornerShape(6.dp),
+    content: @Composable () -> Unit
+) {
+
+    Card(
+        modifier = Modifier
+            //外边距
+            .padding(bottom = 5.dp, start = 8.dp, end = 8.dp, top = 5.dp).fillMaxWidth(),
+        elevation = elevation,
+        backgroundColor = MaterialTheme.colors.background,
+        shape = shape,
+        border = if (isSystemInDarkTheme()) BorderStroke(1.dp, Color.White) else null
+    ) {
+        content()
+    }
+
+}

@@ -46,7 +46,7 @@ fun <T : Any> SwipeRefreshContent(
             pagingStateUtil(lazyPagingListData, refreshState, viewModel) {
                 LazyColumn {
                     itemsIndexed(lazyPagingListData) { index, data ->
-                        SimpleCard(cardHeight) {
+                        SimpleCard(cardHeight = cardHeight) {
                             content(data!!)
                         }
                     }
@@ -96,6 +96,54 @@ fun <T : Any> SwipeRefreshContent(
             LazyColumn {
                 itemsIndexed(listData) { index, data ->
                     SimpleCard(cardHeight) {
+                        content(data)
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+/**
+ * 带刷新头的Card布局
+ * LazyPagingItems<T>
+ * Card高度自适应
+ */
+@Composable
+fun <T : Any> SwipeRefreshContent(
+    viewModel: ViewModel,
+    listData: List<T>?,
+    noData: () -> Unit,
+    content: @Composable (data: T) -> Unit
+) {
+
+    if (listData == null) {
+        ErrorComposable("暂无数据，请点击重试") {
+            noData()
+        }
+        return
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        val refreshState = rememberSwipeRefreshState(false)
+
+        SwipeRefresh(
+            state = refreshState,
+            onRefresh = {
+                //显示刷新头
+                refreshState.isRefreshing = true
+                //刷新数据
+                noData()
+                viewModel.sleepTime(3000) {
+                    refreshState.isRefreshing = false
+                }
+            }
+        ) {
+            LazyColumn {
+                itemsIndexed(listData) { index, data ->
+                    SimpleCard {
                         content(data)
                     }
                 }

@@ -22,4 +22,7 @@ object NetUrl {
     //体系
     const val SYSTEM = "/tree/json"
 
+    //导航数据
+    const val NAVI = "/navi/json"
+
 }

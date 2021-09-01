@@ -1,16 +1,24 @@
 package com.linx.playAndroid.composable
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
-import com.linx.playAndroid.public.HomeCardItemContent
-import com.linx.playAndroid.public.SwipeRefreshContent
-import com.linx.playAndroid.public.SystemCardItemContent
-import com.linx.playAndroid.public.getAuthor
+import com.linx.playAndroid.model.NaviData
+import com.linx.playAndroid.model.SystemData
+import com.linx.playAndroid.public.*
 import com.linx.playAndroid.viewModel.SquareViewModel
 
 /**
@@ -30,10 +38,8 @@ fun SquareCompose(navController: NavController) {
 
     //体系页面
     if (Nav.squareTopBarIndex.value == 2) {
-        if (systemData.value == null) {
-            //请求体系数据
-            squareViewModel.getSystemData()
-        }
+        //请求体系数据
+        if (systemData.value == null) squareViewModel.getSystemData()
 
         SwipeRefreshContent(
             squareViewModel,
@@ -41,6 +47,22 @@ fun SquareCompose(navController: NavController) {
             noData = { squareViewModel.getSystemData() },
         ) { data ->
             SystemCardItemContent(data.name ?: "", data.children)
+        }
+    }
+
+    val naviData = squareViewModel.naviData.observeAsState()
+
+    //导航页面
+    if (Nav.squareTopBarIndex.value == 3) {
+        //请求导航数据
+        if (naviData.value == null) squareViewModel.getNavi()
+
+        SwipeRefreshContent(
+            squareViewModel,
+            naviData.value,
+            noData = { squareViewModel.getNavi() },
+        ) { data ->
+            NaviCardItemContent(data.name ?: "", data.articles)
         }
     }
 
@@ -76,6 +98,68 @@ private fun SquareAndQuestionComposable(index: Int, squareViewModel: SquareViewM
                 collect
             )
         }
+    }
+
+}
+
+/**
+ * 体系页面卡片的内容
+ */
+@Composable
+private fun SystemCardItemContent(title: String, list: List<SystemData.Children?>?) {
+
+    Column(
+        //内边距
+        modifier = Modifier.fillMaxSize()
+            .padding(top = 6.dp, bottom = 6.dp, start = 10.dp, end = 10.dp)
+    ) {
+
+        Text(
+            title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 17.sp,
+            color = MaterialTheme.colors.secondaryVariant
+        )
+
+        //标签
+        LabelCustom(itemGap = FlowBoxGap(6.dp)) {
+            list?.forEach { data ->
+                Button(onClick = {}) { Text(data?.name ?: "") }
+            }
+        }
+
+
+    }
+
+}
+
+/**
+ * 体系页面卡片的内容
+ */
+@Composable
+private fun NaviCardItemContent(title: String, list: List<NaviData.Article?>?) {
+
+    Column(
+        //内边距
+        modifier = Modifier.fillMaxSize()
+            .padding(top = 6.dp, bottom = 6.dp, start = 10.dp, end = 10.dp)
+    ) {
+
+        Text(
+            title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 17.sp,
+            color = MaterialTheme.colors.secondaryVariant
+        )
+
+        //标签
+        LabelCustom(itemGap = FlowBoxGap(6.dp)) {
+            list?.forEach { data ->
+                Button(onClick = {}) { Text(data?.title ?: "") }
+            }
+        }
+
+
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.paging.cachedIn
 import com.linx.common.base.BaseViewModel
 import com.linx.net.ext.*
 import com.linx.net.paging.CommonPagingSource
+import com.linx.playAndroid.model.NaviData
 import com.linx.playAndroid.model.SystemData
 import com.linx.playAndroid.model.UserArticleListData
 import com.linx.playAndroid.repo.SquareRepo
@@ -57,6 +58,25 @@ class SquareViewModel : BaseViewModel() {
             }
         }.onFailure {
             Log.e("xxx", "获取体系数据 接口异常$it")
+        }
+    }
+
+    //导航数据
+    private val _naviData = MutableLiveData<List<NaviData>>()
+    val naviData: LiveData<List<NaviData>>
+        get() = _naviData
+
+    //获取导航数据
+    fun getNavi() = serverAwait {
+        SquareRepo.getNavi().serverData().onSuccess {
+            onBizError { code, message ->
+                Log.e("xxx", "获取导航数据 接口异常 $code $message")
+            }
+            onBizOK<List<NaviData>> { code, data, message ->
+                _naviData.postValue(data)
+            }
+        }.onFailure {
+            Log.e("xxx", "获取导航数据 接口异常$it")
         }
     }
 

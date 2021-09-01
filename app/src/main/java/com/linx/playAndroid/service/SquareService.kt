@@ -26,4 +26,8 @@ interface SquareService {
     @GET(NetUrl.SYSTEM)
     fun getSystem(): Call<BaseResponse>
 
+    //导航数据
+    @GET(NetUrl.NAVI)
+    fun getNavi(): Call<BaseResponse>
+
 }

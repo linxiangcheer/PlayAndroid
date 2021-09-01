@@ -17,4 +17,7 @@ object SquareRepo {
     //获取体系数据
     fun getSystem() = ServiceCreator.getService<SquareService>().getSystem()
 
+    //获取导航数据
+    fun getNavi() = ServiceCreator.getService<SquareService>().getNavi()
+
 }

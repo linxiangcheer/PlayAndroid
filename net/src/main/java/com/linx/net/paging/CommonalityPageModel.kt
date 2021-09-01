@@ -1,4 +1,4 @@
-package com.linx.common.paging
+package com.linx.net.paging
 
 import androidx.annotation.Keep
 

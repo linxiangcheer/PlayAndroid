@@ -2,7 +2,6 @@ package com.linx.net.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.linx.common.paging.CommonalityPageModel
 import java.lang.Exception
 
 /**

@@ -13,4 +13,10 @@ object NetUrl {
     //项目列表数据
     const val PROJECT_LIST = "/project/list/{page}/json"
 
+    //广场
+    const val USER_ARTICLE_LIST = "/user_article/list/{page}/json"
+
+    //问答
+    const val WEN_DA = "/wenda/list/{page}/json"
+
 }

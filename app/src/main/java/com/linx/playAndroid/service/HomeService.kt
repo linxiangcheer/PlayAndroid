@@ -1,6 +1,6 @@
 package com.linx.playAndroid.service
 
-import com.linx.common.paging.CommonalityPageModel
+import com.linx.net.paging.CommonalityPageModel
 import com.linx.net.base.NetUrl
 import com.linx.playAndroid.model.ArticleListData
 import retrofit2.http.GET

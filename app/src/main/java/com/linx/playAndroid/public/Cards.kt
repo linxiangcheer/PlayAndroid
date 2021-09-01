@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * 首页的卡片布局
+ * 首页采用的Card
  */
 @Composable
-fun HomeCard(
+fun SimpleCard(
     cardHeight: Dp = 120.dp,
     elevation: Dp = 3.dp,
     shape: RoundedCornerShape = RoundedCornerShape(6.dp),

@@ -1,17 +1,12 @@
 package com.linx.playAndroid.composable
 
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,18 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.linx.common.ext.transitionDate
-import com.linx.common.widget.sleepTime
 import com.linx.playAndroid.model.ArticleListData
-import com.linx.playAndroid.public.AppBar
-import com.linx.playAndroid.public.HomeCard
-import com.linx.playAndroid.public.paging.ErrorPaging
-import com.linx.playAndroid.public.paging.pagingStateUtil
+import com.linx.playAndroid.public.SwipeRefreshContent
 import com.linx.playAndroid.ui.theme.c_b66731
 import com.linx.playAndroid.viewModel.HomeViewModel
 
@@ -44,33 +31,11 @@ fun HomeCompose(navController: NavController) {
 
     val homeViewModel: HomeViewModel = viewModel()
 
-    val refreshState = rememberSwipeRefreshState(false)
-
     val homeListData = homeViewModel.homeListData.collectAsLazyPagingItems()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        SwipeRefresh(
-            state = refreshState,
-            onRefresh = {
-                //显示刷新头
-                refreshState.isRefreshing = true
-                homeViewModel.sleepTime(3000) {
-                    refreshState.isRefreshing = false
-                }
-            }
-        ) {
-            //首页列表数据
-            pagingStateUtil(homeListData, refreshState, homeViewModel) {
-                LazyColumn {
-                    itemsIndexed(homeListData) { index, data ->
-                        HomeCard(120.dp) {
-                            HomeCardItemContent(data!!)
-                        }
-                    }
-                }
-            }
-
-        }
+    //首页页面的内容
+    SwipeRefreshContent(homeViewModel, homeListData) {
+        HomeCardItemContent(it)
     }
 
 }

@@ -1,15 +1,12 @@
 package com.linx.playAndroid.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,19 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.linx.common.base.BaseViewModel
 import com.linx.common.baseData.Nav
 import com.linx.common.ext.transitionDate
-import com.linx.common.widget.sleepTime
 import com.linx.playAndroid.model.ProjectListData
-import com.linx.playAndroid.public.HomeCard
-import com.linx.playAndroid.public.paging.pagingStateUtil
+import com.linx.playAndroid.public.SwipeRefreshContent
 import com.linx.playAndroid.viewModel.ProjectViewModel
 
 /**
@@ -50,8 +40,10 @@ fun ProjectCompose(navController: NavController) {
         projectListData.refresh()
     }
 
-    //内容
-    ProjectContent(projectViewModel, projectListData)
+    //项目页面的内容
+    SwipeRefreshContent(projectViewModel, projectListData, cardHeight = 190.dp) { data ->
+        ProjectItemContent(data)
+    }
 
 }
 
@@ -61,22 +53,24 @@ fun ProjectCompose(navController: NavController) {
 @Composable
 private fun ProjectItemContent(project: ProjectListData) {
 
-    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+    Column(
+        modifier = Modifier.padding(bottom = 6.dp, top = 6.dp).padding(start = 8.dp, end = 8.dp)
+    ) {
 
         topCard(project.author ?: "", project.publishTime.transitionDate())
 
         Row(
-            modifier = Modifier.weight(1f, true).padding(top = 6.dp)
+            modifier = Modifier.padding(3.dp).weight(1f)
         ) {
             centerCard(project.envelopePic ?: "", project.title ?: "", project.desc ?: "")
         }
 
         bottomCard(
             "开源项目主Tab·${project.chapterName}",
-            project.collect,
-            modifier = Modifier.padding(bottom = 6.dp)
+            project.collect
         )
     }
+
 }
 
 /**
@@ -86,7 +80,7 @@ private fun ProjectItemContent(project: ProjectListData) {
 private fun topCard(author: String, desc: String) {
 
     Row(
-        modifier = Modifier.padding(top = 6.dp).fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -116,7 +110,7 @@ private fun centerCard(envelopePic: String, title: String, desc: String) {
         painter = painter,
         contentDescription = null,
         contentScale = ContentScale.Crop,
-        modifier = Modifier.size(120.dp)
+        modifier = Modifier.fillMaxHeight().width(130.dp)
             .padding(end = 4.dp)
     )
 
@@ -134,7 +128,7 @@ private fun centerCard(envelopePic: String, title: String, desc: String) {
             text = desc,
             style = MaterialTheme.typography.body1,
             color = Color.Gray,
-            modifier = Modifier.padding(top = 6.dp).weight(1f, true),
+            modifier = Modifier.padding(top = 3.dp),
             maxLines = 4,
             fontSize = 14.sp,
             //超长以...结尾
@@ -169,40 +163,4 @@ private fun bottomCard(
         )
     }
 
-}
-
-/**
- * 项目页面的内容
- */
-@Composable
-private fun ProjectContent(
-    projectViewModel: ProjectViewModel,
-    projectListData: LazyPagingItems<ProjectListData>
-) {
-
-    //下拉刷新头状态
-    val refreshState = rememberSwipeRefreshState(false)
-
-    SwipeRefresh(
-        state = refreshState,
-        onRefresh = {
-            //显示刷新头
-            refreshState.isRefreshing = true
-            projectViewModel.sleepTime(3000) {
-                refreshState.isRefreshing = false
-            }
-        }
-    ) {
-        pagingStateUtil(projectListData, refreshState, projectViewModel) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                itemsIndexed(projectListData) { index, item ->
-                    HomeCard(180.dp) {
-                        ProjectItemContent(item!!)
-                    }
-                }
-            }
-        }
-    }
 }

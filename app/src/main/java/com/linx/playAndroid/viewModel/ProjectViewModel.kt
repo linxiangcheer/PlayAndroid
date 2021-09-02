@@ -16,6 +16,7 @@ import com.linx.net.paging.CommonPagingSource
 import com.linx.playAndroid.model.ProjectListData
 import com.linx.playAndroid.model.ProjectTreeData
 import com.linx.playAndroid.repo.ProjectRepo
+import com.linx.playAndroid.widget.StoreData
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -25,7 +26,7 @@ class ProjectViewModel : BaseViewModel() {
 
     //选中分类的cid
     private val indexCid
-        get() = _projectTreeData.value?.get(Nav.projectTopBarIndex.value)?.id ?: 0
+        get() = StoreData.projectTopBarListData.value?.get(Nav.projectTopBarIndex.value)?.id ?: 0
 
     //项目页面顶部指示器
     private val _projectTreeData = MutableLiveData<List<ProjectTreeData>>()
@@ -42,6 +43,8 @@ class ProjectViewModel : BaseViewModel() {
             }
             onBizOK<List<ProjectTreeData>> { code, data, message ->
                 _projectTreeData.postValue(data)
+                //临时存储指示器数据
+                StoreData.projectTopBarListData.postValue(data)
             }
         }.onFailure {
             Log.e("xxx", "获取项目页面顶部指示器数据 接口异常 $it")

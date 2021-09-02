@@ -1,26 +1,49 @@
 package com.linx.playAndroid.composable
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import android.util.Log
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.linx.common.baseData.Nav
+import com.linx.common.ext.transitionDate
+import com.linx.playAndroid.model.PublicNumListData
+import com.linx.playAndroid.public.*
+import com.linx.playAndroid.viewModel.PublicNumViewModel
 
 /**
  * 公众号页面
  */
 @Composable
-fun PublicNumCompose() {
+fun PublicNumCompose(navController: NavController) {
 
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("公众号", color = MaterialTheme.colors.primary)
+    val publicNumViewModel: PublicNumViewModel = viewModel()
+
+    //某个公众号历史文章列表数据
+    val publicNumListData = publicNumViewModel.publicNumListData.collectAsLazyPagingItems()
+
+    //如果TopBar的Index改变的话需要刷新数据
+    LaunchedEffect(Nav.publicNumIndex.value) {
+        publicNumListData.refresh()
+    }
+
+    //公众号页面的内容
+    SwipeRefreshContent(publicNumViewModel, publicNumListData) { data ->
+        data.apply {
+            HomeCardItemContent(
+                getAuthor(author, shareUser),
+                fresh,
+                publishTime,
+                title ?: "",
+                if (superChapterName != null) "公众号·$superChapterName" else "未知",
+                collect,
+                isSpecific = false
+            )
+        }
     }
 
 }

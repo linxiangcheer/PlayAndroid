@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.linx.common.ext.transitionDate
-import com.linx.playAndroid.model.ArticleListData
 import com.linx.playAndroid.ui.theme.c_b66731
 
 /**
@@ -34,7 +33,9 @@ fun HomeCardItemContent(
     //来源
     superChapterName: String,
     //是否收藏
-    collect: Boolean
+    collect: Boolean,
+    //是否显示具体时间
+    isSpecific: Boolean = true
 ) {
     Column(
         //内边距
@@ -43,13 +44,13 @@ fun HomeCardItemContent(
     ) {
 
         //上面的控件
-        topCard(author, fresh, publishTime)
+        TopCard(author, fresh, publishTime, isSpecific)
 
         //中间的控件
-        centerCard(modifier = Modifier.weight(1f, true), title)
+        CenterCard(modifier = Modifier.weight(1f, true), title)
 
         //下面的控件
-        bottomCard(superChapterName, collect)
+        BottomCard(superChapterName, collect)
 
     }
 }
@@ -58,7 +59,7 @@ fun HomeCardItemContent(
  * 底部部分
  */
 @Composable
-private fun bottomCard(
+private fun BottomCard(
     //渠道名
     chapterName: String,
     //是否收藏
@@ -85,7 +86,7 @@ private fun bottomCard(
  * 中间部分
  */
 @Composable
-private fun centerCard(modifier: Modifier = Modifier, title: String) {
+private fun CenterCard(modifier: Modifier = Modifier, title: String) {
 
     Surface(
         modifier = modifier.padding(top = 6.dp),
@@ -106,13 +107,15 @@ private fun centerCard(modifier: Modifier = Modifier, title: String) {
  * 上面部分
  */
 @Composable
-private fun topCard(
+private fun TopCard(
     //作者
     author: String,
     //是否是最新的
     fresh: Boolean,
     //发布时间
-    publishTime: Long
+    publishTime: Long,
+    //是否显示具体时间
+    isSpecific: Boolean
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -128,7 +131,7 @@ private fun topCard(
             modifier = Modifier.weight(1f, true),
             horizontalAlignment = Alignment.End
         ) {
-            grayText(publishTime.transitionDate())
+            grayText(if (isSpecific) publishTime.transitionDate() else publishTime.transitionDate("yyyy-MM-dd"))
         }
     }
 }

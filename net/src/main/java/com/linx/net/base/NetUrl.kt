@@ -26,6 +26,9 @@ object NetUrl {
     const val NAVI = "/navi/json"
 
     //公众号列表
-    const val WXARTICLE_CHAPTERS = "/wxarticle/chapters/json  "
+    const val WXARTICLE_CHAPTERS = "/wxarticle/chapters/json"
+
+    //某个公众号历史数据列表
+    const val WXARTICLE_LIST = "/wxarticle/list/{id}/{page}/json"
 
 }

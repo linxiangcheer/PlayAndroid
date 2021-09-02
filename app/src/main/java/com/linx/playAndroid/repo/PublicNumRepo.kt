@@ -10,4 +10,9 @@ object PublicNumRepo {
      */
     fun getPublicNumChapter() = ServiceCreator.getService<PublicNumService>().getPublicNumChapter()
 
+    /**
+     * 获取某个公众号历史文章列表
+     */
+    suspend fun getPublicNumList(id: Int, page: Int) = ServiceCreator.getService<PublicNumService>().getPublicNumList(id, page)
+
 }

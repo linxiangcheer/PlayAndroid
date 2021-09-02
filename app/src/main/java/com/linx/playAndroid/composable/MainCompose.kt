@@ -1,5 +1,6 @@
 package com.linx.playAndroid.composable
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -128,7 +129,6 @@ private fun OnTwoBackContent(navController: NavHostController) {
 
 /**
  * 项目页面顶部的指示器
- * [projects]指示器下方的内容
  */
 @Composable
 private fun ProjectTab(
@@ -191,7 +191,6 @@ private fun SquareTab(squareTopBarIndex: MutableState<Int>) {
 
 /**
  * 公众号页面顶部的指示器
- * [projects]指示器下方的内容
  */
 @Composable
 private fun PublicNumTab(

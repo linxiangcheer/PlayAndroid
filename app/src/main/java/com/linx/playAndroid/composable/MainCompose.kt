@@ -101,7 +101,7 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
         }
         //我的
         Nav.BottomNavScreen.MineScreen -> {
-            AppBar("我的", Icons.Default.Add)
+            AppBar(elevation = 0.dp)
         }
     }
 }
@@ -146,7 +146,7 @@ private fun ProjectTab(
 
     ScrollableTabRow(
         selectedTabIndex = projectTopBarIndex.value,
-        modifier = Modifier.fillMaxWidth().height(50.dp),
+        modifier = Modifier.fillMaxWidth().height(54.dp),
         //边缘padding
         edgePadding = 0.dp,
         backgroundColor = MaterialTheme.colors.primary
@@ -173,7 +173,7 @@ private fun SquareTab(squareTopBarIndex: MutableState<Int>) {
     //顶部指示器
     ScrollableTabRow(
         selectedTabIndex = squareTopBarIndex.value,
-        modifier = Modifier.fillMaxWidth().height(50.dp),
+        modifier = Modifier.fillMaxWidth().height(54.dp),
         backgroundColor = MaterialTheme.colors.primary
     ) {
         squareTopBarList.forEachIndexed { index, item ->
@@ -208,7 +208,7 @@ private fun PublicNumTab(
 
     ScrollableTabRow(
         selectedTabIndex = publicNumIndex.value,
-        modifier = Modifier.fillMaxWidth().height(50.dp),
+        modifier = Modifier.fillMaxWidth().height(54.dp),
         //边缘padding
         edgePadding = 0.dp,
         backgroundColor = MaterialTheme.colors.primary

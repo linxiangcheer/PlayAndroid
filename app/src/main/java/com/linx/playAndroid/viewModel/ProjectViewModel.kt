@@ -25,7 +25,7 @@ class ProjectViewModel : BaseViewModel() {
 
     //选中分类的cid
     private val indexCid
-        get() = projectTreeData.value?.get(Nav.projectTopBarIndex.value)?.id ?: 0
+        get() = _projectTreeData.value?.get(Nav.projectTopBarIndex.value)?.id ?: 0
 
     //项目页面顶部指示器
     private val _projectTreeData = MutableLiveData<List<ProjectTreeData>>()
@@ -38,13 +38,13 @@ class ProjectViewModel : BaseViewModel() {
     fun getProjectTreeData() = serverAwait {
         ProjectRepo.getProjectTree().serverData().onSuccess {
             onBizError { code, message ->
-                Log.e("xxx", "获取项目页面顶部指示器数据 接口异常")
+                Log.e("xxx", "获取项目页面顶部指示器数据 接口异常 $code $message")
             }
             onBizOK<List<ProjectTreeData>> { code, data, message ->
                 _projectTreeData.postValue(data)
             }
         }.onFailure {
-            Log.e("xxx", "获取项目页面顶部指示器数据 接口异常")
+            Log.e("xxx", "获取项目页面顶部指示器数据 接口异常 $it")
         }
     }
 

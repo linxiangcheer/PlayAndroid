@@ -25,4 +25,7 @@ object NetUrl {
     //导航数据
     const val NAVI = "/navi/json"
 
+    //公众号列表
+    const val WXARTICLE_CHAPTERS = "/wxarticle/chapters/json  "
+
 }

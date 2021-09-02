@@ -22,9 +22,11 @@ import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
 import com.linx.playAndroid.NavigationHost
 import com.linx.playAndroid.model.ProjectTreeData
+import com.linx.playAndroid.model.PublicNumChapterData
 import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.BottomNavBar
 import com.linx.playAndroid.viewModel.ProjectViewModel
+import com.linx.playAndroid.viewModel.PublicNumViewModel
 
 /**
  * 主界面
@@ -84,7 +86,17 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
         }
         //公众号
         Nav.BottomNavScreen.PublicNumScreen -> {
-            AppBar("公众号", Icons.Default.ArrowForward)
+
+            val publicNumViewModel: PublicNumViewModel = viewModel()
+
+            //请求公众号列表数据
+            publicNumViewModel.getPublicNumChapterData()
+
+            val publicNumChapterData = publicNumViewModel.publicNumChapter.observeAsState()
+
+            //顶部指示器
+            PublicNumTab(Nav.publicNumIndex, publicNumChapterData)
+
         }
         //我的
         Nav.BottomNavScreen.MineScreen -> {
@@ -170,10 +182,46 @@ private fun SquareTab(squareTopBarIndex: MutableState<Int>) {
                 selected = index == squareTopBarIndex.value,
                 onClick = {
                     squareTopBarIndex.value = index
-                    //todo 通知刷新下面的内容
                 }
             )
         }
     }
 
+}
+
+/**
+ * 公众号页面顶部的指示器
+ * [projects]指示器下方的内容
+ */
+@Composable
+private fun PublicNumTab(
+    publicNumIndex: MutableState<Int>,
+    publicNumChapterData: State<List<PublicNumChapterData>?>
+) {
+
+    if (publicNumChapterData.value == null) {
+        Box(
+            modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxWidth()
+                .height(54.dp)
+        )
+        return
+    }
+
+    ScrollableTabRow(
+        selectedTabIndex = publicNumIndex.value,
+        modifier = Modifier.fillMaxWidth().height(50.dp),
+        //边缘padding
+        edgePadding = 0.dp,
+        backgroundColor = MaterialTheme.colors.primary
+    ) {
+        publicNumChapterData.value!!.forEachIndexed { index, item ->
+            Tab(
+                text = { Text(item.name ?: "") },
+                selected = publicNumIndex.value == index,
+                onClick = {
+                    publicNumIndex.value = index
+                }
+            )
+        }
+    }
 }

@@ -34,4 +34,7 @@ object Nav {
     //广场页面指示器index
     val squareTopBarIndex = mutableStateOf(0)
 
+    //公众号页面指示器index
+    val publicNumIndex = mutableStateOf(0)
+
 }

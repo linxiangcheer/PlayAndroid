@@ -153,9 +153,16 @@ private fun NaviCardItemContent(title: String, list: List<NaviData.Article?>?) {
         )
 
         //标签
-        LabelCustom(itemGap = FlowBoxGap(6.dp)) {
-            list?.forEach { data ->
-                Button(onClick = {}) { Text(data?.title ?: "") }
+        LabelCustom(itemGap = FlowBoxGap(start = 0.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)) {
+
+            //没有标签的时候
+            if (list == null || list.isEmpty()) {
+                Text("暂无", fontWeight = FontWeight.Light)
+                return@LabelCustom
+            }
+
+            list.forEachIndexed { index, article ->
+                Button(onClick = {}) { Text(article?.title ?: "") }
             }
         }
 

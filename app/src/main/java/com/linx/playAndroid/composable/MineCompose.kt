@@ -2,27 +2,40 @@ package com.linx.playAndroid.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.Interaction
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.linx.playAndroid.R
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  * 我的页面
  */
 @Composable
-fun MineCompose() {
+fun MineCompose(navController: NavController) {
 
     Column(
         modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxSize()
@@ -31,18 +44,87 @@ fun MineCompose() {
         //头像和名字
         HeadAndName()
 
+        //下方列表
         Surface(
             shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
             color = MaterialTheme.colors.background,
             modifier = Modifier.fillMaxSize().padding(top = 50.dp)
         ) {
-
-            Text("")
-
+            Column(modifier = Modifier.padding(top = 13.dp).fillMaxSize()) {
+                MineListComposable(painterResource(R.mipmap.ic_jifen), "我的积分", 361) {}
+                MineListComposable(painterResource(R.mipmap.ic_collect), "我的收藏") {}
+                MineListComposable(painterResource(R.mipmap.ic_wenzhang), "我的文章") {}
+                MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}
+                MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {}
+                MineListComposable(painterResource(R.mipmap.ic_shezhi), "系统设置") {}
+            }
         }
 
     }
 
+}
+
+/**
+ * 列表
+ */
+@Composable
+private fun MineListComposable(
+    painter: Painter,
+    leftStr: String,
+    //积分
+    integral: Int = -1,
+    onClick: () -> Unit
+) {
+
+    Row(
+        modifier = Modifier.background(MaterialTheme.colors.background)
+            .clickable(onClick = onClick)
+            .padding(start = 20.dp, end = 20.dp, top = 13.dp, bottom = 13.dp)
+            .height(26.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Image(
+            painter,
+            contentDescription = null,
+            modifier = Modifier.size(26.dp)
+        )
+
+        Text(
+            leftStr,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.secondaryVariant,
+            fontSize = 15.sp,
+            modifier = Modifier.padding(start = 14.dp)
+        )
+
+        Spacer(modifier = Modifier.weight(1f, true))
+
+        if (integral != -1) {
+            Text(
+                "当前积分：",
+                color = Color.Gray,
+                fontWeight = FontWeight.Light,
+                fontSize = 13.sp
+            )
+
+            Text(
+                integral.toString(),
+                color = MaterialTheme.colors.primary,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+        }
+
+        //箭头
+        Image(
+            painterResource(R.mipmap.ic_right),
+            contentDescription = null,
+            modifier = Modifier.padding(start = 8.dp).size(16.dp)
+        )
+
+    }
 }
 
 /**

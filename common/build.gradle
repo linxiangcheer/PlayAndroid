@@ -55,4 +55,7 @@ dependencies {
 //    implementation("io.coil-kt:coil-gif:1.2.2")//支持GIF
 //    implementation("io.coil-kt:coil-svg:1.2.2")//支持SVG
 //    implementation("io.coil-kt:coil-video:1.2.2")//支持Video
+
+    // MMKV
+    api "com.tencent:mmkv-static:$mmkv_version"
 }

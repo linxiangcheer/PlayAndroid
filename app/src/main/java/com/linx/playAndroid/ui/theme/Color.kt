@@ -39,3 +39,32 @@ val Theme5Secondary = Color(0xFF60ad5e)
 val Theme5OnPrimary = Color(0xFFFFFFFF)
 
 val c_b66731 = Color(0xFFb66731)
+
+//带透明度
+val c_B3F = Color(0xB3FFFFFF)
+val c_80F = Color(0x80FFFFFF)
+
+/**
+ * 透明度
+ * FF 100% 不透明
+ * F2 95
+ * E6 90
+ * D9 85
+ * CC 80
+ * BF 75
+ * B3 70
+ * A6 65
+ * 99 60
+ * 8C 55
+ * 80 50
+ * 73 45
+ * 66 40
+ * 59 35
+ * 4D 30
+ * 40 25
+ * 33 20
+ * 26 15
+ * 1A 10
+ * 0D 5
+ * 00 0 完全透明
+ */

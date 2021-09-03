@@ -14,6 +14,7 @@ class NetWorkInitializer: Initializer<Boolean> {
         return true
     }
 
+    //是否需要在？之后初始化
     override fun dependencies(): List<Class<out Initializer<*>>> {
         return emptyList()
     }

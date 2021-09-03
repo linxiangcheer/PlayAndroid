@@ -103,6 +103,7 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
         Nav.BottomNavScreen.MineScreen -> {
             AppBar(elevation = 0.dp)
         }
+        else -> {}
     }
 }
 

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.linx.common.baseData.Nav
 import com.linx.playAndroid.composable.*
 
@@ -15,6 +16,7 @@ import com.linx.playAndroid.composable.*
  */
 @Composable
 fun NavigationHost(navController: NavHostController, paddingValues: PaddingValues) {
+
     NavHost(
         navController,
         startDestination = Nav.BottomNavScreen.HomeScreen.route,
@@ -27,6 +29,14 @@ fun NavigationHost(navController: NavHostController, paddingValues: PaddingValue
             composable(Nav.BottomNavScreen.MineScreen.route) { MineCompose(navController) }
         }
     )
+}
+
+enum class MyNavHost(
+    val route: String
+) {
+    //主页面
+    MAIN("main"),
+    LOGIN("login"),
 }
 
 

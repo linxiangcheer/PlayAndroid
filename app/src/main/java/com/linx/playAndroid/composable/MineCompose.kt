@@ -1,8 +1,6 @@
 package com.linx.playAndroid.composable
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,6 +13,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,10 +24,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.linx.playAndroid.MyNavHost
 import com.linx.playAndroid.R
+import com.linx.playAndroid.viewModel.MineViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -37,12 +41,32 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 @Composable
 fun MineCompose(navController: NavController) {
 
+    val mineViewModel: MineViewModel = viewModel()
+
+    //如果登录了就个人积分数据
+    if (mineViewModel.isLogin()) {
+        //获取个人积分数据
+        mineViewModel.getUserInfoIntegral()
+    }
+
+    //个人积分数据
+    val userInfoIntegralData = mineViewModel.userInfoIntegral.observeAsState()
+
     Column(
         modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxSize()
     ) {
 
-        //头像和名字
-        HeadAndName()
+        userInfoIntegralData.value.apply {
+            //头像和名字
+            HeadAndName(
+                this?.nickname ?: "",
+                if (this?.userId == 0 || this?.userId == null) "" else this.userId.toString(),
+                if (this?.rank == null) "" else this.rank.toString()
+            ) {
+                //跳转到登录页面 todo
+                navController.navigate(MyNavHost.LOGIN.route)
+            }
+        }
 
         //下方列表
         Surface(
@@ -51,7 +75,11 @@ fun MineCompose(navController: NavController) {
             modifier = Modifier.fillMaxSize().padding(top = 50.dp)
         ) {
             Column(modifier = Modifier.padding(top = 13.dp).fillMaxSize()) {
-                MineListComposable(painterResource(R.mipmap.ic_jifen), "我的积分", 361) {}
+                MineListComposable(
+                    painterResource(R.mipmap.ic_jifen),
+                    "我的积分",
+                    userInfoIntegralData.value?.coinCount ?: 0
+                ) {}
                 MineListComposable(painterResource(R.mipmap.ic_collect), "我的收藏") {}
                 MineListComposable(painterResource(R.mipmap.ic_wenzhang), "我的文章") {}
                 MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}
@@ -78,7 +106,11 @@ private fun MineListComposable(
 
     Row(
         modifier = Modifier.background(MaterialTheme.colors.background)
-            .clickable(onClick = onClick)
+            .clickable(
+                onClick = onClick,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(color = MaterialTheme.colors.background)
+            )
             .padding(start = 20.dp, end = 20.dp, top = 13.dp, bottom = 13.dp)
             .height(26.dp)
             .fillMaxWidth(),
@@ -131,9 +163,9 @@ private fun MineListComposable(
  * 头像和名字
  */
 @Composable
-private fun HeadAndName() {
+private fun HeadAndName(name: String, id: String, rank: String, goLogin: () -> Unit) {
     Row(
-        modifier = Modifier.height(80.dp).fillMaxWidth().padding(start = 20.dp)
+        modifier = Modifier.clickable { goLogin() }.height(80.dp).fillMaxWidth().padding(start = 20.dp)
     ) {
         //头像
         Surface(
@@ -149,11 +181,11 @@ private fun HeadAndName() {
             //平分
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text("姓名", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text(name, fontWeight = FontWeight.Bold, fontSize = 20.sp)
 
             Row {
-                Text("id: xxx", fontSize = 14.sp)
-                Text("排名: xxx", modifier = Modifier.padding(start = 20.dp), fontSize = 14.sp)
+                Text("id: $id", fontSize = 14.sp)
+                Text("排名: $rank", modifier = Modifier.padding(start = 20.dp), fontSize = 14.sp)
             }
         }
     }

@@ -31,4 +31,7 @@ object NetUrl {
     //某个公众号历史数据列表
     const val WXARTICLE_LIST = "/wxarticle/list/{id}/{page}/json"
 
+    //个人信息
+    const val LG_COIN_USERINFO = "/lg/coin/userinfo/json"
+
 }

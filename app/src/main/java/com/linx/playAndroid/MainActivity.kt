@@ -5,7 +5,10 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.linx.common.baseData.themeTypeState
 import com.linx.playAndroid.ui.theme.CustomThemeManager
 import com.linx.common.widget.TwoBackFinish
@@ -19,24 +22,16 @@ class MainActivity : ComponentActivity() {
 
             val themeState = themeTypeState.value
 
-            //状态栏
-            window.statusBarColor = if (isSystemInDarkTheme()) {
-                CustomThemeManager.getWrappedColor(themeState).darkColors.primary
-            } else {
-                CustomThemeManager.getWrappedColor(themeState).lightColors.primary
-            }.toArgb()
-
-            //底部导航栏
-            window.navigationBarColor = if (isSystemInDarkTheme()) {
-                CustomThemeManager.getWrappedColor(themeState).darkColors.background
-            } else {
-                CustomThemeManager.getWrappedColor(themeState).lightColors.background
-            }.toArgb()
+            //设置为沉浸式状态栏
+            WindowCompat.setDecorFitsSystemWindows(window, false)
 
             //主题包裹
             CustomThemeManager.WanAndroidTheme(themeState) {
-                //主界面
-                MainCompose(onFinish = { finish() })
+                //可以获取状态栏高度
+                ProvideWindowInsets {
+                    //主界面
+                    MainCompose(onFinish = { finish() })
+                }
             }
         }
 

@@ -2,10 +2,7 @@ package com.linx.playAndroid.composable
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -18,6 +15,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.insets.navigationBarsHeight
+import com.google.accompanist.insets.statusBarsHeight
 import com.linx.common.baseData.Nav
 import com.linx.playAndroid.NavigationHost
 import com.linx.playAndroid.model.ProjectTreeData
@@ -45,14 +44,24 @@ fun MainCompose(navController: NavHostController = rememberNavController(), onFi
             contentColor = MaterialTheme.colors.background,
             //标题栏
             topBar = {
-                MainTopBar(Nav.bottomNavRoute.value)
+                Column {
+                    //内容不挡住状态栏
+                    Spacer(modifier = Modifier.statusBarsHeight().fillMaxWidth())
+
+                    MainTopBar(Nav.bottomNavRoute.value)
+                }
             },
             //底部导航栏
             bottomBar = {
-                BottomNavBar(Nav.bottomNavRoute.value, navController)
+                Column {
+                    BottomNavBar(Nav.bottomNavRoute.value, navController)
+                    //内容不挡住导航栏
+                    Spacer(modifier = Modifier.navigationBarsHeight().fillMaxWidth())
+                }
             },
             //内容
             content = { paddingValues: PaddingValues ->
+
                 //内容嵌套在Scaffold中
                 NavigationHost(navController, onFinish)
 
@@ -60,7 +69,7 @@ fun MainCompose(navController: NavHostController = rememberNavController(), onFi
             }
         )
     } else
-        //独立页面
+    //独立页面
         NavigationHost(navController, onFinish)
 
 }

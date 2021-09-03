@@ -40,6 +40,10 @@ dependencies {
 
     //刷新头
     api "com.google.accompanist:accompanist-swiperefresh:$accompanist_pager"
+    //UI ProvideWindowInsets正确获取状态栏高度
+    api "com.google.accompanist:accompanist-insets-ui:$accompanist_pager"
+    //控制UI栏
+    api "com.google.accompanist:accompanist-systemuicontroller:$accompanist_pager"
 
     /**
      * compose提供有viewModel等其他方便的函数

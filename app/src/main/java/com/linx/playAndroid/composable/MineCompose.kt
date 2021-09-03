@@ -5,6 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -141,10 +142,11 @@ private fun MineListComposable(
         }
 
         //箭头
-        Image(
+        Icon(
             painterResource(R.mipmap.ic_right),
             contentDescription = null,
-            modifier = Modifier.padding(start = 8.dp).size(16.dp)
+            modifier = Modifier.padding(start = 8.dp).size(16.dp),
+            tint = MaterialTheme.colors.secondaryVariant
         )
 
     }

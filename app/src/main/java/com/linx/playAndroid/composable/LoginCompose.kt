@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,55 +41,52 @@ fun LoginCompose(navController: NavController) {
 
     val loginViewModel: LoginViewModel = viewModel()
 
-    Scaffold() {
-        Box(
-            modifier = Modifier.fillMaxSize()
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        //背景图
+        Image(
+            painter = painterResource(R.mipmap.login_bg),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            //背景图
-            Image(
-                painter = painterResource(R.mipmap.login_bg),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
-            )
+            item {
 
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                item {
-
-                    //返回上个页面和找回密码
-                    BackAndFinPassWordComposable() {
-                        //关闭页面
-                        navController.navigateUp()
-                    }
-
-                    Image(
-                        modifier = Modifier.padding(top = 50.dp).size(100.dp)
-                            .align(Alignment.Center),
-                        painter = painterResource(R.mipmap.ic_net_empty),
-                        contentDescription = null
-                    )
-
-                    loginViewModel.apply {
-                        //用户名和密码
-                        UserNameAndPasswordComposable(userName, passWord, passwordVisible)
-                    }
-
-                    //登录按钮  用户注册  作者登录
-                    LoginBtnAndTextComposable() {
-
-                    }
-
-                    //第三方登录
-                    OtherLoginComposable()
-
-                    //用户协议
-                    AgreementComposable()
+                //返回上个页面和找回密码
+                BackAndFinPassWordComposable() {
+                    //关闭页面
+                    navController.navigateUp()
                 }
-            }
 
+                Image(
+                    modifier = Modifier.padding(top = 50.dp).size(100.dp)
+                        .align(Alignment.Center),
+                    painter = painterResource(R.mipmap.ic_net_empty),
+                    contentDescription = null
+                )
+
+                loginViewModel.apply {
+                    //用户名和密码
+                    UserNameAndPasswordComposable(userName, passWord, passwordVisible)
+                }
+
+                //登录按钮  用户注册  作者登录
+                LoginBtnAndTextComposable() {
+
+                }
+
+                //第三方登录
+                OtherLoginComposable()
+
+                //用户协议
+                AgreementComposable()
+            }
         }
     }
 
@@ -131,7 +129,9 @@ private fun AgreementComposable() {
  */
 @Composable
 private fun OtherLoginComposable() {
-    val modifier = Modifier.clip(CircleShape).background(MaterialTheme.colors.background).padding(10.dp).size(30.dp)
+    val modifier =
+        Modifier.clip(CircleShape).background(MaterialTheme.colors.background).padding(10.dp)
+            .size(30.dp)
     Row(
         modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 90.dp)
             .fillMaxWidth(),
@@ -314,9 +314,7 @@ private fun BackAndFinPassWordComposable(
         Icon(
             painter = painterResource(R.mipmap.ic_tab_strip_icon_follow),
             contentDescription = null,
-            modifier = Modifier.clickable {
-                back.invoke()
-            }.padding(10.dp),
+            modifier = Modifier.clickable(onClick = back).padding(10.dp),
             tint = Color.White
         )
 
@@ -324,9 +322,7 @@ private fun BackAndFinPassWordComposable(
             text = "跳过",
             fontSize = 13.sp,
             color = Color.White,
-            modifier = Modifier.padding(10.dp).clickable(onClick = {
-                back.invoke()
-            })
+            modifier = Modifier.padding(10.dp)
         )
     }
 }

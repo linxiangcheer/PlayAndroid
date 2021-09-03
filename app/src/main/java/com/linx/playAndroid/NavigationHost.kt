@@ -15,27 +15,34 @@ import com.linx.playAndroid.composable.*
  * 内容 导航
  */
 @Composable
-fun NavigationHost(navController: NavHostController, paddingValues: PaddingValues) {
+fun NavigationHost(navController: NavHostController) {
 
     NavHost(
         navController,
-        startDestination = Nav.BottomNavScreen.HomeScreen.route,
-        Modifier.padding(paddingValues),
+        startDestination = KeyNavigationRoute.MAIN.route,
         builder = {
-            composable(Nav.BottomNavScreen.HomeScreen.route) { HomeCompose(navController) }
-            composable(Nav.BottomNavScreen.ProjectScreen.route) { ProjectCompose(navController) }
-            composable(Nav.BottomNavScreen.SquareScreen.route) { SquareCompose(navController) }
-            composable(Nav.BottomNavScreen.PublicNumScreen.route) { PublicNumCompose(navController) }
-            composable(Nav.BottomNavScreen.MineScreen.route) { MineCompose(navController) }
+
+            //主页面
+            navigation(route = KeyNavigationRoute.MAIN.route, startDestination = Nav.BottomNavScreen.HomeScreen.route) {
+                composable(Nav.BottomNavScreen.HomeScreen.route) { HomeCompose(navController) }
+                composable(Nav.BottomNavScreen.ProjectScreen.route) { ProjectCompose(navController) }
+                composable(Nav.BottomNavScreen.SquareScreen.route) { SquareCompose(navController) }
+                composable(Nav.BottomNavScreen.PublicNumScreen.route) { PublicNumCompose(navController) }
+                composable(Nav.BottomNavScreen.MineScreen.route) { MineCompose(navController) }
+            }
+
+            composable(route = KeyNavigationRoute.LOGIN.route) { LoginCompose(navController) }
+
         }
     )
 }
 
-enum class MyNavHost(
+enum class KeyNavigationRoute(
     val route: String
 ) {
     //主页面
     MAIN("main"),
+    //登录页面
     LOGIN("login"),
 }
 

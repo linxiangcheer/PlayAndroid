@@ -9,16 +9,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.linx.common.baseData.Nav
 import com.linx.playAndroid.NavigationHost
@@ -33,27 +31,36 @@ import com.linx.playAndroid.viewModel.PublicNumViewModel
  * 主界面
  */
 @Composable
-fun MainCompose() {
+fun MainCompose(navController: NavHostController = rememberNavController()) {
 
-    val navController = rememberNavController()
+    //返回back堆栈的顶部条目
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    //返回当前route
+    val currentRoute = navBackStackEntry?.destination?.route ?: Nav.BottomNavScreen.HomeScreen.route
 
-    Scaffold(
-        contentColor = MaterialTheme.colors.background,
-        //标题栏
-        topBar = {
-            MainTopBar(Nav.bottomNavRoute.value)
-        },
-        //底部导航栏
-        bottomBar = {
-            BottomNavBar(Nav.bottomNavRoute.value, navController)
-        },
-        //内容
-        content = { paddingValues: PaddingValues ->
-            NavigationHost(navController, paddingValues)
+    //是否为route == "main",主页面的内容
+    if (isMainScreen(currentRoute)) {
+        Scaffold(
+            contentColor = MaterialTheme.colors.background,
+            //标题栏
+            topBar = {
+                MainTopBar(Nav.bottomNavRoute.value)
+            },
+            //底部导航栏
+            bottomBar = {
+                BottomNavBar(Nav.bottomNavRoute.value, navController)
+            },
+            //内容
+            content = { paddingValues: PaddingValues ->
+                //内容嵌套在Scaffold中
+                NavigationHost(navController)
 
-            OnTwoBackContent(navController)
-        }
-    )
+                OnTwoBackContent(navController)
+            }
+        )
+    } else
+        //独立页面
+        NavigationHost(navController)
 
 }
 
@@ -62,7 +69,7 @@ fun MainCompose() {
  */
 @Composable
 private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
-    when(bottomNavScreen) {
+    when (bottomNavScreen) {
         //首页
         Nav.BottomNavScreen.HomeScreen -> {
             AppBar("首页", rightIcon = Icons.Default.Search)
@@ -103,7 +110,8 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
         Nav.BottomNavScreen.MineScreen -> {
             AppBar(elevation = 0.dp)
         }
-        else -> {}
+        else -> {
+        }
     }
 }
 
@@ -165,6 +173,7 @@ private fun ProjectTab(
 }
 
 val squareTopBarList = listOf<String>("广场", "每日一问", "体系", "导航")
+
 /**
  * 广场页面的TopBar
  */
@@ -224,4 +233,16 @@ private fun PublicNumTab(
             )
         }
     }
+}
+
+/**
+ * 是否是首页的内容
+ */
+fun isMainScreen(route: String): Boolean = when (route) {
+    Nav.BottomNavScreen.HomeScreen.route,
+    Nav.BottomNavScreen.ProjectScreen.route,
+    Nav.BottomNavScreen.SquareScreen.route,
+    Nav.BottomNavScreen.PublicNumScreen.route,
+    Nav.BottomNavScreen.MineScreen.route -> true
+    else -> false
 }

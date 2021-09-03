@@ -1,8 +1,6 @@
 package com.linx.playAndroid.composable
 
 import androidx.compose.foundation.*
-import androidx.compose.foundation.interaction.Interaction
-import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,28 +10,21 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.linx.playAndroid.MyNavHost
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.R
 import com.linx.playAndroid.viewModel.MineViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  * 我的页面
@@ -63,8 +54,8 @@ fun MineCompose(navController: NavController) {
                 if (this?.userId == 0 || this?.userId == null) "" else this.userId.toString(),
                 if (this?.rank == null) "" else this.rank.toString()
             ) {
-                //跳转到登录页面 todo
-                navController.navigate(MyNavHost.LOGIN.route)
+                //跳转到登录页面
+                navController.navigate(KeyNavigationRoute.LOGIN.route)
             }
         }
 
@@ -165,7 +156,7 @@ private fun MineListComposable(
 @Composable
 private fun HeadAndName(name: String, id: String, rank: String, goLogin: () -> Unit) {
     Row(
-        modifier = Modifier.clickable { goLogin() }.height(80.dp).fillMaxWidth().padding(start = 20.dp)
+        modifier = Modifier.clickable(onClick = goLogin).height(80.dp).fillMaxWidth().padding(start = 20.dp)
     ) {
         //头像
         Surface(

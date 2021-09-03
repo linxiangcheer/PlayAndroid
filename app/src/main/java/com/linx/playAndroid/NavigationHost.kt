@@ -1,12 +1,8 @@
 package com.linx.playAndroid
 
-import android.content.Context
 import android.util.Log
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -14,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.linx.common.baseData.Nav
 import com.linx.common.widget.TwoBackFinish
-import com.linx.common.widget.TwoBackFinishA
 import com.linx.playAndroid.composable.*
 
 /**
@@ -36,35 +31,35 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                     HomeCompose(navController)
                     //点击两次返回才关闭app
                     BackHandler {
-                        TwoBackFinishA().execute(context, onFinish)
+                        TwoBackFinish().execute(context, onFinish)
                     }
                 }
                 composable(Nav.BottomNavScreen.ProjectScreen.route) {
                     ProjectCompose(navController)
                     //点击两次返回才关闭app
                     BackHandler {
-                        TwoBackFinishA().execute(context, onFinish)
+                        TwoBackFinish().execute(context, onFinish)
                     }
                 }
                 composable(Nav.BottomNavScreen.SquareScreen.route) {
                     SquareCompose(navController)
                     //点击两次返回才关闭app
                     BackHandler {
-                        TwoBackFinishA().execute(context, onFinish)
+                        TwoBackFinish().execute(context, onFinish)
                     }
                 }
                 composable(Nav.BottomNavScreen.PublicNumScreen.route) {
                     PublicNumCompose(navController)
                     //点击两次返回才关闭app
                     BackHandler {
-                        TwoBackFinishA().execute(context, onFinish)
+                        TwoBackFinish().execute(context, onFinish)
                     }
                 }
                 composable(Nav.BottomNavScreen.MineScreen.route) {
                     MineCompose(navController)
                     //点击两次返回才关闭app
                     BackHandler {
-                        TwoBackFinishA().execute(context, onFinish)
+                        TwoBackFinish().execute(context, onFinish)
                     }
                 }
             }

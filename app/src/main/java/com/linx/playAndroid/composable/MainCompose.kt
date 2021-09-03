@@ -29,9 +29,10 @@ import com.linx.playAndroid.viewModel.PublicNumViewModel
 
 /**
  * 主界面
+ * [onFinish] 点击两次返回关闭页面
  */
 @Composable
-fun MainCompose(navController: NavHostController = rememberNavController()) {
+fun MainCompose(navController: NavHostController = rememberNavController(), onFinish: () -> Unit) {
 
     //返回back堆栈的顶部条目
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -53,14 +54,14 @@ fun MainCompose(navController: NavHostController = rememberNavController()) {
             //内容
             content = { paddingValues: PaddingValues ->
                 //内容嵌套在Scaffold中
-                NavigationHost(navController)
+                NavigationHost(navController, onFinish)
 
                 OnTwoBackContent(navController)
             }
         )
     } else
         //独立页面
-        NavigationHost(navController)
+        NavigationHost(navController, onFinish)
 
 }
 

@@ -36,13 +36,10 @@ class MainActivity : ComponentActivity() {
             //主题包裹
             CustomThemeManager.WanAndroidTheme(themeState) {
                 //主界面
-                MainCompose()
+                MainCompose(onFinish = { finish() })
             }
         }
 
     }
-
-    //拦截返回按钮，点击两次才关闭app
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean = TwoBackFinish().execute(keyCode, this)
 
 }

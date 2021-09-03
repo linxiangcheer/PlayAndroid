@@ -45,8 +45,8 @@ fun MainCompose(navController: NavHostController = rememberNavController(), onFi
             //标题栏
             topBar = {
                 Column {
-                    //内容不挡住状态栏
-                    Spacer(modifier = Modifier.statusBarsHeight().fillMaxWidth())
+                    //内容不挡住状态栏 如果不设置颜色这里会自己适配，但可能产生闪烁
+                    Spacer(modifier = Modifier.background(MaterialTheme.colors.primary).statusBarsHeight().fillMaxWidth())
 
                     MainTopBar(Nav.bottomNavRoute.value)
                 }
@@ -55,8 +55,8 @@ fun MainCompose(navController: NavHostController = rememberNavController(), onFi
             bottomBar = {
                 Column {
                     BottomNavBar(Nav.bottomNavRoute.value, navController)
-                    //内容不挡住导航栏
-                    Spacer(modifier = Modifier.navigationBarsHeight().fillMaxWidth())
+                    //内容不挡住导航栏 如果不设置颜色这里会自己适配，但可能产生闪烁
+                    Spacer(modifier = Modifier.background(MaterialTheme.colors.primary).navigationBarsHeight().fillMaxWidth())
                 }
             },
             //内容

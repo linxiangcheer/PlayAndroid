@@ -40,6 +40,11 @@
                 android:name="com.linx.playAndroid.initializer.MmkvIniaializer"
                 android:value="androidx.startup" />
 
+            <!--初始化工具类-->
+            <meta-data
+                android:name="com.linx.playAndroid.initializer.WidgetInitializer"
+                android:value="androidx.startup" />
+
         </provider>
 
     </application>

@@ -11,6 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.linx.common.baseData.refreshUserMessageData
 import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.R
 import com.linx.playAndroid.viewModel.MineViewModel
@@ -35,12 +37,32 @@ fun MineCompose(navController: NavController) {
 
     val mineViewModel: MineViewModel = viewModel()
 
-    //如果登录了就个人积分数据
-    if (mineViewModel.isLogin()) {
-        //获取个人积分数据
-        mineViewModel.getUserInfoIntegral()
+    mineViewModel.apply {
+        //如果登录了就个人积分数据
+        if (isLogin()) {
+            //获取个人积分数据
+            getUserInfoIntegral()
+        }
+
+        //刷新个人信息数据
+        LaunchedEffect(refreshUserMessageData.value) {
+            getUserInfoIntegral()
+        }
     }
 
+    //页面布局
+    MineScreen(mineViewModel, navController)
+
+}
+
+/**
+ * 页面布局
+ */
+@Composable
+private fun MineScreen(
+    mineViewModel: MineViewModel,
+    navController: NavController
+) {
     //个人积分数据
     val userInfoIntegralData = mineViewModel.userInfoIntegral.observeAsState()
 
@@ -51,9 +73,9 @@ fun MineCompose(navController: NavController) {
         userInfoIntegralData.value.apply {
             //头像和名字
             HeadAndName(
-                this?.nickname ?: "",
+                this?.username ?: "",
                 if (this?.userId == 0 || this?.userId == null) "" else this.userId.toString(),
-                if (this?.rank == null) "" else this.rank.toString()
+                if (this?.rank == null) "" else rank.toString()
             ) {
                 //跳转到登录页面
                 navController.navigate(KeyNavigationRoute.LOGIN.route)
@@ -81,7 +103,6 @@ fun MineCompose(navController: NavController) {
         }
 
     }
-
 }
 
 /**

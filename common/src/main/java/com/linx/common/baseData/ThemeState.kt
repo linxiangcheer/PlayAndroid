@@ -10,3 +10,10 @@ import com.linx.common.model.ThemeType
 val themeTypeState: MutableState<ThemeType> by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
     mutableStateOf(ThemeType.Default)
 }
+
+/**
+ * 刷新个人信息数据
+ */
+val refreshUserMessageData: MutableState<String> by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    mutableStateOf("")
+}

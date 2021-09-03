@@ -34,4 +34,7 @@ object NetUrl {
     //个人信息
     const val LG_COIN_USERINFO = "/lg/coin/userinfo/json"
 
+    //登录
+    const val USER_LOGIN = "/user/login"
+
 }

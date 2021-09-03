@@ -10,8 +10,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.linx.common.baseData.CommonConstant
+import com.linx.common.baseData.refreshUserMessageData
+import com.linx.common.ext.toast
+import com.linx.common.widget.SpUtilsMMKV
 import com.linx.playAndroid.R
 import com.linx.playAndroid.ui.theme.c_80F
 import com.linx.playAndroid.ui.theme.c_B3F
@@ -40,6 +46,39 @@ import com.linx.playAndroid.viewModel.LoginViewModel
 fun LoginCompose(navController: NavController) {
 
     val loginViewModel: LoginViewModel = viewModel()
+
+    val context = LocalContext.current
+
+    loginViewModel.apply {
+
+        //toast
+        mToast.observeAsState().value?.toast(context)
+
+        val userLogin= userLoginData.observeAsState()
+        //登录成功
+        LaunchedEffect(userLogin.value) {
+            if (userLogin.value == "登录成功") {
+                mToast.value = "登录成功"
+                //保存登录数据
+                SpUtilsMMKV.put(CommonConstant.IS_LOGIN, true)
+                //通知刷新个人信息
+                refreshUserMessageData.value = System.currentTimeMillis().toString()
+                navController.navigateUp()
+            }
+        }
+
+    }
+
+    //登录页面布局
+    LoginScreen(navController, loginViewModel)
+
+}
+
+/**
+ * 登录页面 布局
+ */
+@Composable
+private fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel) {
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -78,7 +117,8 @@ fun LoginCompose(navController: NavController) {
 
                 //登录按钮  用户注册  作者登录
                 LoginBtnAndTextComposable() {
-
+                    //登录
+                    loginViewModel.getUserLoginData()
                 }
 
                 //第三方登录
@@ -171,9 +211,7 @@ private fun LoginBtnAndTextComposable(login: () -> Unit) {
 
     //登录
     Button(
-        onClick = {
-            login()
-        },
+        onClick = login,
         modifier = Modifier
             .padding(start = 50.dp, end = 50.dp, top = 30.dp)
             .fillMaxWidth(),

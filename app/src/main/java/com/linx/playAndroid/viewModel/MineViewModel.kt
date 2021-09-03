@@ -18,6 +18,7 @@ class MineViewModel : BaseViewModel() {
     //是否登录
     fun isLogin(): Boolean = SpUtilsMMKV.getBoolean(CommonConstant.IS_LOGIN) == true
 
+
     //个人积分
     private val _userInfoIntegral = MutableLiveData<UserInfoIntegralData>()
     val userInfoIntegral: LiveData<UserInfoIntegralData>

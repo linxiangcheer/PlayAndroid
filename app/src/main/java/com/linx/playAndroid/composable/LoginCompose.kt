@@ -104,7 +104,7 @@ private fun LoginScreen(navController: NavController, loginViewModel: LoginViewM
                 Image(
                     modifier = Modifier.padding(top = 50.dp).size(100.dp)
                         .align(Alignment.Center),
-                    painter = painterResource(R.mipmap.ic_net_empty),
+                    painter = painterResource(R.mipmap.ic_account),
                     contentDescription = null
                 )
 

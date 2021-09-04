@@ -59,7 +59,7 @@ private fun ProjectItemContent(project: ProjectListData) {
         }
 
         BottomCard(
-            "开源项目主Tab·${project.chapterName}",
+            "${project.superChapterName}·${project.chapterName}",
             project.collect
         )
     }

@@ -76,8 +76,11 @@ private fun MineScreen(
                 if (this?.userId == 0 || this?.userId == null) "" else this.userId.toString(),
                 if (this?.rank == null) "" else rank.toString()
             ) {
-                //跳转到登录页面
-                navController.navigate(KeyNavigationRoute.LOGIN.route)
+                //未登录才跳转到登录页面
+                if (!mineViewModel.isLogin()) {
+                    //跳转到登录页面
+                    navController.navigate(KeyNavigationRoute.LOGIN.route)
+                }
             }
         }
 
@@ -187,7 +190,7 @@ private fun HeadAndName(name: String, id: String, rank: String, goLogin: () -> U
             shape = CircleShape,
             modifier = Modifier.size(80.dp)
         ) {
-            Image(painterResource(R.mipmap.ic_net_empty), contentDescription = null)
+            Image(painterResource(R.mipmap.ic_account), contentDescription = null)
         }
 
         Column(

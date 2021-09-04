@@ -37,4 +37,7 @@ object NetUrl {
     //登录
     const val USER_LOGIN = "/user/login"
 
+    //注册
+    const val USER_REGISTER = "/user/register"
+
 }

@@ -12,7 +12,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +33,7 @@ import com.linx.common.baseData.CommonConstant
 import com.linx.common.baseData.refreshUserMessageData
 import com.linx.common.ext.toast
 import com.linx.common.widget.SpUtilsMMKV
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.R
 import com.linx.playAndroid.ui.theme.c_80F
 import com.linx.playAndroid.ui.theme.c_B3F
@@ -114,11 +114,13 @@ private fun LoginScreen(navController: NavController, loginViewModel: LoginViewM
                 }
 
                 //登录按钮  用户注册  作者登录
-                LoginBtnAndTextComposable() {
+                LoginBtnAndTextComposable(loginClick = {
                     //登录
                     loginViewModel.getUserLoginData()
-                }
-
+                }, registerClick = {
+                    //跳转到注册页面
+                    navController.navigate(KeyNavigationRoute.REGISTER.route)
+                })
                 //第三方登录
                 OtherLoginComposable()
 
@@ -205,11 +207,11 @@ private fun OtherLoginComposable() {
  * 用户注册 作者登录
  */
 @Composable
-private fun LoginBtnAndTextComposable(login: () -> Unit) {
+private fun LoginBtnAndTextComposable(loginClick: () -> Unit, registerClick: () -> Unit) {
 
     //登录
     Button(
-        onClick = login,
+        onClick = loginClick,
         modifier = Modifier
             .padding(start = 50.dp, end = 50.dp, top = 30.dp)
             .fillMaxWidth(),
@@ -228,7 +230,7 @@ private fun LoginBtnAndTextComposable(login: () -> Unit) {
         //平分控件
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Text("用户注册", color = Color.White, modifier = Modifier.padding(10.dp))
+        Text("用户注册", color = Color.White, modifier = Modifier.clickable(onClick = registerClick).padding(10.dp))
         Text("找回密码", color = Color.White, modifier = Modifier.padding(10.dp))
     }
 }
@@ -237,7 +239,7 @@ private fun LoginBtnAndTextComposable(login: () -> Unit) {
  * 用户名和密码
  */
 @Composable
-private fun UserNameAndPasswordComposable(
+fun UserNameAndPasswordComposable(
     //用户名
     userName: MutableState<TextFieldValue>,
     //密码
@@ -339,7 +341,7 @@ private fun UserNameAndPasswordComposable(
  * 返回上个页面和跳过
  */
 @Composable
-private fun BackAndFinPassWordComposable(
+fun BackAndFinPassWordComposable(
     back: () -> Unit,
 ) {
     Row(

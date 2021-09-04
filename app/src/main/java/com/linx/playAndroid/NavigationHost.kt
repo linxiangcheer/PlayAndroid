@@ -102,16 +102,24 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
 
             //登录页面
             composable(route = KeyNavigationRoute.LOGIN.route) {
-
                 //透明/沉浸式状态栏
                 StatsBarUtil().StatsBarColor(true)
 
                 LoginCompose(navController)
 
-                BackHandler {
-                    navController.navigateUp()
-                }
+                BackHandler { navController.navigateUp() }
             }
+
+            //注册页面
+            composable(route = KeyNavigationRoute.REGISTER.route) {
+                //透明/沉浸式状态栏
+                StatsBarUtil().StatsBarColor(true)
+
+                RegisterCompose(navController)
+
+                BackHandler { navController.navigateUp() }
+            }
+
 
         }
     )
@@ -128,6 +136,9 @@ enum class KeyNavigationRoute(
 
     //登录页面
     LOGIN("login"),
+
+    //注册页面
+    REGISTER("register")
 }
 
 

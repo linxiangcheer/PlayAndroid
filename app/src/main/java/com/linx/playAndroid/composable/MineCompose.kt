@@ -72,7 +72,7 @@ private fun MineScreen(
         userInfoIntegralData.value.apply {
             //头像和名字
             HeadAndName(
-                this?.username ?: "",
+                this?.username ?: "请先登录~",
                 if (this?.userId == 0 || this?.userId == null) "" else this.userId.toString(),
                 if (this?.rank == null) "" else rank.toString()
             ) {
@@ -123,6 +123,7 @@ private fun MineListComposable(
         modifier = Modifier.background(MaterialTheme.colors.background)
             .clickable(
                 onClick = onClick,
+                //波纹效果变淡 todo
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(color = MaterialTheme.colors.background)
             )
@@ -181,7 +182,13 @@ private fun MineListComposable(
 @Composable
 private fun HeadAndName(name: String, id: String, rank: String, goLogin: () -> Unit) {
     Row(
-        modifier = Modifier.clickable(onClick = goLogin).height(80.dp).fillMaxWidth()
+        modifier = Modifier
+            .clickable(
+                onClick = goLogin,
+                //波纹效果变淡 todo
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(color = MaterialTheme.colors.primary)
+            ).height(80.dp).fillMaxWidth()
             .padding(start = 20.dp)
     ) {
         //头像

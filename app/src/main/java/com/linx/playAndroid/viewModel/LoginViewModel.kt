@@ -56,6 +56,7 @@ class LoginViewModel : BaseViewModel() {
                 _userLoginData.postValue("登录成功")
             }
         }.onFailure {
+            mToast.postValue("登录失败 $it")
             Log.e("xxx", "登录 接口异常 $it")
         }
     }

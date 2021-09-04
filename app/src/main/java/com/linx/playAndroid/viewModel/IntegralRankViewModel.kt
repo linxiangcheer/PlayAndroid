@@ -4,16 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linx.common.base.BaseViewModel
-import com.linx.common.baseData.CommonConstant
-import com.linx.common.widget.SpUtilsMMKV
 import com.linx.net.ext.*
 import com.linx.playAndroid.model.UserInfoIntegralData
 import com.linx.playAndroid.repo.MineRepo
 
 /**
- * 我的
+ * 积分排名
  */
-class MineViewModel : BaseViewModel() {
+class IntegralRankViewModel: BaseViewModel() {
 
     //个人积分
     private val _userInfoIntegral = MutableLiveData<UserInfoIntegralData>()

@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.navigation
 import com.linx.common.baseData.Nav
 import com.linx.common.widget.TwoBackFinish
@@ -120,6 +121,20 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 BackHandler { navController.navigateUp() }
             }
 
+            //积分排行页面
+            composable(route = KeyNavigationRoute.INTEGRAL_RANK.route) { backStackEntry ->
+
+                val rank = backStackEntry.arguments?.getString("rank")
+                Log.i("xxx", "rank = $rank")
+
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                IntegralRankCompose(navController)
+
+                BackHandler { navController.navigateUp() }
+            }
+
 
         }
     )
@@ -138,7 +153,10 @@ enum class KeyNavigationRoute(
     LOGIN("login"),
 
     //注册页面
-    REGISTER("register")
+    REGISTER("register"),
+
+    //积分排行
+    INTEGRAL_RANK("integral_rank"),
 }
 
 

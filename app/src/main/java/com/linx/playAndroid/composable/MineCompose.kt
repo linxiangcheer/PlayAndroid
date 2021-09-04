@@ -1,6 +1,5 @@
 package com.linx.playAndroid.composable
 
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -19,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.linx.common.baseData.refreshUserMessageData
+import com.linx.common.ext.toast
 import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.R
 import com.linx.playAndroid.viewModel.MineViewModel
@@ -84,6 +85,8 @@ private fun MineScreen(
             }
         }
 
+        val context = LocalContext.current
+
         //下方列表
         Surface(
             shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
@@ -95,7 +98,16 @@ private fun MineScreen(
                     painterResource(R.mipmap.ic_jifen),
                     "我的积分",
                     userInfoIntegralData.value?.coinCount ?: 0
-                ) {}
+                ) {
+                    if (mineViewModel.isLogin())
+                    //跳转到积分排行页面
+                        navController.navigate(
+                            KeyNavigationRoute.INTEGRAL_RANK.route
+                        )
+                    else {
+                        "请先登录".toast(context)
+                    }
+                }
                 MineListComposable(painterResource(R.mipmap.ic_collect), "我的收藏") {}
                 MineListComposable(painterResource(R.mipmap.ic_wenzhang), "我的文章") {}
                 MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}

@@ -5,8 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.linx.common.baseData.CommonConstant
 import com.linx.common.ext.addTo
 import com.linx.common.model.ThemeType
+import com.linx.common.widget.SpUtilsMMKV
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -35,5 +37,8 @@ abstract class BaseViewModel: ViewModel() {
         jobs.forEach { it.cancel() }
         super.onCleared()
     }
+
+    //是否登录
+    fun isLogin(): Boolean = SpUtilsMMKV.getBoolean(CommonConstant.IS_LOGIN) == true
 
 }

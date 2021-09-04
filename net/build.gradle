@@ -35,4 +35,7 @@ dependencies {
     //paging3
     api "androidx.paging:paging-runtime:$paging_version"
     api "androidx.paging:paging-compose:$paging_compose_version"
+
+    //数据保存，这里用于cookie持久化
+    api "androidx.datastore:datastore-preferences:$datastore_version"
 }

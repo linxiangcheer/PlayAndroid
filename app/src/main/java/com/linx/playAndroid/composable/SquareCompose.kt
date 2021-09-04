@@ -87,7 +87,7 @@ private fun SquareAndQuestionComposable(index: Int, squareViewModel: SquareViewM
             0 -> userArticleListData
             else -> questionAnswerData
         }
-    ) { data ->
+    ) { index, data ->
         data.apply {
             HomeCardItemContent(
                 getAuthor(author, shareUser),

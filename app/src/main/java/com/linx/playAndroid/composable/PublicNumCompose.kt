@@ -32,7 +32,7 @@ fun PublicNumCompose(navController: NavController) {
     }
 
     //公众号页面的内容
-    SwipeRefreshContent(publicNumViewModel, publicNumListData) { data ->
+    SwipeRefreshContent(publicNumViewModel, publicNumListData) { index, data ->
         data.apply {
             HomeCardItemContent(
                 getAuthor(author, shareUser),

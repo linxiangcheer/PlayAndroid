@@ -24,7 +24,7 @@ fun <T : Any> SwipeRefreshContent(
     viewModel: ViewModel,
     lazyPagingListData: LazyPagingItems<T>,
     cardHeight: Dp = 120.dp,
-    content: @Composable (data: T) -> Unit
+    content: @Composable (index: Int, data: T) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -47,7 +47,7 @@ fun <T : Any> SwipeRefreshContent(
                 LazyColumn {
                     itemsIndexed(lazyPagingListData) { index, data ->
                         SimpleCard(cardHeight = cardHeight) {
-                            content(data!!)
+                            content(index, data!!)
                         }
                     }
                 }

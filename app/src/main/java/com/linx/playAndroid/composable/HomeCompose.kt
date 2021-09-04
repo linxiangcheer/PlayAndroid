@@ -20,7 +20,7 @@ fun HomeCompose(navController: NavController) {
     val homeListData = homeViewModel.homeListData.collectAsLazyPagingItems()
 
     //首页页面的内容
-    SwipeRefreshContent(homeViewModel, homeListData) { data ->
+    SwipeRefreshContent(homeViewModel, homeListData) { index, data ->
         data.apply {
             HomeCardItemContent(
                 getAuthor(author, shareUser),

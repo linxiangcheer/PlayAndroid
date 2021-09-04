@@ -40,4 +40,7 @@ object NetUrl {
     //注册
     const val USER_REGISTER = "/user/register"
 
+    //积分排行
+    const val COIN_RANK = "/coin/rank/{page}/json"
+
 }

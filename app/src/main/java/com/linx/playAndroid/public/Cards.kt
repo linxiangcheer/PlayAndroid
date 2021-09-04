@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 
 /**
  * 首页采用的Card
+ * 卡片高度可以设置
  */
 @Composable
 fun SimpleCard(
@@ -40,6 +41,9 @@ fun SimpleCard(
 
 }
 
+/**
+ * 卡片高度自适应
+ */
 @Composable
 fun SimpleCard(
     elevation: Dp = 3.dp,

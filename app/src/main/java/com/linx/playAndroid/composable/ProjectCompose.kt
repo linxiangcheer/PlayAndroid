@@ -34,7 +34,7 @@ fun ProjectCompose(navController: NavController) {
     }
 
     //项目页面的内容
-    SwipeRefreshContent(projectViewModel, projectListData, cardHeight = 190.dp) { data ->
+    SwipeRefreshContent(projectViewModel, projectListData, cardHeight = 190.dp) { index, data ->
         ProjectItemContent(data)
     }
 

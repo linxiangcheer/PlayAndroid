@@ -1,5 +1,6 @@
 package com.linx.playAndroid.composable
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -40,13 +41,11 @@ fun MineCompose(navController: NavController) {
     mineViewModel.apply {
         //如果登录了就个人积分数据
         if (isLogin()) {
-            //获取个人积分数据
-            getUserInfoIntegral()
-        }
-
-        //刷新个人信息数据
-        LaunchedEffect(refreshUserMessageData.value) {
-            getUserInfoIntegral()
+            //监听 刷新个人信息数据
+            LaunchedEffect(refreshUserMessageData.value) {
+                //获取个人积分数据
+                getUserInfoIntegral()
+            }
         }
     }
 
@@ -179,7 +178,8 @@ private fun MineListComposable(
 @Composable
 private fun HeadAndName(name: String, id: String, rank: String, goLogin: () -> Unit) {
     Row(
-        modifier = Modifier.clickable(onClick = goLogin).height(80.dp).fillMaxWidth().padding(start = 20.dp)
+        modifier = Modifier.clickable(onClick = goLogin).height(80.dp).fillMaxWidth()
+            .padding(start = 20.dp)
     ) {
         //头像
         Surface(

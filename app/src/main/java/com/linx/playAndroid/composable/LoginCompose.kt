@@ -50,7 +50,6 @@ fun LoginCompose(navController: NavController) {
     val context = LocalContext.current
 
     loginViewModel.apply {
-
         //toast
         mToast.observeAsState().value?.toast(context)
 
@@ -66,7 +65,6 @@ fun LoginCompose(navController: NavController) {
                 navController.navigateUp()
             }
         }
-
     }
 
     //登录页面布局

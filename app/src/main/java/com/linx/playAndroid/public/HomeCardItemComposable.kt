@@ -1,6 +1,9 @@
 package com.linx.playAndroid.public
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -27,7 +30,7 @@ fun HomeCardItemContent(
     //新的内容
     fresh: Boolean,
     //发布时间
-    publishTime: Long,
+    niceDate: String,
     //标题
     title: String,
     //来源
@@ -44,7 +47,7 @@ fun HomeCardItemContent(
     ) {
 
         //上面的控件
-        TopCard(author, fresh, publishTime, isSpecific)
+        TopCard(author, fresh, niceDate, isSpecific)
 
         //中间的控件
         CenterCard(modifier = Modifier.weight(1f, true), title)
@@ -113,27 +116,40 @@ private fun TopCard(
     //是否是最新的
     fresh: Boolean,
     //发布时间
-    publishTime: Long,
+    niceDate: String,
     //是否显示具体时间
     isSpecific: Boolean
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.CenterVertically
     ) {
         grayText(author)
         if (fresh) {
-            redText("最新", modifier = Modifier.padding(start = 6.dp))
-            redText("置顶", modifier = Modifier.padding(start = 6.dp))
+            borderText("最新", modifier = Modifier.padding(start = 6.dp))
         }
 
         Column(
             modifier = Modifier.weight(1f, true),
             horizontalAlignment = Alignment.End
         ) {
-            grayText(if (isSpecific) publishTime.transitionDate() else publishTime.transitionDate("yyyy-MM-dd"))
+            grayText(niceDate)
         }
     }
+}
+
+/**
+ * 带边框的Text
+ */
+@Composable
+private fun borderText(str: String, color: Color = Color.Red, modifier: Modifier = Modifier) {
+    Text(
+        str,
+        modifier = modifier.border(BorderStroke(1.dp, color), RoundedCornerShape(4.dp))
+            .padding(start = 3.dp, end = 3.dp),
+        color = color,
+        fontSize = 10.sp
+    )
 }
 
 /**

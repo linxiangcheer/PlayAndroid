@@ -37,9 +37,9 @@ fun PublicNumCompose(navController: NavController) {
             HomeCardItemContent(
                 getAuthor(author, shareUser),
                 fresh,
-                publishTime,
+                niceDate ?: "刚刚",
                 title ?: "",
-                if (superChapterName != null) "公众号·$superChapterName" else "未知",
+                if (superChapterName != null) "$superChapterName" else "未知",
                 collect,
                 isSpecific = false
             )

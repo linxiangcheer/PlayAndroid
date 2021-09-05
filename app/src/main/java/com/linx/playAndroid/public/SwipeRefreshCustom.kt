@@ -93,7 +93,7 @@ fun <T : Any> SwipeRefreshContent(
                 }
             }
         ) {
-            LazyColumn {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
                 itemsIndexed(listData) { index, data ->
                     SimpleCard(cardHeight) {
                         content(data)
@@ -141,7 +141,7 @@ fun <T : Any> SwipeRefreshContent(
                 }
             }
         ) {
-            LazyColumn {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
                 itemsIndexed(listData) { index, data ->
                     SimpleCard {
                         content(data)

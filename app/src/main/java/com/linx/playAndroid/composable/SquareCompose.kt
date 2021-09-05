@@ -92,7 +92,7 @@ private fun SquareAndQuestionComposable(index: Int, squareViewModel: SquareViewM
             HomeCardItemContent(
                 getAuthor(author, shareUser),
                 fresh,
-                publishTime,
+                niceDate ?: "刚刚",
                 title ?: "",
                 superChapterName ?: "未知",
                 collect

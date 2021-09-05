@@ -43,7 +43,7 @@ fun MyCollectCompose(navController: NavController) {
                         HomeCardItemContent(
                             getAuthor(author, null),
                             false,
-                            publishTime,
+                            niceDate ?: "刚刚",
                             title ?: "",
                             chapterName ?: "未知",
                             true

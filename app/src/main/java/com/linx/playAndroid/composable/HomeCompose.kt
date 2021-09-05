@@ -25,7 +25,7 @@ fun HomeCompose(navController: NavController) {
             HomeCardItemContent(
                 getAuthor(author, shareUser),
                 fresh,
-                publishTime,
+                niceDate ?: "刚刚",
                 title ?: "",
                 superChapterName ?: "未知",
                 collect

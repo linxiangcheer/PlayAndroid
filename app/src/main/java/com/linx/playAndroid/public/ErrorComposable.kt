@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +22,7 @@ import com.linx.common.R
 fun ErrorComposable(title: String = "网络不佳，请点击重试", block: () -> Unit) {
 
     Column(
-        modifier = Modifier.background(Color.White).fillMaxSize(),
+        modifier = Modifier.background(MaterialTheme.colors.background).fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

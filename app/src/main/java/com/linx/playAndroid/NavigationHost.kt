@@ -141,6 +141,15 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 BackHandler { navController.navigateUp() }
             }
 
+            composable(route = KeyNavigationRoute.MY_SHARE_ARTICLES.route) {
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                MyShareArticlesCompose(navController)
+
+                BackHandler { navController.navigateUp() }
+            }
+
 
         }
     )
@@ -165,7 +174,10 @@ enum class KeyNavigationRoute(
     INTEGRAL_RANK("integral_rank"),
 
     //我的收藏
-    MY_COLLECT("my_collect")
+    MY_COLLECT("my_collect"),
+
+    //我的文章
+    MY_SHARE_ARTICLES("my_share_articles")
 }
 
 

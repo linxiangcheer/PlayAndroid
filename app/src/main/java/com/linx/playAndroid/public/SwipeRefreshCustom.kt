@@ -13,7 +13,7 @@ import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.linx.common.widget.sleepTime
-import com.linx.playAndroid.public.paging.pagingStateUtil
+import com.linx.playAndroid.public.paging.PagingStateUtil
 
 /**
  * 带刷新头的Card布局
@@ -42,8 +42,8 @@ fun <T : Any> SwipeRefreshContent(
                 }
             }
         ) {
-            //首页列表数据
-            pagingStateUtil(lazyPagingListData, refreshState, viewModel) {
+            //列表数据
+            PagingStateUtil().pagingStateUtil(lazyPagingListData, refreshState, viewModel) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     itemsIndexed(lazyPagingListData) { index, data ->
                         SimpleCard(cardHeight = cardHeight) {
@@ -70,7 +70,9 @@ fun <T : Any> SwipeRefreshContent(
     content: @Composable (data: T) -> Unit
 ) {
 
-    if (listData == null) {
+    if (listData == null) return
+
+    if (listData.isEmpty()) {
         ErrorComposable("暂无数据，请点击重试") {
             noData()
         }
@@ -118,7 +120,9 @@ fun <T : Any> SwipeRefreshContent(
     content: @Composable (data: T) -> Unit
 ) {
 
-    if (listData == null) {
+    if (listData == null) return
+
+    if (listData.isEmpty()) {
         ErrorComposable("暂无数据，请点击重试") {
             noData()
         }

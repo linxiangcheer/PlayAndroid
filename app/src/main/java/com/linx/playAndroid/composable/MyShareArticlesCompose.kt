@@ -10,41 +10,42 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.playAndroid.model.MyCollectData
 import com.linx.playAndroid.public.*
-import com.linx.playAndroid.viewModel.MyCollectViewModel
+import com.linx.playAndroid.viewModel.MyShareArticlesViewModel
 
 /**
- * 我的收藏页面
+ * 我的文章页面
  */
 @Composable
-fun MyCollectCompose(navController: NavController) {
-    
-    val myCollectViewModel: MyCollectViewModel = viewModel()
+fun MyShareArticlesCompose(navController: NavController) {
+
+    val myShareArticlesViewModel: MyShareArticlesViewModel = viewModel()
 
     //布局
-    MyCollectScreen(navController, myCollectViewModel)
-
+    MyShareArticlesScreen(navController, myShareArticlesViewModel)
 }
 
 /**
- * 我的收藏页面布局
+ * 我的文章布局
  */
 @Composable
-private fun MyCollectScreen(navController: NavController, myCollectViewModel: MyCollectViewModel) {
+private fun MyShareArticlesScreen(
+    navController: NavController,
+    myShareArticlesViewModel: MyShareArticlesViewModel
+) {
 
-    //获取我的收藏列表数据
-    val myCollectListData = myCollectViewModel.myCollectListData.collectAsLazyPagingItems()
+    val myShareArticlesListData = myShareArticlesViewModel.myShareArticlesListData.collectAsLazyPagingItems()
 
     BaseScreen {
         Scaffold(
             topBar = {
-                AppBar("我的收藏", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
+                AppBar("我分享的文章", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
                     navController.navigateUp()
                 })
             },
             content = { paddingValues: PaddingValues ->
                 SwipeRefreshContent(
-                    myCollectViewModel,
-                    myCollectListData
+                    myShareArticlesViewModel,
+                    myShareArticlesListData
                 ) { index: Int, data: MyCollectData ->
                     data.apply {
                         HomeCardItemContent(

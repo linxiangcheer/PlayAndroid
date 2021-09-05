@@ -46,4 +46,7 @@ object NetUrl {
     //我的收藏
     const val MY_COLLECT = "/lg/collect/list/{page}/json"
 
+    //我分享的文章
+    const val MY_SHARE_ARTICLES = "/user/lg/private_articles/{page}/json"
+
 }

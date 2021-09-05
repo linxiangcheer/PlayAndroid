@@ -118,7 +118,16 @@ private fun MineScreen(
                         "请先登录".toast(context)
                     }
                 }
-                MineListComposable(painterResource(R.mipmap.ic_wenzhang), "我的文章") {}
+                MineListComposable(painterResource(R.mipmap.ic_wenzhang), "我的文章") {
+                    if (mineViewModel.isLogin())
+                    //跳转到我的文章页面
+                        navController.navigate(
+                            KeyNavigationRoute.MY_SHARE_ARTICLES.route
+                        )
+                    else {
+                        "请先登录".toast(context)
+                    }
+                }
                 MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}
                 MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {}
                 MineListComposable(painterResource(R.mipmap.ic_shezhi), "系统设置") {}

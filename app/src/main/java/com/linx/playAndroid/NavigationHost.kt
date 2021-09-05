@@ -122,15 +122,21 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
             }
 
             //积分排行页面
-            composable(route = KeyNavigationRoute.INTEGRAL_RANK.route) { backStackEntry ->
-
-                val rank = backStackEntry.arguments?.getString("rank")
-                Log.i("xxx", "rank = $rank")
-
+            composable(route = KeyNavigationRoute.INTEGRAL_RANK.route) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
                 IntegralRankCompose(navController)
+
+                BackHandler { navController.navigateUp() }
+            }
+
+            //我的收藏页面
+            composable(route = KeyNavigationRoute.MY_COLLECT.route) {
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                MyCollectCompose(navController)
 
                 BackHandler { navController.navigateUp() }
             }
@@ -157,6 +163,9 @@ enum class KeyNavigationRoute(
 
     //积分排行
     INTEGRAL_RANK("integral_rank"),
+
+    //我的收藏
+    MY_COLLECT("my_collect")
 }
 
 

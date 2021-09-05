@@ -44,7 +44,7 @@ fun <T : Any> SwipeRefreshContent(
         ) {
             //首页列表数据
             pagingStateUtil(lazyPagingListData, refreshState, viewModel) {
-                LazyColumn {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
                     itemsIndexed(lazyPagingListData) { index, data ->
                         SimpleCard(cardHeight = cardHeight) {
                             content(index, data!!)

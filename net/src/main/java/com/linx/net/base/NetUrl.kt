@@ -43,4 +43,7 @@ object NetUrl {
     //积分排行
     const val COIN_RANK = "/coin/rank/{page}/json"
 
+    //我的收藏
+    const val MY_COLLECT = "/lg/collect/list/{page}/json"
+
 }

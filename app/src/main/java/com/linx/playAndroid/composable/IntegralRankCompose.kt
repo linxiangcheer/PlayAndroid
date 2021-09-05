@@ -90,7 +90,7 @@ private fun IntegralScreen(
                     cardHeight = 65.dp
                 ) { index: Int, data: CoinRankData ->
                     CardContent(
-                        data.rank ?: "未知",
+                        (index + 1).toString(),
                         data.username ?: "",
                         data.coinCount.toString()
                     )

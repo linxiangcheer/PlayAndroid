@@ -65,7 +65,6 @@ fun SettingCompose(navController: NavHostController) {
 /**
  * 中间的内容布局
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SettingCenterScreen(
     navController: NavHostController,
@@ -99,39 +98,7 @@ private fun SettingCenterScreen(
     var themeColorState by remember { mutableStateOf(false) }
     if (themeColorState) {
         ContentCustomAlertDialog("主题颜色设置", textCompose = {
-            //aspectRatio 宽高1:1
-            val modifier = Modifier.aspectRatio(1f).padding(4.dp)
-            //垂直GridList
-            LazyVerticalGrid(
-                //每行的数量
-                cells = GridCells.Fixed(4)
-            ) {
-                itemsIndexed(themeColorList) { index: Int, theme: ThemeType ->
-                    Surface(
-                        border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
-                        modifier = modifier.clickable(onClick = {
-                            //保存主题颜色
-                            SpUtilsMMKV.put(CommonConstant.THEME_COLOR, index)
-                            themeTypeState.value = theme
-                        }),
-                        shape = CircleShape,
-                        color = CustomThemeManager.getThemeColor(theme).primary,
-                    ) {
-                        //如果是当前选中的主题
-                        if (themeTypeState.value == theme) {
-                            Box(
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    Icons.Default.Lock,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colors.background
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+            ThemeSelectedScreen()
         }) { themeColorState = false }
     }
 
@@ -173,6 +140,47 @@ private fun SettingCenterScreen(
         }
     }
 
+}
+
+/**
+ * 主题选择布局
+ */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun ThemeSelectedScreen() {
+    //aspectRatio 宽高1:1
+    val modifier = Modifier.aspectRatio(1f).padding(4.dp)
+    //垂直GridList
+    LazyVerticalGrid(
+        //每行的数量
+        cells = GridCells.Fixed(4)
+    ) {
+        itemsIndexed(themeColorList) { index: Int, theme: ThemeType ->
+            Surface(
+                border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
+                modifier = modifier.clickable(onClick = {
+                    //保存主题颜色
+                    SpUtilsMMKV.put(CommonConstant.THEME_COLOR, index)
+                    themeTypeState.value = theme
+                }),
+                shape = CircleShape,
+                color = CustomThemeManager.getThemeColor(theme).primary,
+            ) {
+                //如果是当前选中的主题
+                if (themeTypeState.value == theme) {
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.Lock,
+                            contentDescription = null,
+                            tint = MaterialTheme.colors.background
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**

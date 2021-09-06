@@ -2,6 +2,7 @@ package com.linx.playAndroid.public
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -38,11 +39,12 @@ fun HomeCardItemContent(
     //是否收藏
     collect: Boolean,
     //是否显示具体时间
-    isSpecific: Boolean = true
+    isSpecific: Boolean = true,
+    onClick: () -> Unit = {}
 ) {
     Column(
         //内边距
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.clickable(onClick = onClick).fillMaxSize()
             .padding(top = 6.dp, bottom = 6.dp, start = 10.dp, end = 10.dp)
     ) {
 

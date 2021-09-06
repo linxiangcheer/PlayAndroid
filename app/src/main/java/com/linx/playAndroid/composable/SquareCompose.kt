@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.model.NaviData
 import com.linx.playAndroid.model.SystemData
 import com.linx.playAndroid.public.*
@@ -31,7 +32,7 @@ fun SquareCompose(navController: NavController) {
 
     //广场和问答页面
     if (Nav.squareTopBarIndex.value == 0 || Nav.squareTopBarIndex.value == 1) {
-        SquareAndQuestionComposable(Nav.squareTopBarIndex.value, squareViewModel)
+        SquareAndQuestionComposable(navController, Nav.squareTopBarIndex.value, squareViewModel)
     }
 
     val systemData = squareViewModel.systemData.observeAsState()
@@ -72,7 +73,11 @@ fun SquareCompose(navController: NavController) {
  * 广场和问答页面
  */
 @Composable
-private fun SquareAndQuestionComposable(index: Int, squareViewModel: SquareViewModel) {
+private fun SquareAndQuestionComposable(
+    navController: NavController,
+    index: Int,
+    squareViewModel: SquareViewModel
+) {
 
     //广场数据
     val userArticleListData = squareViewModel.userArticleListData.collectAsLazyPagingItems()
@@ -96,7 +101,9 @@ private fun SquareAndQuestionComposable(index: Int, squareViewModel: SquareViewM
                 title ?: "",
                 superChapterName ?: "未知",
                 collect
-            )
+            ) {
+                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+            }
         }
     }
 

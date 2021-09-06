@@ -1,5 +1,6 @@
 package com.linx.playAndroid.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
 import com.linx.common.ext.transitionDate
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.model.ProjectListData
 import com.linx.playAndroid.public.SwipeRefreshContent
 import com.linx.playAndroid.public.BottomCard
@@ -35,7 +37,9 @@ fun ProjectCompose(navController: NavController) {
 
     //项目页面的内容
     SwipeRefreshContent(projectViewModel, projectListData, cardHeight = 190.dp) { index, data ->
-        ProjectItemContent(data)
+        ProjectItemContent(data) {
+            navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=${data.link}")
+        }
     }
 
 }
@@ -44,10 +48,10 @@ fun ProjectCompose(navController: NavController) {
  * 项目页面列表子项
  */
 @Composable
-private fun ProjectItemContent(project: ProjectListData) {
+private fun ProjectItemContent(project: ProjectListData, onClick: () -> Unit) {
 
     Column(
-        modifier = Modifier.padding(bottom = 6.dp, top = 6.dp).padding(start = 8.dp, end = 8.dp)
+        modifier = Modifier.clickable(onClick = onClick).padding(bottom = 6.dp, top = 6.dp).padding(start = 8.dp, end = 8.dp)
     ) {
 
         TopCard(project.author ?: "", project.publishTime.transitionDate())

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.public.HomeCardItemContent
 import com.linx.playAndroid.public.SwipeRefreshContent
 import com.linx.playAndroid.public.getAuthor
@@ -29,7 +30,9 @@ fun HomeCompose(navController: NavController) {
                 title ?: "",
                 superChapterName ?: "未知",
                 collect
-            )
+            ) {
+                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+            }
         }
     }
 

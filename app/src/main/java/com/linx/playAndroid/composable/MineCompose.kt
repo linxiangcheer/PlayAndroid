@@ -132,7 +132,9 @@ private fun MineScreen(
                         "请先登录".toast(context)
                     }
                 }
-                MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}
+                MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {
+                    navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=https://www.wanandroid.com")
+                }
                 MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {
                     joinQQGroup(context, "jtDR37meSA0N3ceEPYRk3IbaqkqtsQgm")
                 }

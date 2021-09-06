@@ -1,5 +1,6 @@
 package com.linx.playAndroid
 
+import android.provider.ContactsContract
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
@@ -7,6 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.navigation
 import com.linx.common.baseData.Nav
 import com.linx.common.widget.TwoBackFinish
@@ -138,6 +140,7 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 BackHandler { navController.navigateUp() }
             }
 
+            //我分享的文章页面
             composable(route = KeyNavigationRoute.MY_SHARE_ARTICLES.route) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
@@ -147,11 +150,26 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 BackHandler { navController.navigateUp() }
             }
 
+            //设置页面
             composable(route = KeyNavigationRoute.SETTING.route) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
                 SettingCompose(navController)
+
+                BackHandler { navController.navigateUp() }
+            }
+
+            //H5页面
+            composable(
+                route = "${KeyNavigationRoute.WEBVIEW.route}?url={url}", arguments = listOf(
+                    navArgument("url") { defaultValue = "https://www.wanandroid.com/" })
+            ) { backStackEntry ->
+
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                WebViewCompose(navController, backStackEntry.arguments?.getString("url") ?: "https://www.wanandroid.com")
 
                 BackHandler { navController.navigateUp() }
             }
@@ -186,7 +204,10 @@ enum class KeyNavigationRoute(
     MY_SHARE_ARTICLES("my_share_articles"),
 
     //设置
-    SETTING("setting")
+    SETTING("setting"),
+
+    //H5
+    WEBVIEW("webview")
 }
 
 

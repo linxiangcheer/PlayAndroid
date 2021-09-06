@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
 import com.linx.common.ext.transitionDate
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.model.PublicNumListData
 import com.linx.playAndroid.public.*
 import com.linx.playAndroid.viewModel.PublicNumViewModel
@@ -42,7 +43,9 @@ fun PublicNumCompose(navController: NavController) {
                 if (superChapterName != null) "$superChapterName" else "未知",
                 collect,
                 isSpecific = false
-            )
+            ) {
+                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+            }
         }
     }
 

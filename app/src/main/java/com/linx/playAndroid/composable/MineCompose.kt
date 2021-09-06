@@ -26,8 +26,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.linx.common.baseData.refreshUserMessageData
+import com.linx.common.ext.joinQQGroup
 import com.linx.common.ext.toast
 import com.linx.playAndroid.KeyNavigationRoute
+import com.linx.playAndroid.MainActivity
 import com.linx.playAndroid.R
 import com.linx.playAndroid.viewModel.MineViewModel
 
@@ -131,7 +133,9 @@ private fun MineScreen(
                     }
                 }
                 MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}
-                MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {}
+                MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {
+                    joinQQGroup(context, "jtDR37meSA0N3ceEPYRk3IbaqkqtsQgm")
+                }
                 MineListComposable(painterResource(R.mipmap.ic_shezhi), "系统设置") {
                     //跳转到设置页面
                     navController.navigate(

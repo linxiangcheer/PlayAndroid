@@ -130,7 +130,12 @@ private fun MineScreen(
                 }
                 MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {}
                 MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {}
-                MineListComposable(painterResource(R.mipmap.ic_shezhi), "系统设置") {}
+                MineListComposable(painterResource(R.mipmap.ic_shezhi), "系统设置") {
+                    //跳转到设置页面
+                    navController.navigate(
+                        KeyNavigationRoute.SETTING.route
+                    )
+                }
             }
         }
 

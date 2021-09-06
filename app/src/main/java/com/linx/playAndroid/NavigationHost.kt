@@ -1,15 +1,11 @@
 package com.linx.playAndroid
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.navigation
 import com.linx.common.baseData.Nav
 import com.linx.common.widget.TwoBackFinish
@@ -150,6 +146,15 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 BackHandler { navController.navigateUp() }
             }
 
+            composable(route = KeyNavigationRoute.SETTING.route) {
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                SettingCompose(navController)
+
+                BackHandler { navController.navigateUp() }
+            }
+
 
         }
     )
@@ -177,7 +182,10 @@ enum class KeyNavigationRoute(
     MY_COLLECT("my_collect"),
 
     //我的文章
-    MY_SHARE_ARTICLES("my_share_articles")
+    MY_SHARE_ARTICLES("my_share_articles"),
+
+    //设置
+    SETTING("setting")
 }
 
 

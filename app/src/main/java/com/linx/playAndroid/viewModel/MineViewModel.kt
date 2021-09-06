@@ -17,8 +17,7 @@ class MineViewModel : BaseViewModel() {
 
     //个人积分
     private val _userInfoIntegral = MutableLiveData<UserInfoIntegralData>()
-    val userInfoIntegral: LiveData<UserInfoIntegralData>
-        get() = _userInfoIntegral
+    val userInfoIntegral = _userInfoIntegral
 
     /**
      * 获取个人积分数据

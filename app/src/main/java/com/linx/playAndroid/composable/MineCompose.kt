@@ -47,7 +47,9 @@ fun MineCompose(navController: NavController) {
                 //获取个人积分数据
                 getUserInfoIntegral()
             }
-        }
+        } else if (userInfoIntegral.value != null)
+            //如果退出登录的话会走这里
+            userInfoIntegral.value = null
     }
 
     //页面布局

@@ -15,12 +15,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.linx.common.base.BaseViewModel
+import com.linx.common.baseData.CommonConstant
+import com.linx.common.ext.toast
+import com.linx.common.widget.SpUtilsMMKV
+import com.linx.net.widget.DataStoreUtils
 import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.BaseScreen
 import com.linx.playAndroid.public.ColumnTextText
 import com.linx.playAndroid.public.SimpleAlertDialog
+import com.linx.playAndroid.viewModel.SettingViewModel
 import com.linx.playAndroid.widget.CacheDataManager
 import com.linx.playAndroid.widget.SmallUtil
 
@@ -30,6 +36,8 @@ import com.linx.playAndroid.widget.SmallUtil
 @Composable
 fun SettingCompose(navController: NavHostController) {
 
+    val settingViewModel: SettingViewModel = viewModel()
+
     BaseScreen {
         Scaffold(topBar = {
             AppBar("设置", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
@@ -37,7 +45,7 @@ fun SettingCompose(navController: NavHostController) {
             })
         },
             content = { paddingValues: PaddingValues ->
-                SettingCenterScreen()
+                SettingCenterScreen(navController, settingViewModel)
             }
         )
     }
@@ -48,16 +56,29 @@ fun SettingCompose(navController: NavHostController) {
  * 中间的内容布局
  */
 @Composable
-private fun SettingCenterScreen() {
+private fun SettingCenterScreen(navController: NavHostController, settingViewModel: SettingViewModel) {
 
     val context = LocalContext.current
 
-    var simpleDialogShown by remember { mutableStateOf(false) }
-    if (simpleDialogShown) {
+    //清除缓存弹窗
+    var cacheDataState by remember { mutableStateOf(false) }
+    if (cacheDataState) {
         //弹窗,关闭之后重新设置为false,下次可以继续监听
         SimpleAlertDialog("温馨提示", "确定清理缓存吗", confirmStr = "清理", confirmClick = {
             CacheDataManager.clearAllCache(context)
-        }) { simpleDialogShown = false }
+        }) { cacheDataState = false }
+    }
+
+    //退出登录弹窗
+    var exitLoginState by remember { mutableStateOf(false) }
+    if (exitLoginState) {
+        SimpleAlertDialog("温馨提示", "确定退出登录吗", confirmStr = "退出", confirmClick = {
+            //同步清除cookie
+            DataStoreUtils.clearSync()
+            //设置为未登录
+            SpUtilsMMKV.removeKey(CommonConstant.IS_LOGIN)
+            navController.navigateUp()
+        }) { exitLoginState = false }
     }
 
     LazyColumn(
@@ -66,9 +87,13 @@ private fun SettingCenterScreen() {
         item {
             TopText("基本设置")
             ColumnTextTextScreen("清除缓存", CacheDataManager.getTotalCacheSize(context), onClick = {
-                simpleDialogShown = true
+                cacheDataState = true
             })
-            ColumnTextTextScreen("退出", "退出登录")
+            ColumnTextTextScreen("退出", "退出登录", onClick = {
+                if (settingViewModel.isLogin())
+                    exitLoginState = true
+                else "您还未登录".toast(context)
+            })
             //分割线
             Spacer(modifier = Modifier.background(Color.Gray).fillMaxWidth().height(1.dp))
 

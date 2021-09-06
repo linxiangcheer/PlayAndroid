@@ -1,8 +1,9 @@
 package com.linx.playAndroid.composable
 
 import android.content.Context
-import android.util.Log
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebView
+import android.widget.LinearLayout
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -31,6 +32,11 @@ fun WebViewCompose(navController: NavController, url: String) {
 
             AndroidView({ context: Context ->
                 WebView(context).apply {
+                    layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                }
+            }, update = {
+                //update方法是一个callback, inflate之后会执行, 读取的状态state值变化后也会被执行
+                it.apply {
                     loadUrl(url)
                 }
             })
@@ -38,3 +44,4 @@ fun WebViewCompose(navController: NavController, url: String) {
     }
 
 }
+

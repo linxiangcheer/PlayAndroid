@@ -8,4 +8,7 @@ object CommonConstant {
     //是否登录
     const val IS_LOGIN = "is_login"
 
+    //主题颜色
+    const val THEME_COLOR = "theme_color"
+
 }

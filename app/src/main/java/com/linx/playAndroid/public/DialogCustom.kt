@@ -42,3 +42,46 @@ fun SimpleAlertDialog(
         }
     )
 }
+
+/**
+ * 内容自定义的弹窗
+ */
+@Composable
+fun ContentCustomAlertDialog(
+    title: String,
+    contextStr: String = "",
+    textCompose: @Composable (() -> Unit)? = null,
+    dismissStr: String? = null,
+    confirmStr: String? = null,
+    confirmClick: () -> Unit = {},
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(title)
+        },
+        text = {
+            if (textCompose == null)
+                Text(contextStr)
+            else textCompose()
+        },
+        dismissButton = {
+            if (dismissStr != null) {
+                TextButton(onClick = onDismiss) {
+                    Text(dismissStr)
+                }
+            }
+        },
+        confirmButton = {
+            if (confirmStr != null) {
+                TextButton(onClick = {
+                    confirmClick()
+                    onDismiss()
+                }) {
+                    Text(confirmStr)
+                }
+            }
+        }
+    )
+}

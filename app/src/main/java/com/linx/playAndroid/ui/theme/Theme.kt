@@ -194,6 +194,21 @@ object CustomThemeManager {
         return WrappedColor(lightColors, darkColors)
     }
 
+    /**
+     * 获取主题样式颜色
+     */
+    @Composable
+    fun getThemeColor(themeType: ThemeType): Colors {
+        return when(themeType) {
+            ThemeType.Default -> if (isSystemInDarkTheme()) Default.darkColors else Default.lightColors
+            ThemeType.Theme1 -> if (isSystemInDarkTheme()) Theme1.darkColors else Theme1.lightColors
+            ThemeType.Theme2 -> if (isSystemInDarkTheme()) Theme2.darkColors else Theme2.lightColors
+            ThemeType.Theme3 -> if (isSystemInDarkTheme()) Theme3.darkColors else Theme3.lightColors
+            ThemeType.Theme4 -> if (isSystemInDarkTheme()) Theme4.darkColors else Theme4.lightColors
+            ThemeType.Theme5 -> if (isSystemInDarkTheme()) Theme5.darkColors else Theme5.lightColors
+        }
+    }
+
 }
 
 data class WrappedColor(val lightColors: Colors, val darkColors: Colors)

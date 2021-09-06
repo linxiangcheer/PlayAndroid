@@ -1,17 +1,26 @@
 package com.linx.playAndroid.composable
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,13 +28,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.linx.common.base.BaseViewModel
 import com.linx.common.baseData.CommonConstant
+import com.linx.common.baseData.themeColorList
+import com.linx.common.baseData.themeTypeState
 import com.linx.common.ext.toast
+import com.linx.common.model.ThemeType
 import com.linx.common.widget.SpUtilsMMKV
 import com.linx.net.widget.DataStoreUtils
-import com.linx.playAndroid.public.AppBar
-import com.linx.playAndroid.public.BaseScreen
-import com.linx.playAndroid.public.ColumnTextText
-import com.linx.playAndroid.public.SimpleAlertDialog
+import com.linx.playAndroid.public.*
+import com.linx.playAndroid.ui.theme.CustomThemeManager
 import com.linx.playAndroid.viewModel.SettingViewModel
 import com.linx.playAndroid.widget.CacheDataManager
 import com.linx.playAndroid.widget.SmallUtil
@@ -55,8 +65,12 @@ fun SettingCompose(navController: NavHostController) {
 /**
  * 中间的内容布局
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SettingCenterScreen(navController: NavHostController, settingViewModel: SettingViewModel) {
+private fun SettingCenterScreen(
+    navController: NavHostController,
+    settingViewModel: SettingViewModel
+) {
 
     val context = LocalContext.current
 
@@ -81,6 +95,46 @@ private fun SettingCenterScreen(navController: NavHostController, settingViewMod
         }) { exitLoginState = false }
     }
 
+    //主题颜色弹窗
+    var themeColorState by remember { mutableStateOf(false) }
+    if (themeColorState) {
+        ContentCustomAlertDialog("主题颜色设置", textCompose = {
+            //aspectRatio 宽高1:1
+            val modifier = Modifier.aspectRatio(1f).padding(4.dp)
+            //垂直GridList
+            LazyVerticalGrid(
+                //每行的数量
+                cells = GridCells.Fixed(4)
+            ) {
+                itemsIndexed(themeColorList) { index: Int, theme: ThemeType ->
+                    Surface(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
+                        modifier = modifier.clickable(onClick = {
+                            //保存主题颜色
+                            SpUtilsMMKV.put(CommonConstant.THEME_COLOR, index)
+                            themeTypeState.value = theme
+                        }),
+                        shape = CircleShape,
+                        color = CustomThemeManager.getThemeColor(theme).primary,
+                    ) {
+                        //如果是当前选中的主题
+                        if (themeTypeState.value == theme) {
+                            Box(
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Lock,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colors.background
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }) { themeColorState = false }
+    }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -98,13 +152,15 @@ private fun SettingCenterScreen(navController: NavHostController, settingViewMod
             Spacer(modifier = Modifier.background(Color.Gray).fillMaxWidth().height(1.dp))
 
             TopText("其他设置")
-            ColumnTextTextScreen("主题颜色", "设置主题颜色", context = {
+            ColumnTextTextScreen("主题颜色", "设置App主题颜色", context = {
                 Surface(
                     modifier = Modifier.size(30.dp),
                     shape = CircleShape,
                     color = MaterialTheme.colors.primary,
                     content = {}
                 )
+            }, onClick = {
+                themeColorState = true
             })
             //分割线
             Spacer(modifier = Modifier.background(Color.Gray).fillMaxWidth().height(1.dp))

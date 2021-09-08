@@ -33,5 +33,4 @@ MMKV
 
 1. [Compose图标库包](https://github.com/DevSrSouza/compose-icons)
 2. [SmartToolFactory - 控件学习](https://github.com/SmartToolFactory/Jetpack-Compose-Tutorials)
-3. [乐翁龙-Compose控件介绍](https://blog.csdn.net/u010976213/category_10622907.html)
-4. [Bug小明 - Jetpack Compose 动画](https://juejin.cn/post/6971399722862903310)
+3. [控件学习](https://github.com/linxiangcheer/Jetpack-Compose-Control-Learn)

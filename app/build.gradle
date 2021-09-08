@@ -20,6 +20,14 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        //只打包默认资源与英文资源
+        resConfigs "en"
+
+        ndk {
+            //只适配armeabi-v7a 架构
+            abiFilters "armeabi-v7a"
+        }
     }
 
     kotlinOptions {
@@ -50,18 +58,18 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
             //开启混淆
-            minifyEnabled false
+            minifyEnabled true
             //去除无用资源
-            shrinkResources false
+            shrinkResources true
             zipAlignEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

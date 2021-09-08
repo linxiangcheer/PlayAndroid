@@ -28,6 +28,7 @@ MMKV
 - 玩Android提供的Api  [玩Android](https://www.wanandroid.com/)
 - 官方Demo [compose-samples](https://github.com/android/compose-samples)
 - Compose控件Demo [RickyHal/ComposeDemo](https://gitee.com/Rickyal/compose-demo)
+- UI [Jetpack MVVM](https://github.com/hegaojian/JetpackMvvm)
 
 ## 其他资源分享
 

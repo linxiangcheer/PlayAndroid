@@ -3,6 +3,23 @@ package com.linx.playAndroid.model
 import androidx.annotation.Keep
 
 /**
+ * 首页轮播图
+ */
+@Keep
+data class HomeBannerData(
+    val desc: String?,
+    val id: Int,
+    //图片链接
+    val imagePath: String?,
+    val isVisible: Int,
+    val order: Int,
+    val title: String?,
+    val type: Int,
+    //webView链接
+    val url: String?
+)
+
+/**
  * 首页列表数据
  */
 @Keep

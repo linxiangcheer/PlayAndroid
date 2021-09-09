@@ -2,6 +2,7 @@ package com.linx.playAndroid.public
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ fun <T : Any> SwipeRefreshContent(
     viewModel: ViewModel,
     lazyPagingListData: LazyPagingItems<T>,
     cardHeight: Dp = 120.dp,
+    itemContent: LazyListScope.() -> Unit = {},
     content: @Composable (index: Int, data: T) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -45,60 +47,11 @@ fun <T : Any> SwipeRefreshContent(
             //列表数据
             PagingStateUtil().pagingStateUtil(lazyPagingListData, refreshState, viewModel) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    itemContent()
                     itemsIndexed(lazyPagingListData) { index, data ->
                         SimpleCard(cardHeight = cardHeight) {
                             content(index, data!!)
                         }
-                    }
-                }
-            }
-        }
-
-    }
-}
-
-/**
- * 带刷新头的Card布局
- * LazyPagingItems<T>
- */
-@Composable
-fun <T : Any> SwipeRefreshContent(
-    viewModel: ViewModel,
-    listData: List<T>?,
-    cardHeight: Dp = 120.dp,
-    noData: () -> Unit = {},
-    content: @Composable (data: T) -> Unit
-) {
-
-    if (listData == null) return
-
-    if (listData.isEmpty()) {
-        ErrorComposable("暂无数据，请点击重试") {
-            noData()
-        }
-        return
-    }
-
-    Column(modifier = Modifier.fillMaxSize()) {
-
-        val refreshState = rememberSwipeRefreshState(false)
-
-        SwipeRefresh(
-            state = refreshState,
-            onRefresh = {
-                //显示刷新头
-                refreshState.isRefreshing = true
-                //刷新数据
-                noData()
-                viewModel.sleepTime(3000) {
-                    refreshState.isRefreshing = false
-                }
-            }
-        ) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(listData) { index, data ->
-                    SimpleCard(cardHeight) {
-                        content(data)
                     }
                 }
             }

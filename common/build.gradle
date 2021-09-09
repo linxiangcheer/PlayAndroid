@@ -44,6 +44,8 @@ dependencies {
     api "com.google.accompanist:accompanist-insets-ui:$accompanist_pager"
     //控制UI栏
     api "com.google.accompanist:accompanist-systemuicontroller:$accompanist_pager"
+    //提供了分页布局支持,类似viewPager
+    api "com.google.accompanist:accompanist-pager:$accompanist_pager"
 
     /**
      * compose提供有viewModel等其他方便的函数

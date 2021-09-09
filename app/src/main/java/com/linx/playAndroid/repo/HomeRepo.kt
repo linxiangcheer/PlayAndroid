@@ -8,4 +8,7 @@ object HomeRepo {
     //首页列表
     suspend fun getHomeList(page: Int) = ServiceCreator.getService<HomeService>().getHomeList(page)
 
+    //首页轮播图
+    fun getBanner() = ServiceCreator.getService<HomeService>().getBanner()
+
 }

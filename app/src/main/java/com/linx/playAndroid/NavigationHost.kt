@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.navigation
+import coil.annotation.ExperimentalCoilApi
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.linx.common.baseData.Nav
 import com.linx.common.widget.TwoBackFinish
 import com.linx.playAndroid.composable.*
@@ -16,6 +18,8 @@ import com.linx.playAndroid.widget.StatsBarUtil
 /**
  * 内容 导航
  */
+@ExperimentalCoilApi
+@ExperimentalPagerApi
 @Composable
 fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
 

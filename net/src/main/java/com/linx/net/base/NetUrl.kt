@@ -4,6 +4,9 @@ object NetUrl {
 
     const val BASE_URL = "https://www.wanandroid.com"
 
+    //首页轮播图
+    const val HOME_BANNER = "/banner/json"
+
     //首页列表
     const val ARTICLE_LIST = "/article/list/{page}/json"
 

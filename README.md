@@ -23,11 +23,22 @@ SwipeRefresh
 
 MMKV
 
+
+
+## 1.0.1（2021年9月10日）
+
+首页更新了Banner [Jetpack Compose Banner即拿即用](https://juejin.cn/post/7006230365467574302)
+
+![Banner](https://github.com/linxiangcheer/PlayAndroid/blob/master/github-image/banner.gif)
+
+
+
 ### 2、感谢
 
 - 玩Android提供的Api  [玩Android](https://www.wanandroid.com/)
 - 官方Demo [compose-samples](https://github.com/android/compose-samples)
 - Compose控件Demo [RickyHal/ComposeDemo](https://gitee.com/Rickyal/compose-demo)
+- [RugerMc 手势处理](https://juejin.cn/post/6979777894104956935)
 
 ## 其他资源分享
 

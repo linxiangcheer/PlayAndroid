@@ -1,10 +1,12 @@
 package com.linx.playAndroid.public
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -12,9 +14,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
@@ -25,6 +30,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.linx.playAndroid.R
 import com.linx.playAndroid.ui.theme.c_B3F
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 
 /**
  * 轮播图
@@ -69,8 +75,12 @@ fun Banner(
                 initialPage = 0
             )
 
+            //监听动画执行
+            var executeChangePage by remember { mutableStateOf(false) }
+            var currentPageIndex = 0
+
             //自动滚动
-            LaunchedEffect(pagerState.currentPage) {
+            LaunchedEffect(pagerState.currentPage, executeChangePage) {
                 if (pagerState.pageCount > 0) {
                     delay(timeMillis)
                     //这里直接+1就可以循环，前提是infiniteLoop == true
@@ -80,7 +90,37 @@ fun Banner(
 
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.clickable(onClick = { onClick(list[pagerState.currentPage].linkUrl) })
+                modifier = Modifier.pointerInput(pagerState.currentPage) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            //PointerEventPass.Initial - 本控件优先处理手势，处理后再交给子组件
+                            val event = awaitPointerEvent(PointerEventPass.Initial)
+                            //获取到第一根按下的手指
+                            val dragEvent = event.changes.firstOrNull()
+                            when {
+                                //当前移动手势是否已被消费
+                                dragEvent!!.positionChangeConsumed() -> {
+                                    return@awaitPointerEventScope
+                                }
+                                //是否已经按下(忽略按下手势已消费标记)
+                                dragEvent.changedToDownIgnoreConsumed() -> {
+                                    //记录下当前的页面索引值
+                                    currentPageIndex = pagerState.currentPage
+                                }
+                                //是否已经抬起(忽略按下手势已消费标记)
+                                dragEvent.changedToUpIgnoreConsumed() -> {
+                                    //当页面没有任何滚动/动画的时候pagerState.targetPage为null，这个时候是单击事件
+                                    if (pagerState.targetPage == null) return@awaitPointerEventScope
+                                    //当pageCount大于1，且手指抬起时如果页面没有改变，就手动触发动画
+                                    if (currentPageIndex == pagerState.currentPage && pagerState.pageCount > 1) {
+                                        executeChangePage = !executeChangePage
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                    .clickable(onClick = { onClick(list[pagerState.currentPage].linkUrl) })
                     .fillMaxSize(),
             ) { page ->
                 Image(
@@ -104,7 +144,7 @@ fun Banner(
                     for (i in list.indices) {
                         //大小
                         var size by remember { mutableStateOf(5.dp) }
-                        size = if (pagerState.currentPage == i)  7.dp else 5.dp
+                        size = if (pagerState.currentPage == i) 7.dp else 5.dp
 
                         //颜色
                         val color =
@@ -112,7 +152,7 @@ fun Banner(
 
                         Box(
                             modifier = Modifier.clip(CircleShape).background(color)
-                                    //当size改变的时候以动画的形式改变
+                                //当size改变的时候以动画的形式改变
                                 .animateContentSize().size(size)
                         )
                         //指示点间的间隔

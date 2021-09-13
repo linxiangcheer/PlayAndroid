@@ -1,5 +1,6 @@
 package com.linx.playAndroid.composable
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -17,16 +18,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shader
-import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.linx.common.base.BaseViewModel
 import com.linx.common.baseData.CommonConstant
 import com.linx.common.baseData.themeColorList
 import com.linx.common.baseData.themeTypeState
@@ -73,6 +70,9 @@ private fun SettingCenterScreen(
 
     val context = LocalContext.current
 
+    //是否显示首页置顶文章
+    var showTopArticle by remember { mutableStateOf(SpUtilsMMKV.getBoolean(CommonConstant.GONE_ARTICLE_TOP) != true) }
+
     //清除缓存弹窗
     var cacheDataState by remember { mutableStateOf(false) }
     if (cacheDataState) {
@@ -107,6 +107,28 @@ private fun SettingCenterScreen(
     ) {
         item {
             TopText("基本设置")
+
+            ColumnTextTextScreen("显示置顶文章", "开启后首页会显示置顶文章", onClick = {
+                showTopArticle = !showTopArticle
+                when (showTopArticle) {
+                    //显示
+                    true -> {
+                        SpUtilsMMKV.removeKey(CommonConstant.GONE_ARTICLE_TOP)
+                    }
+                    //隐藏
+                    false -> {
+                        SpUtilsMMKV.put(CommonConstant.GONE_ARTICLE_TOP, true)
+                    }
+                }
+            }) {
+                Checkbox(
+                    showTopArticle,
+                    onCheckedChange = null,
+                    modifier = Modifier.size(6.dp),
+                    colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colors.primary)
+                )
+            }
+
             ColumnTextTextScreen("清除缓存", CacheDataManager.getTotalCacheSize(context), onClick = {
                 cacheDataState = true
             })

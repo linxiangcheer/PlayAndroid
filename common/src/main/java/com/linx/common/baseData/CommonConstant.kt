@@ -11,4 +11,7 @@ object CommonConstant {
     //主题颜色
     const val THEME_COLOR = "theme_color"
 
+    //是否隐藏置顶文章
+    const val GONE_ARTICLE_TOP = "article_top"
+
 }

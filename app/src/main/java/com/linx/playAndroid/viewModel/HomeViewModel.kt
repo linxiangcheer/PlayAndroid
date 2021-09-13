@@ -9,6 +9,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.linx.common.base.BaseViewModel
+import com.linx.common.baseData.CommonConstant
+import com.linx.common.widget.SpUtilsMMKV
 import com.linx.net.ext.*
 import com.linx.net.paging.CommonPagingSource
 import com.linx.playAndroid.model.ArticleListData
@@ -67,6 +69,13 @@ class HomeViewModel : BaseViewModel() {
      * 获取置顶文章列表
      */
     fun getArticleTopListData() = serverAwait {
+
+        //是否隐藏置顶文章
+        if (SpUtilsMMKV.getBoolean(CommonConstant.GONE_ARTICLE_TOP) == true) {
+            _articleTopList.postValue(null)
+            return@serverAwait
+        }
+
         HomeRepo.getArticleTopList().serverData().onSuccess {
             onBizError { code, message ->
                 Log.e("xxx", "获取置顶文章列表 接口异常 $code $message")

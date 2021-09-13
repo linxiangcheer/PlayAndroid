@@ -50,6 +50,7 @@ private fun MyCollectScreen(navController: NavController, myCollectViewModel: My
                         HomeCardItemContent(
                             getAuthor(author, null),
                             false,
+                            false,
                             niceDate ?: "刚刚",
                             title ?: "",
                             chapterName ?: "未知",

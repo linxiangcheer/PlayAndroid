@@ -20,4 +20,8 @@ interface HomeService {
     @GET(NetUrl.HOME_BANNER)
     fun getBanner(): Call<BaseResponse>
 
+    //置顶文章
+    @GET(NetUrl.ARTICLE_TOP)
+    fun getArticleTopList(): Call<BaseResponse>
+
 }

@@ -1,9 +1,11 @@
 package com.linx.playAndroid.composable
 
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -29,11 +31,38 @@ fun HomeCompose(navController: NavController) {
 
     val bannerListData = homeViewModel.bannerListData.observeAsState()
 
+    //获取置顶数据列表
+    homeViewModel.getArticleTopListData()
+
+    val articleTopData = homeViewModel.articleTopList.observeAsState()
+
     //首页页面的内容
     SwipeRefreshContent(homeViewModel, homeListData, itemContent = {
         item {
+            //轮播图
             Banner(bannerListData.value) { link ->
                 navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+            }
+        }
+
+        //置顶数据
+        articleTopData.value?.let { listData ->
+            items(listData) { data ->
+                SimpleCard(cardHeight = 120.dp) {
+                    data.apply {
+                        HomeCardItemContent(
+                            getAuthor(author, shareUser),
+                            fresh,
+                            true,
+                            niceDate ?: "刚刚",
+                            title ?: "",
+                            superChapterName ?: "未知",
+                            collect
+                        ) {
+                            navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                        }
+                    }
+                }
             }
         }
     }) { index, data ->
@@ -41,6 +70,7 @@ fun HomeCompose(navController: NavController) {
             HomeCardItemContent(
                 getAuthor(author, shareUser),
                 fresh,
+                false,
                 niceDate ?: "刚刚",
                 title ?: "",
                 superChapterName ?: "未知",

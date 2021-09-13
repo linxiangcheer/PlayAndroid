@@ -58,4 +58,25 @@ class HomeViewModel : BaseViewModel() {
         }
     }.flow.cachedIn(viewModelScope)
 
+    //置顶文章列表数据
+    private val _articleTopList = MutableLiveData<List<ArticleListData>>()
+    val articleTopList: LiveData<List<ArticleListData>>
+        get() = _articleTopList
+
+    /**
+     * 获取置顶文章列表
+     */
+    fun getArticleTopListData() = serverAwait {
+        HomeRepo.getArticleTopList().serverData().onSuccess {
+            onBizError { code, message ->
+                Log.e("xxx", "获取置顶文章列表 接口异常 $code $message")
+            }
+            onBizOK<List<ArticleListData>> { code, data, message ->
+                _articleTopList.postValue(data)
+            }
+        }.onFailure {
+            Log.e("xxx", "获取置顶文章列表 接口异常 $it")
+        }
+    }
+
 }

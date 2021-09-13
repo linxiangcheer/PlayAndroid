@@ -97,6 +97,7 @@ private fun SquareAndQuestionComposable(
             HomeCardItemContent(
                 getAuthor(author, shareUser),
                 fresh,
+                false,
                 niceDate ?: "刚刚",
                 title ?: "",
                 superChapterName ?: "未知",

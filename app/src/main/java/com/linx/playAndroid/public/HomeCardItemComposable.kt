@@ -30,6 +30,8 @@ fun HomeCardItemContent(
     author: String,
     //新的内容
     fresh: Boolean,
+    //是否置顶,
+    stick: Boolean = false,
     //发布时间
     niceDate: String,
     //标题
@@ -49,7 +51,7 @@ fun HomeCardItemContent(
     ) {
 
         //上面的控件
-        TopCard(author, fresh, niceDate, isSpecific)
+        TopCard(author, fresh, stick, niceDate, isSpecific)
 
         //中间的控件
         CenterCard(modifier = Modifier.weight(1f, true), title)
@@ -117,6 +119,8 @@ private fun TopCard(
     author: String,
     //是否是最新的
     fresh: Boolean,
+    //是否置顶
+    stick: Boolean,
     //发布时间
     niceDate: String,
     //是否显示具体时间
@@ -129,6 +133,9 @@ private fun TopCard(
         grayText(author)
         if (fresh) {
             borderText("最新", modifier = Modifier.padding(start = 6.dp))
+        }
+        if (stick) {
+            borderText("置顶", modifier = Modifier.padding(start = 6.dp))
         }
 
         Column(

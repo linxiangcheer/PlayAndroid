@@ -51,6 +51,7 @@ private fun MyShareArticlesScreen(
                         HomeCardItemContent(
                             getAuthor(author, null),
                             false,
+                            false,
                             niceDate ?: "刚刚",
                             title ?: "",
                             chapterName ?: "未知",

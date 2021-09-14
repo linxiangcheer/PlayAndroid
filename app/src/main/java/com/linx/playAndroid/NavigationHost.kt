@@ -21,12 +21,12 @@ import com.linx.playAndroid.widget.StatsBarUtil
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
-fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
+fun NavigationHost(navHostController: NavHostController, onFinish: () -> Unit) {
 
     val context = LocalContext.current
 
     NavHost(
-        navController,
+        navHostController,
         startDestination = KeyNavigationRoute.MAIN.route,
         builder = {
 
@@ -41,7 +41,7 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                     //系统颜色的状态栏
                     StatsBarUtil().StatsBarColor(false)
 
-                    HomeCompose(navController)
+                    HomeCompose(navHostController)
 
                     //点击两次返回才关闭app
                     BackHandler {
@@ -54,7 +54,7 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                     //系统颜色的状态栏
                     StatsBarUtil().StatsBarColor(false)
 
-                    ProjectCompose(navController)
+                    ProjectCompose(navHostController)
 
                     //点击两次返回才关闭app
                     BackHandler {
@@ -67,7 +67,7 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                     //系统颜色的状态栏
                     StatsBarUtil().StatsBarColor(false)
 
-                    SquareCompose(navController)
+                    SquareCompose(navHostController)
 
                     //点击两次返回才关闭app
                     BackHandler {
@@ -80,7 +80,7 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                     //系统颜色的状态栏
                     StatsBarUtil().StatsBarColor(false)
 
-                    PublicNumCompose(navController)
+                    PublicNumCompose(navHostController)
 
                     //点击两次返回才关闭app
                     BackHandler {
@@ -93,7 +93,7 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                     //系统颜色的状态栏
                     StatsBarUtil().StatsBarColor(false)
 
-                    MineCompose(navController)
+                    MineCompose(navHostController)
 
                     //点击两次返回才关闭app
                     BackHandler {
@@ -107,9 +107,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //透明/沉浸式状态栏
                 StatsBarUtil().StatsBarColor(true)
 
-                LoginCompose(navController)
+                LoginCompose(navHostController)
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
             //注册页面
@@ -117,9 +117,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //透明/沉浸式状态栏
                 StatsBarUtil().StatsBarColor(true)
 
-                RegisterCompose(navController)
+                RegisterCompose(navHostController)
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
             //积分排行页面
@@ -127,9 +127,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
-                IntegralRankCompose(navController)
+                IntegralRankCompose(navHostController)
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
             //我的收藏页面
@@ -137,9 +137,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
-                MyCollectCompose(navController)
+                MyCollectCompose(navHostController)
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
             //我分享的文章页面
@@ -147,9 +147,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
-                MyShareArticlesCompose(navController)
+                MyShareArticlesCompose(navHostController)
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
             //设置页面
@@ -157,9 +157,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
-                SettingCompose(navController)
+                SettingCompose(navHostController)
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
             //H5页面
@@ -171,9 +171,9 @@ fun NavigationHost(navController: NavHostController, onFinish: () -> Unit) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
-                WebViewCompose(navController, backStackEntry.arguments?.getString("url") ?: "https://www.wanandroid.com")
+                WebViewCompose(navHostController, backStackEntry.arguments?.getString("url") ?: "https://www.wanandroid.com")
 
-                BackHandler { navController.navigateUp() }
+                BackHandler { navHostController.navigateUp() }
             }
 
 

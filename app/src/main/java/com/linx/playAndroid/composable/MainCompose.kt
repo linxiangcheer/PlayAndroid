@@ -1,6 +1,5 @@
 package com.linx.playAndroid.composable
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -35,10 +34,10 @@ import com.linx.playAndroid.viewModel.PublicNumViewModel
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
-fun MainCompose(navController: NavHostController = rememberNavController(), onFinish: () -> Unit) {
+fun MainCompose(navHostController: NavHostController = rememberNavController(), onFinish: () -> Unit) {
 
     //返回back堆栈的顶部条目
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     //返回当前route
     val currentRoute = navBackStackEntry?.destination?.route ?: Nav.BottomNavScreen.HomeScreen.route
 
@@ -58,7 +57,7 @@ fun MainCompose(navController: NavHostController = rememberNavController(), onFi
             //底部导航栏
             bottomBar = {
                 Column {
-                    BottomNavBar(Nav.bottomNavRoute.value, navController)
+                    BottomNavBar(Nav.bottomNavRoute.value, navHostController)
                     //内容不挡住导航栏 如果不设置颜色这里会自己适配，但可能产生闪烁
                     Spacer(modifier = Modifier.background(MaterialTheme.colors.primary).navigationBarsHeight().fillMaxWidth())
                 }
@@ -67,14 +66,14 @@ fun MainCompose(navController: NavHostController = rememberNavController(), onFi
             content = { paddingValues: PaddingValues ->
 
                 //内容嵌套在Scaffold中
-                NavigationHost(navController, onFinish)
+                NavigationHost(navHostController, onFinish)
 
-                OnTwoBackContent(navController)
+                OnTwoBackContent(navHostController)
             }
         )
     } else
     //独立页面
-        NavigationHost(navController, onFinish)
+        NavigationHost(navHostController, onFinish)
 
 }
 
@@ -133,11 +132,11 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
  * 在主界面点击两次返回按钮,返回到手机桌面,再重新打开app,此时显示退出时的主界面
  */
 @Composable
-private fun OnTwoBackContent(navController: NavHostController) {
+private fun OnTwoBackContent(navHostController: NavHostController) {
     if (Nav.twoBackFinishActivity) {
         LaunchedEffect(Unit) {
-            navController.navigate(Nav.bottomNavRoute.value.route) {
-                popUpTo(navController.graph.findStartDestination().id) {
+            navHostController.navigate(Nav.bottomNavRoute.value.route) {
+                popUpTo(navHostController.graph.findStartDestination().id) {
                     saveState = true
                 }
                 //避免重建

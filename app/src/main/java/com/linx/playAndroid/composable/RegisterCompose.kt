@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.linx.common.ext.toast
 import com.linx.playAndroid.R
 import com.linx.playAndroid.ui.theme.c_B3F
@@ -28,7 +28,7 @@ import com.linx.playAndroid.viewModel.RegisterViewModel
  * 注册界面
  */
 @Composable
-fun RegisterCompose(navController: NavController) {
+fun RegisterCompose(navHostController: NavHostController) {
 
     val registerViewModel: RegisterViewModel = viewModel()
 
@@ -43,20 +43,20 @@ fun RegisterCompose(navController: NavController) {
         LaunchedEffect(userRegisterData.value) {
             if (userRegisterData.value != null) {
                 mToast.value = "注册成功"
-                navController.navigateUp()
+                navHostController.navigateUp()
             }
         }
     }
 
     //页面布局
-    RegisterScreen(navController, registerViewModel)
+    RegisterScreen(navHostController, registerViewModel)
 }
 
 /**
  * 注册页面布局
  */
 @Composable
-private fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel) {
+private fun RegisterScreen(navHostController: NavHostController, registerViewModel: RegisterViewModel) {
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -78,7 +78,7 @@ private fun RegisterScreen(navController: NavController, registerViewModel: Regi
                 //返回上个页面和找回密码
                 BackAndFinPassWordComposable() {
                     //关闭页面
-                    navController.navigateUp()
+                    navHostController.navigateUp()
                 }
 
                 Image(

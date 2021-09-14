@@ -1,18 +1,12 @@
 package com.linx.playAndroid.composable
 
-import android.util.Log
-import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
-import com.linx.common.ext.transitionDate
 import com.linx.playAndroid.KeyNavigationRoute
-import com.linx.playAndroid.model.PublicNumListData
 import com.linx.playAndroid.public.*
 import com.linx.playAndroid.viewModel.PublicNumViewModel
 
@@ -20,7 +14,7 @@ import com.linx.playAndroid.viewModel.PublicNumViewModel
  * 公众号页面
  */
 @Composable
-fun PublicNumCompose(navController: NavController) {
+fun PublicNumCompose(navHostController: NavHostController) {
 
     val publicNumViewModel: PublicNumViewModel = viewModel()
 
@@ -45,7 +39,7 @@ fun PublicNumCompose(navController: NavController) {
                 collect,
                 isSpecific = false
             ) {
-                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
             }
         }
     }

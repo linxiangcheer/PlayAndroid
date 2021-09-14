@@ -1,6 +1,5 @@
 package com.linx.playAndroid.composable
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -20,14 +19,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.insets.navigationBarsPadding
 import com.linx.playAndroid.model.CoinRankData
 import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.BaseScreen
-import com.linx.playAndroid.public.SimpleCard
 import com.linx.playAndroid.public.SwipeRefreshContent
 import com.linx.playAndroid.viewModel.IntegralRankViewModel
 
@@ -35,7 +33,7 @@ import com.linx.playAndroid.viewModel.IntegralRankViewModel
  * 积分排行
  */
 @Composable
-fun IntegralRankCompose(navController: NavController) {
+fun IntegralRankCompose(navHostController: NavHostController) {
 
     val integralRankViewModel: IntegralRankViewModel = viewModel()
 
@@ -52,7 +50,7 @@ fun IntegralRankCompose(navController: NavController) {
     }
 
     //布局
-    IntegralScreen(navController, integralRankViewModel, coinRankData)
+    IntegralScreen(navHostController, integralRankViewModel, coinRankData)
 }
 
 /**
@@ -60,7 +58,7 @@ fun IntegralRankCompose(navController: NavController) {
  */
 @Composable
 private fun IntegralScreen(
-    navController: NavController,
+    navHostController: NavHostController,
     integralRankViewModel: IntegralRankViewModel,
     coinRankData: LazyPagingItems<CoinRankData>
 ) {
@@ -69,7 +67,7 @@ private fun IntegralScreen(
         Scaffold(
             topBar = {
                 AppBar("积分排行", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
-                    navController.navigateUp()
+                    navHostController.navigateUp()
                 })
             },
             bottomBar = {

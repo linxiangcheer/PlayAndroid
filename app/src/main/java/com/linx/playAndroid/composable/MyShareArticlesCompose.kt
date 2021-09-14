@@ -6,7 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.playAndroid.model.MyCollectData
 import com.linx.playAndroid.public.*
@@ -16,12 +16,12 @@ import com.linx.playAndroid.viewModel.MyShareArticlesViewModel
  * 我的文章页面
  */
 @Composable
-fun MyShareArticlesCompose(navController: NavController) {
+fun MyShareArticlesCompose(navHostController: NavHostController) {
 
     val myShareArticlesViewModel: MyShareArticlesViewModel = viewModel()
 
     //布局
-    MyShareArticlesScreen(navController, myShareArticlesViewModel)
+    MyShareArticlesScreen(navHostController, myShareArticlesViewModel)
 }
 
 /**
@@ -29,7 +29,7 @@ fun MyShareArticlesCompose(navController: NavController) {
  */
 @Composable
 private fun MyShareArticlesScreen(
-    navController: NavController,
+    navHostController: NavHostController,
     myShareArticlesViewModel: MyShareArticlesViewModel
 ) {
 
@@ -39,7 +39,7 @@ private fun MyShareArticlesScreen(
         Scaffold(
             topBar = {
                 AppBar("我分享的文章", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
-                    navController.navigateUp()
+                    navHostController.navigateUp()
                 })
             },
             content = { paddingValues: PaddingValues ->

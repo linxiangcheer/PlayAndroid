@@ -28,7 +28,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.linx.common.baseData.CommonConstant
 import com.linx.common.baseData.refreshUserMessageData
 import com.linx.common.ext.toast
@@ -43,7 +43,7 @@ import com.linx.playAndroid.viewModel.LoginViewModel
  * 登录页面
  */
 @Composable
-fun LoginCompose(navController: NavController) {
+fun LoginCompose(navHostController: NavHostController) {
 
     val loginViewModel: LoginViewModel = viewModel()
 
@@ -62,13 +62,13 @@ fun LoginCompose(navController: NavController) {
                 SpUtilsMMKV.put(CommonConstant.IS_LOGIN, true)
                 //通知刷新个人信息
                 refreshUserMessageData.value = System.currentTimeMillis().toString()
-                navController.navigateUp()
+                navHostController.navigateUp()
             }
         }
     }
 
     //登录页面布局
-    LoginScreen(navController, loginViewModel)
+    LoginScreen(navHostController, loginViewModel)
 
 }
 
@@ -76,7 +76,7 @@ fun LoginCompose(navController: NavController) {
  * 登录页面 布局
  */
 @Composable
-private fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel) {
+private fun LoginScreen(navHostController: NavHostController, loginViewModel: LoginViewModel) {
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -98,7 +98,7 @@ private fun LoginScreen(navController: NavController, loginViewModel: LoginViewM
                 //返回上个页面和找回密码
                 BackAndFinPassWordComposable() {
                     //关闭页面
-                    navController.navigateUp()
+                    navHostController.navigateUp()
                 }
 
                 Image(
@@ -119,7 +119,7 @@ private fun LoginScreen(navController: NavController, loginViewModel: LoginViewM
                     loginViewModel.getUserLoginData()
                 }, registerClick = {
                     //跳转到注册页面
-                    navController.navigate(KeyNavigationRoute.REGISTER.route)
+                    navHostController.navigate(KeyNavigationRoute.REGISTER.route)
                 })
                 //第三方登录
                 OtherLoginComposable()

@@ -1,6 +1,5 @@
 package com.linx.playAndroid.composable
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -41,18 +40,18 @@ import com.linx.playAndroid.widget.SmallUtil
  * 设置页面
  */
 @Composable
-fun SettingCompose(navController: NavHostController) {
+fun SettingCompose(navHostController: NavHostController) {
 
     val settingViewModel: SettingViewModel = viewModel()
 
     BaseScreen {
         Scaffold(topBar = {
             AppBar("设置", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
-                navController.navigateUp()
+                navHostController.navigateUp()
             })
         },
             content = { paddingValues: PaddingValues ->
-                SettingCenterScreen(navController, settingViewModel)
+                SettingCenterScreen(navHostController, settingViewModel)
             }
         )
     }
@@ -64,7 +63,7 @@ fun SettingCompose(navController: NavHostController) {
  */
 @Composable
 private fun SettingCenterScreen(
-    navController: NavHostController,
+    navHostController: NavHostController,
     settingViewModel: SettingViewModel
 ) {
 
@@ -90,7 +89,7 @@ private fun SettingCenterScreen(
             DataStoreUtils.clearSync()
             //设置为未登录
             SpUtilsMMKV.removeKey(CommonConstant.IS_LOGIN)
-            navController.navigateUp()
+            navHostController.navigateUp()
         }) { exitLoginState = false }
     }
 
@@ -112,13 +111,9 @@ private fun SettingCenterScreen(
                 showTopArticle = !showTopArticle
                 when (showTopArticle) {
                     //显示
-                    true -> {
-                        SpUtilsMMKV.removeKey(CommonConstant.GONE_ARTICLE_TOP)
-                    }
+                    true -> SpUtilsMMKV.removeKey(CommonConstant.GONE_ARTICLE_TOP)
                     //隐藏
-                    false -> {
-                        SpUtilsMMKV.put(CommonConstant.GONE_ARTICLE_TOP, true)
-                    }
+                    false -> SpUtilsMMKV.put(CommonConstant.GONE_ARTICLE_TOP, true)
                 }
             }) {
                 Checkbox(

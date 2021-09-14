@@ -28,7 +28,7 @@ val items = listOf(
 @Composable
 fun BottomNavBar(
     bottomNavScreen: Nav.BottomNavScreen,
-    navController: NavHostController
+    navHostController: NavHostController
 ) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary
@@ -70,8 +70,8 @@ fun BottomNavBar(
                     //记录当前的Item
                     Nav.bottomNavRoute.value = bottomNavScreenItem
 
-                    navController.navigate(bottomNavScreenItem.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
+                    navHostController.navigate(bottomNavScreenItem.route) {
+                        popUpTo(navHostController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         //避免重建

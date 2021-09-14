@@ -24,12 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.linx.common.baseData.refreshUserMessageData
 import com.linx.common.ext.joinQQGroup
 import com.linx.common.ext.toast
 import com.linx.playAndroid.KeyNavigationRoute
-import com.linx.playAndroid.MainActivity
 import com.linx.playAndroid.R
 import com.linx.playAndroid.viewModel.MineViewModel
 
@@ -37,7 +36,7 @@ import com.linx.playAndroid.viewModel.MineViewModel
  * 我的页面
  */
 @Composable
-fun MineCompose(navController: NavController) {
+fun MineCompose(navHostController: NavHostController) {
 
     val mineViewModel: MineViewModel = viewModel()
 
@@ -55,7 +54,7 @@ fun MineCompose(navController: NavController) {
     }
 
     //页面布局
-    MineScreen(mineViewModel, navController)
+    MineScreen(mineViewModel, navHostController)
 
 }
 
@@ -65,7 +64,7 @@ fun MineCompose(navController: NavController) {
 @Composable
 private fun MineScreen(
     mineViewModel: MineViewModel,
-    navController: NavController
+    navHostController: NavHostController
 ) {
     //个人积分数据
     val userInfoIntegralData = mineViewModel.userInfoIntegral.observeAsState()
@@ -84,7 +83,7 @@ private fun MineScreen(
                 //未登录才跳转到登录页面
                 if (!mineViewModel.isLogin()) {
                     //跳转到登录页面
-                    navController.navigate(KeyNavigationRoute.LOGIN.route)
+                    navHostController.navigate(KeyNavigationRoute.LOGIN.route)
                 }
             }
         }
@@ -105,7 +104,7 @@ private fun MineScreen(
                 ) {
                     if (mineViewModel.isLogin())
                     //跳转到积分排行页面
-                        navController.navigate(
+                        navHostController.navigate(
                             KeyNavigationRoute.INTEGRAL_RANK.route
                         )
                     else {
@@ -115,7 +114,7 @@ private fun MineScreen(
                 MineListComposable(painterResource(R.mipmap.ic_collect), "我的收藏") {
                     if (mineViewModel.isLogin())
                     //跳转到我的收藏页面
-                        navController.navigate(
+                        navHostController.navigate(
                             KeyNavigationRoute.MY_COLLECT.route
                         )
                     else {
@@ -125,7 +124,7 @@ private fun MineScreen(
                 MineListComposable(painterResource(R.mipmap.ic_wenzhang), "我的文章") {
                     if (mineViewModel.isLogin())
                     //跳转到我的文章页面
-                        navController.navigate(
+                        navHostController.navigate(
                             KeyNavigationRoute.MY_SHARE_ARTICLES.route
                         )
                     else {
@@ -133,14 +132,14 @@ private fun MineScreen(
                     }
                 }
                 MineListComposable(painterResource(R.mipmap.ic_web), "开源网站") {
-                    navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=https://www.wanandroid.com")
+                    navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=https://www.wanandroid.com")
                 }
                 MineListComposable(painterResource(R.mipmap.ic_jairu), "加入我们") {
                     joinQQGroup(context, "jtDR37meSA0N3ceEPYRk3IbaqkqtsQgm")
                 }
                 MineListComposable(painterResource(R.mipmap.ic_shezhi), "系统设置") {
                     //跳转到设置页面
-                    navController.navigate(
+                    navHostController.navigate(
                         KeyNavigationRoute.SETTING.route
                     )
                 }

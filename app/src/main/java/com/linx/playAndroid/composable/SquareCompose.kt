@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
 import com.linx.playAndroid.KeyNavigationRoute
@@ -26,13 +26,13 @@ import com.linx.playAndroid.viewModel.SquareViewModel
  * 广场页面
  */
 @Composable
-fun SquareCompose(navController: NavController) {
+fun SquareCompose(navHostController: NavHostController) {
 
     val squareViewModel: SquareViewModel = viewModel()
 
     //广场和问答页面
     if (Nav.squareTopBarIndex.value == 0 || Nav.squareTopBarIndex.value == 1) {
-        SquareAndQuestionComposable(navController, Nav.squareTopBarIndex.value, squareViewModel)
+        SquareAndQuestionComposable(navHostController, Nav.squareTopBarIndex.value, squareViewModel)
     }
 
     val systemData = squareViewModel.systemData.observeAsState()
@@ -74,7 +74,7 @@ fun SquareCompose(navController: NavController) {
  */
 @Composable
 private fun SquareAndQuestionComposable(
-    navController: NavController,
+    navHostController: NavHostController,
     index: Int,
     squareViewModel: SquareViewModel
 ) {
@@ -103,7 +103,7 @@ private fun SquareAndQuestionComposable(
                 superChapterName ?: "未知",
                 collect
             ) {
-                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
             }
         }
     }

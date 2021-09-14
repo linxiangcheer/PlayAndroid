@@ -7,7 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
 import com.linx.common.ext.transitionDate
@@ -23,7 +23,7 @@ import com.linx.playAndroid.viewModel.ProjectViewModel
  * 项目页面
  */
 @Composable
-fun ProjectCompose(navController: NavController) {
+fun ProjectCompose(navHostController: NavHostController) {
 
     val projectViewModel: ProjectViewModel = viewModel()
 
@@ -38,7 +38,7 @@ fun ProjectCompose(navController: NavController) {
     //项目页面的内容
     SwipeRefreshContent(projectViewModel, projectListData, cardHeight = 190.dp) { index, data ->
         ProjectItemContent(data) {
-            navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=${data.link}")
+            navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=${data.link}")
         }
     }
 

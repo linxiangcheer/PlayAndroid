@@ -11,7 +11,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.linx.playAndroid.public.AppBar
 import com.linx.playAndroid.public.BaseScreen
 
@@ -19,7 +19,7 @@ import com.linx.playAndroid.public.BaseScreen
  * H5页面
  */
 @Composable
-fun WebViewCompose(navController: NavController, url: String) {
+fun WebViewCompose(navHostController: NavHostController, url: String) {
 
     BaseScreen {
         Column(
@@ -27,7 +27,7 @@ fun WebViewCompose(navController: NavController, url: String) {
         ) {
 
             AppBar("玩Android", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
-                navController.navigateUp()
+                navHostController.navigateUp()
             })
 
             AndroidView({ context: Context ->

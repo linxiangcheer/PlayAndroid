@@ -2,12 +2,10 @@ package com.linx.playAndroid.composable
 
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -21,7 +19,7 @@ import com.linx.playAndroid.viewModel.HomeViewModel
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
-fun HomeCompose(navController: NavController) {
+fun HomeCompose(navHostController: NavHostController) {
 
     val homeViewModel: HomeViewModel = viewModel()
 
@@ -41,7 +39,7 @@ fun HomeCompose(navController: NavController) {
         item {
             //轮播图
             Banner(bannerListData.value) { link ->
-                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
             }
         }
 
@@ -59,7 +57,7 @@ fun HomeCompose(navController: NavController) {
                             superChapterName ?: "未知",
                             collect
                         ) {
-                            navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                            navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
                         }
                     }
                 }
@@ -76,7 +74,7 @@ fun HomeCompose(navController: NavController) {
                 superChapterName ?: "未知",
                 collect
             ) {
-                navController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
             }
         }
     }

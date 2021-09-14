@@ -64,16 +64,15 @@ fun MainCompose(navHostController: NavHostController = rememberNavController(), 
             },
             //内容
             content = { paddingValues: PaddingValues ->
-
                 //内容嵌套在Scaffold中
-                NavigationHost(navHostController, onFinish)
+                NavigationHost(navHostController, paddingValues, onFinish)
 
                 OnTwoBackContent(navHostController)
             }
         )
     } else
     //独立页面
-        NavigationHost(navHostController, onFinish)
+        NavigationHost(navHostController, onFinish = onFinish)
 
 }
 
@@ -123,8 +122,7 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
         Nav.BottomNavScreen.MineScreen -> {
             AppBar(elevation = 0.dp)
         }
-        else -> {
-        }
+        else -> { }
     }
 }
 

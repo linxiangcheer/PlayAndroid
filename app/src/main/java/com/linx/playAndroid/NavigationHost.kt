@@ -1,8 +1,12 @@
 package com.linx.playAndroid
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,13 +25,19 @@ import com.linx.playAndroid.widget.StatsBarUtil
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
-fun NavigationHost(navHostController: NavHostController, onFinish: () -> Unit) {
+fun NavigationHost(
+    navHostController: NavHostController,
+    paddingValues: PaddingValues = PaddingValues(0.dp),
+    onFinish: () -> Unit
+) {
 
     val context = LocalContext.current
 
     NavHost(
         navHostController,
         startDestination = KeyNavigationRoute.MAIN.route,
+        //todo 只有主界面需要这个padding
+        modifier = Modifier.padding(paddingValues),
         builder = {
 
             //主页面
@@ -171,7 +181,10 @@ fun NavigationHost(navHostController: NavHostController, onFinish: () -> Unit) {
                 //系统颜色的状态栏
                 StatsBarUtil().StatsBarColor(false)
 
-                WebViewCompose(navHostController, backStackEntry.arguments?.getString("url") ?: "https://www.wanandroid.com")
+                WebViewCompose(
+                    navHostController,
+                    backStackEntry.arguments?.getString("url") ?: "https://www.wanandroid.com"
+                )
 
                 BackHandler { navHostController.navigateUp() }
             }

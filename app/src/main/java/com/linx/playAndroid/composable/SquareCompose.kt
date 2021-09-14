@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -14,11 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.linx.common.baseData.Nav
 import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.model.NaviData
 import com.linx.playAndroid.model.SystemData
+import com.linx.playAndroid.model.UserArticleListData
 import com.linx.playAndroid.public.*
 import com.linx.playAndroid.viewModel.SquareViewModel
 
@@ -30,43 +32,44 @@ fun SquareCompose(navHostController: NavHostController) {
 
     val squareViewModel: SquareViewModel = viewModel()
 
-    //广场和问答页面
-    if (Nav.squareTopBarIndex.value == 0 || Nav.squareTopBarIndex.value == 1) {
-        SquareAndQuestionComposable(navHostController, Nav.squareTopBarIndex.value, squareViewModel)
-    }
+    val userArticleListData = squareViewModel.userArticleListData.collectAsLazyPagingItems()
+
+    val questionAnswerData = squareViewModel.questionAnswerData.collectAsLazyPagingItems()
 
     val systemData = squareViewModel.systemData.observeAsState()
 
-    //体系页面
-    if (Nav.squareTopBarIndex.value == 2) {
-        //请求体系数据
-        if (systemData.value == null) squareViewModel.getSystemData()
-
-        SwipeRefreshContent(
-            squareViewModel,
-            systemData.value,
-            noData = { squareViewModel.getSystemData() },
-        ) { data ->
-            SystemCardItemContent(data.name ?: "", data.children)
-        }
-    }
-
     val naviData = squareViewModel.naviData.observeAsState()
 
-    //导航页面
-    if (Nav.squareTopBarIndex.value == 3) {
-        //请求导航数据
-        if (naviData.value == null) squareViewModel.getNavi()
+    //广场页面
+    when (Nav.squareTopBarIndex.value) {
+        0 -> SquareAndQuestionComposable(navHostController, userArticleListData, squareViewModel)
+        //每日一问页面
+        1 -> SquareAndQuestionComposable(navHostController, questionAnswerData, squareViewModel)
+        //体系页面
+        2 -> {
+            if (systemData.value == null) squareViewModel.getSystemData()
 
-        SwipeRefreshContent(
-            squareViewModel,
-            naviData.value,
-            noData = { squareViewModel.getNavi() },
-        ) { data ->
-            NaviCardItemContent(data.name ?: "", data.articles)
+            SwipeRefreshContent(
+                squareViewModel,
+                systemData.value,
+                noData = { squareViewModel.getSystemData() },
+            ) { data ->
+                SystemCardItemContent(data.name ?: "", data.children)
+            }
+        }
+        //导航页面
+        else -> {
+            if (naviData.value == null) squareViewModel.getNavi()
+
+            SwipeRefreshContent(
+                squareViewModel,
+                naviData.value,
+                noData = { squareViewModel.getNavi() },
+            ) { data ->
+                NaviCardItemContent(data.name ?: "", data.articles)
+            }
         }
     }
-
 }
 
 /**
@@ -75,23 +78,13 @@ fun SquareCompose(navHostController: NavHostController) {
 @Composable
 private fun SquareAndQuestionComposable(
     navHostController: NavHostController,
-    index: Int,
+    listdata: LazyPagingItems<UserArticleListData>,
     squareViewModel: SquareViewModel
 ) {
-
-    //广场数据
-    val userArticleListData = squareViewModel.userArticleListData.collectAsLazyPagingItems()
-
-    //问答数据
-    val questionAnswerData = squareViewModel.questionAnswerData.collectAsLazyPagingItems()
-
     //广场页面广场模块内容
     SwipeRefreshContent(
         squareViewModel,
-        when (index) {
-            0 -> userArticleListData
-            else -> questionAnswerData
-        }
+        listdata
     ) { index, data ->
         data.apply {
             HomeCardItemContent(
@@ -107,7 +100,6 @@ private fun SquareAndQuestionComposable(
             }
         }
     }
-
 }
 
 /**

@@ -33,6 +33,16 @@ MMKV
 
 
 
+## 1.0.2（2021年9月15日）
+
+- 大部分LazyColumn做了列表状态持久化，点击进入详情再退出来看到的是上次滑动结束的位置
+- 首页列表添加"置顶"内容
+- 设置页面可以选择首页是否显示"置顶"内容
+
+![1.0.2](https://github.com/linxiangcheer/PlayAndroid/blob/master/github-image/1.0.2.png)
+
+
+
 ### 2、感谢
 
 - 玩Android提供的Api  [玩Android](https://www.wanandroid.com/)

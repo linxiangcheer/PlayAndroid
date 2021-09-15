@@ -32,11 +32,25 @@ fun ProjectCompose(navHostController: NavHostController) {
 
     //TopBar的Index改变
     LaunchedEffect(Nav.projectTopBarIndex.value) {
+
+        if (Nav.projectTopBarIndex.value == projectViewModel.saveChangeProjectIndex) return@LaunchedEffect
+
+        projectViewModel.apply {
+            //保存改变过index和offset的指示器Index
+            saveChangeProjectIndex = Nav.projectTopBarIndex.value
+            projectLazyListState.scrollToItem(0, 0)
+        }
+
         projectListData.refresh()
     }
 
     //项目页面的内容
-    SwipeRefreshContent(projectViewModel, projectListData, cardHeight = 190.dp) { index, data ->
+    SwipeRefreshContent(
+        projectViewModel,
+        projectListData,
+        state = projectViewModel.projectLazyListState,
+        cardHeight = 190.dp
+    ) { index, data ->
         ProjectItemContent(data) {
             navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=${data.link}")
         }
@@ -51,7 +65,8 @@ fun ProjectCompose(navHostController: NavHostController) {
 private fun ProjectItemContent(project: ProjectListData, onClick: () -> Unit) {
 
     Column(
-        modifier = Modifier.clickable(onClick = onClick).padding(bottom = 6.dp, top = 6.dp).padding(start = 8.dp, end = 8.dp)
+        modifier = Modifier.clickable(onClick = onClick).padding(bottom = 6.dp, top = 6.dp)
+            .padding(start = 8.dp, end = 8.dp)
     ) {
 
         TopCard(project.author ?: "", project.publishTime.transitionDate())

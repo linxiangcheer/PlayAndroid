@@ -1,6 +1,7 @@
 package com.linx.playAndroid.viewModel
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +25,12 @@ import kotlinx.coroutines.flow.Flow
  */
 class ProjectViewModel : BaseViewModel() {
 
+    //项目页面列表状态
+    val projectLazyListState: LazyListState = LazyListState()
+
+    //保存改变过index和offset的指示器Index
+    var saveChangeProjectIndex = 0
+
     //选中分类的cid
     private val indexCid
         get() = StoreData.projectTopBarListData.value?.get(Nav.projectTopBarIndex.value)?.id ?: 0
@@ -45,6 +52,8 @@ class ProjectViewModel : BaseViewModel() {
                 _projectTreeData.postValue(data)
                 //临时存储指示器数据
                 StoreData.projectTopBarListData.postValue(data)
+
+                //todo 获取了之后查看有多少个Index，就创建多少个LazyListState
             }
         }.onFailure {
             Log.e("xxx", "获取项目页面顶部指示器数据 接口异常 $it")

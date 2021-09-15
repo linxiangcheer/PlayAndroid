@@ -23,11 +23,24 @@ fun PublicNumCompose(navHostController: NavHostController) {
 
     //如果TopBar的Index改变的话需要刷新数据
     LaunchedEffect(Nav.publicNumIndex.value) {
+
+        if (Nav.publicNumIndex.value == publicNumViewModel.saveChangePublicNumIndex) return@LaunchedEffect
+
+        publicNumViewModel.apply {
+            //保存改变过index和offset的指示器Index
+            saveChangePublicNumIndex = Nav.publicNumIndex.value
+            publicNumLazyListState.scrollToItem(0, 0)
+        }
+
         publicNumListData.refresh()
     }
 
     //公众号页面的内容
-    SwipeRefreshContent(publicNumViewModel, publicNumListData) { index, data ->
+    SwipeRefreshContent(
+        publicNumViewModel,
+        publicNumListData,
+        state = publicNumViewModel.publicNumLazyListState
+    ) { index, data ->
         data.apply {
             HomeCardItemContent(
                 getAuthor(author, shareUser),

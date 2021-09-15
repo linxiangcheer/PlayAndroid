@@ -1,6 +1,7 @@
 package com.linx.playAndroid.viewModel
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -23,6 +24,12 @@ import kotlinx.coroutines.flow.Flow
  * 公众号
  */
 class PublicNumViewModel : BaseViewModel() {
+
+    //公众号页面列表状态
+    val publicNumLazyListState: LazyListState = LazyListState()
+
+    //保存改变过index和offset的指示器Index
+    var saveChangePublicNumIndex = 0
 
     //公众号id
     private val indexId

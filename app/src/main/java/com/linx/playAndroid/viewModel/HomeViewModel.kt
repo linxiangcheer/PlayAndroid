@@ -1,6 +1,7 @@
 package com.linx.playAndroid.viewModel
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -23,6 +24,9 @@ import kotlinx.coroutines.flow.Flow
  * 首页
  */
 class HomeViewModel : BaseViewModel() {
+
+    //首页列表状态
+    val homeLazyListState: LazyListState = LazyListState()
 
     //轮播图的数据
     private val _bannerListData = MutableLiveData<List<BannerData>>()

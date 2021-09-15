@@ -35,35 +35,39 @@ fun HomeCompose(navHostController: NavHostController) {
     val articleTopData = homeViewModel.articleTopList.observeAsState()
 
     //首页页面的内容
-    SwipeRefreshContent(homeViewModel, homeListData, itemContent = {
-        item {
-            //轮播图
-            Banner(bannerListData.value) { link ->
-                navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+    SwipeRefreshContent(
+        homeViewModel,
+        homeListData,
+        state = homeViewModel.homeLazyListState,
+        itemContent = {
+            item {
+                //轮播图
+                Banner(bannerListData.value) { link ->
+                    navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                }
             }
-        }
 
-        //置顶数据
-        articleTopData.value?.let { listData ->
-            items(listData) { data ->
-                SimpleCard(cardHeight = 120.dp) {
-                    data.apply {
-                        HomeCardItemContent(
-                            getAuthor(author, shareUser),
-                            fresh,
-                            true,
-                            niceDate ?: "刚刚",
-                            title ?: "",
-                            superChapterName ?: "未知",
-                            collect
-                        ) {
-                            navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+            //置顶数据
+            articleTopData.value?.let { listData ->
+                items(listData) { data ->
+                    SimpleCard(cardHeight = 120.dp) {
+                        data.apply {
+                            HomeCardItemContent(
+                                getAuthor(author, shareUser),
+                                fresh,
+                                true,
+                                niceDate ?: "刚刚",
+                                title ?: "",
+                                superChapterName ?: "未知",
+                                collect
+                            ) {
+                                navHostController.navigate("${KeyNavigationRoute.WEBVIEW.route}?url=$link")
+                            }
                         }
                     }
                 }
             }
-        }
-    }) { index, data ->
+        }) { index, data ->
         data.apply {
             HomeCardItemContent(
                 getAuthor(author, shareUser),

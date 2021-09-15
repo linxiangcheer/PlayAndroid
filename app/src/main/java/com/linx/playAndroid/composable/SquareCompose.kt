@@ -1,8 +1,8 @@
 package com.linx.playAndroid.composable
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -40,11 +40,23 @@ fun SquareCompose(navHostController: NavHostController) {
 
     val naviData = squareViewModel.naviData.observeAsState()
 
-    //广场页面
     when (Nav.squareTopBarIndex.value) {
-        0 -> SquareAndQuestionComposable(navHostController, userArticleListData, squareViewModel)
+        //广场页面
+        0 -> {
+            SquareAndQuestionComposable(
+                navHostController,
+                userArticleListData,
+                squareViewModel,
+                squareViewModel.squareIndexState
+            )
+        }
         //每日一问页面
-        1 -> SquareAndQuestionComposable(navHostController, questionAnswerData, squareViewModel)
+        1 -> SquareAndQuestionComposable(
+            navHostController,
+            questionAnswerData,
+            squareViewModel,
+            squareViewModel.questionIndexState
+        )
         //体系页面
         2 -> {
             if (systemData.value == null) squareViewModel.getSystemData()
@@ -52,6 +64,7 @@ fun SquareCompose(navHostController: NavHostController) {
             SwipeRefreshContent(
                 squareViewModel,
                 systemData.value,
+                state = squareViewModel.systemIndexState,
                 noData = { squareViewModel.getSystemData() },
             ) { data ->
                 SystemCardItemContent(data.name ?: "", data.children)
@@ -64,6 +77,7 @@ fun SquareCompose(navHostController: NavHostController) {
             SwipeRefreshContent(
                 squareViewModel,
                 naviData.value,
+                state = squareViewModel.naviIndexState,
                 noData = { squareViewModel.getNavi() },
             ) { data ->
                 NaviCardItemContent(data.name ?: "", data.articles)
@@ -79,12 +93,14 @@ fun SquareCompose(navHostController: NavHostController) {
 private fun SquareAndQuestionComposable(
     navHostController: NavHostController,
     listdata: LazyPagingItems<UserArticleListData>,
-    squareViewModel: SquareViewModel
+    squareViewModel: SquareViewModel,
+    state: LazyListState = rememberLazyListState()
 ) {
     //广场页面广场模块内容
     SwipeRefreshContent(
         squareViewModel,
-        listdata
+        listdata,
+        state = state
     ) { index, data ->
         data.apply {
             HomeCardItemContent(

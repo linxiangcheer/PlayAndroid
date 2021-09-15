@@ -1,9 +1,7 @@
 package com.linx.playAndroid.public
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -25,6 +23,7 @@ fun <T : Any> SwipeRefreshContent(
     viewModel: ViewModel,
     lazyPagingListData: LazyPagingItems<T>,
     cardHeight: Dp = 120.dp,
+    state: LazyListState = rememberLazyListState(),
     itemContent: LazyListScope.() -> Unit = {},
     content: @Composable (index: Int, data: T) -> Unit
 ) {
@@ -46,7 +45,7 @@ fun <T : Any> SwipeRefreshContent(
         ) {
             //列表数据
             PagingStateUtil().pagingStateUtil(lazyPagingListData, refreshState, viewModel) {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(modifier = Modifier.fillMaxSize(), state = state) {
                     itemContent()
                     itemsIndexed(lazyPagingListData) { index, data ->
                         SimpleCard(cardHeight = cardHeight) {
@@ -69,6 +68,7 @@ fun <T : Any> SwipeRefreshContent(
 fun <T : Any> SwipeRefreshContent(
     viewModel: ViewModel,
     listData: List<T>?,
+    state: LazyListState = rememberLazyListState(),
     noData: () -> Unit,
     content: @Composable (data: T) -> Unit
 ) {
@@ -98,7 +98,7 @@ fun <T : Any> SwipeRefreshContent(
                 }
             }
         ) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.fillMaxSize(), state = state) {
                 itemsIndexed(listData) { index, data ->
                     SimpleCard {
                         content(data)

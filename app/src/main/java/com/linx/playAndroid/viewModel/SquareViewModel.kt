@@ -1,6 +1,7 @@
 package com.linx.playAndroid.viewModel
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -21,6 +22,18 @@ import kotlinx.coroutines.flow.Flow
  * 广场
  */
 class SquareViewModel : BaseViewModel() {
+
+    //广场
+    val squareIndexState: LazyListState = LazyListState()
+
+    //每日一问
+    val questionIndexState: LazyListState = LazyListState()
+
+    //体系
+    val systemIndexState: LazyListState = LazyListState()
+
+    //导航
+    val naviIndexState: LazyListState = LazyListState()
 
     //广场列表
     val userArticleListData: Flow<PagingData<UserArticleListData>>

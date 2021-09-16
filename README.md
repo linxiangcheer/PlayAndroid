@@ -56,4 +56,4 @@ MMKV
 2. [SmartToolFactory - 控件学习](https://github.com/SmartToolFactory/Jetpack-Compose-Tutorials)
 3. [乐翁龙-Compose控件介绍](https://blog.csdn.net/u010976213/category_10622907.html)
 4. [Bug小明 - Jetpack Compose 动画](https://juejin.cn/post/6971399722862903310)
-5. [大佬们一起做的Compose UI 示例！！！]https://github.com/Gurupreet/ComposeCookBook)
+5. [大佬们一起做的Compose UI 示例！！！强烈推荐](https://github.com/Gurupreet/ComposeCookBook)

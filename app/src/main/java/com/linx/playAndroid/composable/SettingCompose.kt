@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.linx.common.baseData.CommonConstant
 import com.linx.common.baseData.themeColorList
 import com.linx.common.baseData.themeTypeState
@@ -30,6 +32,7 @@ import com.linx.common.ext.toast
 import com.linx.common.model.ThemeType
 import com.linx.common.widget.SpUtilsMMKV
 import com.linx.net.widget.DataStoreUtils
+import com.linx.playAndroid.R
 import com.linx.playAndroid.public.*
 import com.linx.playAndroid.ui.theme.CustomThemeManager
 import com.linx.playAndroid.viewModel.SettingViewModel
@@ -44,11 +47,20 @@ fun SettingCompose(navHostController: NavHostController) {
 
     val settingViewModel: SettingViewModel = viewModel()
 
+    val content = LocalContext.current
+
     BaseScreen {
         Scaffold(topBar = {
+            val lottieComposition by rememberLottieComposition(
+                spec = LottieCompositionSpec.RawRes(
+                    R.raw.loader
+                )
+            )
             AppBar("设置", leftIcon = Icons.Default.ArrowBack, onLeftClick = {
                 navHostController.navigateUp()
-            })
+            }, rightLottie = lottieComposition) {
+                "哟，你发现了啥？Lottie动画！".toast(content)
+            }
         },
             content = { paddingValues: PaddingValues ->
                 SettingCenterScreen(navHostController, settingViewModel)

@@ -62,6 +62,9 @@ dependencies {
 //    implementation("io.coil-kt:coil-svg:1.2.2")//支持SVG
 //    implementation("io.coil-kt:coil-video:1.2.2")//支持Video
 
+    //加载lottie动画
+    api "com.airbnb.android:lottie-compose:$lottie_version"
+
     // MMKV
     api "com.tencent:mmkv-static:$mmkv_version"
 }

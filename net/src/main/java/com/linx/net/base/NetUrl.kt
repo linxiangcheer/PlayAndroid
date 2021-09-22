@@ -55,4 +55,7 @@ object NetUrl {
     //我分享的文章
     const val MY_SHARE_ARTICLES = "/user/lg/private_articles/{page}/json"
 
+    //搜索热词
+    const val HOTKEY = "/hotkey/json"
+
 }

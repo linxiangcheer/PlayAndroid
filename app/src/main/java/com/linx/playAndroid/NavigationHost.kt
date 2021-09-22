@@ -189,6 +189,15 @@ fun NavigationHost(
                 BackHandler { navHostController.navigateUp() }
             }
 
+            //搜索页面
+            composable(route = KeyNavigationRoute.SEARCH.route) {
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                SearchCompose(navHostController)
+
+                BackHandler { navHostController.navigateUp() }
+            }
 
         }
     )
@@ -222,7 +231,10 @@ enum class KeyNavigationRoute(
     SETTING("setting"),
 
     //H5
-    WEBVIEW("webview")
+    WEBVIEW("webview"),
+
+    //搜索
+    SEARCH("search")
 }
 
 

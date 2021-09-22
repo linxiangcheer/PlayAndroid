@@ -3,6 +3,8 @@ package com.linx.playAndroid.public
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
@@ -10,7 +12,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -147,4 +152,85 @@ fun AppBar(
             )
         }
     }
+}
+
+/**
+ * 带输入框的标题栏
+ */
+@Composable
+fun AppBar(
+    textFieldValue: TextFieldValue,
+    onValueChange: (changeValue: TextFieldValue) -> Unit,
+    elevation: Dp = AppBarDefaults.TopAppBarElevation,
+    leftIcon: ImageVector? = null,
+    rightIcon: ImageVector? = null,
+    onLeftClick: () -> Unit = {},
+    onRightClick: () -> Unit = {}
+) {
+
+    TopAppBar(
+        backgroundColor = MaterialTheme.colors.primary,
+        modifier = Modifier.height(54.dp),
+        elevation = elevation,
+    ) {
+
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                //左边图标
+                if (leftIcon == null)
+                    Spacer(modifier = Modifier.size(10.dp))
+                else
+                    Icon(leftIcon, contentDescription = null, modifier = Modifier.clickable {
+                        onLeftClick()
+                    }.padding(start = 10.dp), tint = MaterialTheme.colors.background)
+
+                //右边图标
+                rightIcon?.let {
+                    Icon(rightIcon, contentDescription = null, Modifier.clickable {
+                        onRightClick()
+                    }.padding(end = 10.dp), tint = MaterialTheme.colors.background)
+                }
+            }
+
+            //标题文字
+            TextField(
+                value = textFieldValue,
+                onValueChange = { changeValue ->
+                    onValueChange(changeValue)
+                },
+                //单行
+                singleLine = true,
+                colors = TextFieldDefaults.textFieldColors(
+                    //文字
+                    textColor = MaterialTheme.colors.background,
+                    //背景
+                    backgroundColor = MaterialTheme.colors.primary,
+                    //光标
+                    cursorColor = MaterialTheme.colors.background,
+                    //当输入框处于/不处于焦点时，底部指示器的颜色
+                    focusedIndicatorColor = MaterialTheme.colors.primary,
+                    unfocusedIndicatorColor = MaterialTheme.colors.primary
+                ),
+                label = {
+                    Text("输入关键字搜索", color = Color.Gray)
+                },
+                keyboardOptions = KeyboardOptions(
+                    //图标
+                    imeAction = ImeAction.Search,
+                ),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        onRightClick()
+                    }
+                )
+            )
+        }
+    }
+
 }

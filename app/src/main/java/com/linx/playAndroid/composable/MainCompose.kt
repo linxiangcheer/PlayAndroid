@@ -19,6 +19,7 @@ import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.linx.common.baseData.Nav
+import com.linx.playAndroid.KeyNavigationRoute
 import com.linx.playAndroid.NavigationHost
 import com.linx.playAndroid.model.ProjectTreeData
 import com.linx.playAndroid.model.PublicNumChapterData
@@ -34,7 +35,10 @@ import com.linx.playAndroid.viewModel.PublicNumViewModel
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
-fun MainCompose(navHostController: NavHostController = rememberNavController(), onFinish: () -> Unit) {
+fun MainCompose(
+    navHostController: NavHostController = rememberNavController(),
+    onFinish: () -> Unit
+) {
 
     //返回back堆栈的顶部条目
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
@@ -49,9 +53,12 @@ fun MainCompose(navHostController: NavHostController = rememberNavController(), 
             topBar = {
                 Column {
                     //内容不挡住状态栏 如果不设置颜色这里会自己适配，但可能产生闪烁
-                    Spacer(modifier = Modifier.background(MaterialTheme.colors.primary).statusBarsHeight().fillMaxWidth())
+                    Spacer(
+                        modifier = Modifier.background(MaterialTheme.colors.primary)
+                            .statusBarsHeight().fillMaxWidth()
+                    )
 
-                    MainTopBar(Nav.bottomNavRoute.value)
+                    MainTopBar(Nav.bottomNavRoute.value, navHostController)
                 }
             },
             //底部导航栏
@@ -59,7 +66,10 @@ fun MainCompose(navHostController: NavHostController = rememberNavController(), 
                 Column {
                     BottomNavBar(Nav.bottomNavRoute.value, navHostController)
                     //内容不挡住导航栏 如果不设置颜色这里会自己适配，但可能产生闪烁
-                    Spacer(modifier = Modifier.background(MaterialTheme.colors.primary).navigationBarsHeight().fillMaxWidth())
+                    Spacer(
+                        modifier = Modifier.background(MaterialTheme.colors.primary)
+                            .navigationBarsHeight().fillMaxWidth()
+                    )
                 }
             },
             //内容
@@ -80,11 +90,15 @@ fun MainCompose(navHostController: NavHostController = rememberNavController(), 
  * 主页面的标题栏
  */
 @Composable
-private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
+private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen, navHostController: NavHostController) {
     when (bottomNavScreen) {
         //首页
         Nav.BottomNavScreen.HomeScreen -> {
-            AppBar("首页", rightIcon = Icons.Default.Search)
+            AppBar(
+                "首页",
+                rightIcon = Icons.Default.Search,
+                //跳转到搜索页面
+                onRightClick = { navHostController.navigate(KeyNavigationRoute.SEARCH.route) })
         }
         //项目
         Nav.BottomNavScreen.ProjectScreen -> {
@@ -122,7 +136,8 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen) {
         Nav.BottomNavScreen.MineScreen -> {
             AppBar(elevation = 0.dp)
         }
-        else -> { }
+        else -> {
+        }
     }
 }
 

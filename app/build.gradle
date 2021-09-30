@@ -28,6 +28,19 @@ android {
             //只适配armeabi-v7a 架构
             abiFilters "armeabi-v7a"
         }
+
+        //room
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        //配置并启用将数据库架构导出到给定目录中的json文件的功能
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        //启用gradle增量注解处理器
+                        "room.incremental"     : "true",
+                        //配置room以重写查询，使其顶部星形投影在展开后包含DAO方法返回类型中定义的列
+                        "room.expandProjection": "true"]
+            }
+        }
     }
 
     kotlinOptions {
@@ -120,4 +133,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    //room
+    testImplementation "androidx.room:room-testing:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 }

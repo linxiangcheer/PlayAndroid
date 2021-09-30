@@ -67,4 +67,9 @@ dependencies {
 
     // MMKV
     api "com.tencent:mmkv-static:$mmkv_version"
+
+    //room
+    api "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    api "androidx.room:room-ktx:$room_version"
 }

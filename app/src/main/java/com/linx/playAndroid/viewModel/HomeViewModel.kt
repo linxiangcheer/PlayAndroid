@@ -15,8 +15,8 @@ import com.linx.common.widget.SpUtilsMMKV
 import com.linx.net.ext.*
 import com.linx.net.paging.CommonPagingSource
 import com.linx.playAndroid.model.ArticleListData
+import com.linx.playAndroid.model.BannerData
 import com.linx.playAndroid.model.HomeBannerData
-import com.linx.playAndroid.public.BannerData
 import com.linx.playAndroid.repo.HomeRepo
 import kotlinx.coroutines.flow.Flow
 

@@ -1,6 +1,7 @@
 package com.linx.playAndroid.public
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.Keep
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +25,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.linx.playAndroid.R
+import com.linx.playAndroid.model.BannerData
 import kotlinx.coroutines.delay
 
 /**
@@ -158,15 +160,5 @@ fun Banner(
 
             }
         }
-
     }
-
 }
-
-/**
- * 轮播图数据
- */
-data class BannerData(
-    val imageUrl: String,
-    val linkUrl: String
-)

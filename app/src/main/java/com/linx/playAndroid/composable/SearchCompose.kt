@@ -1,6 +1,11 @@
 package com.linx.playAndroid.composable
 
+import android.content.Context
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -18,11 +23,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.linx.common.ext.toast
-import com.linx.playAndroid.public.AppBar
-import com.linx.playAndroid.public.BaseScreen
-import com.linx.playAndroid.public.FlowBoxGap
-import com.linx.playAndroid.public.LabelCustom
+import com.linx.playAndroid.public.*
 import com.linx.playAndroid.viewModel.SearchViewModel
+import com.linx.playAndroid.widget.roomUtil.SearchHistoryData
+import com.linx.playAndroid.widget.roomUtil.SearchHistoryHelper
+import com.linx.playAndroid.widget.roomUtil.SearchHistoryHelper.delete
+import com.linx.playAndroid.widget.roomUtil.SearchHistoryHelper.deleteAll
+import com.linx.playAndroid.widget.roomUtil.SearchHistoryHelper.insertSearchHistory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * 搜索页面
@@ -30,13 +39,15 @@ import com.linx.playAndroid.viewModel.SearchViewModel
 @Composable
 fun SearchCompose(navHostController: NavHostController) {
 
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
     val searchViewModel: SearchViewModel = viewModel()
 
+    //请求热门搜索
     searchViewModel.getHotKeyData()
 
     var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
-
-    val context = LocalContext.current
 
     BaseScreen {
         Scaffold(topBar = {
@@ -45,11 +56,20 @@ fun SearchCompose(navHostController: NavHostController) {
             }, leftIcon = Icons.Default.ArrowBack, onLeftClick = {
                 navHostController.navigateUp()
             }, rightIcon = Icons.Default.Search, onRightClick = {
+
+                if (textFieldValue.text.isBlank()) {
+                    return@AppBar
+                }
+
+                //保存到room数据库
+                scope.launch {
+                    this.insertSearchHistory(context, SearchHistoryData(textFieldValue.text))
+                }
+
                 //todo 跳转到搜索结果页面
-                "跳转到搜索页面".toast(context)
             })
         }) {
-            SearchScrren(navHostController, searchViewModel)
+            SearchScrren(context, scope, navHostController, searchViewModel)
         }
     }
 
@@ -59,9 +79,19 @@ fun SearchCompose(navHostController: NavHostController) {
  * 标题栏下方的内容
  */
 @Composable
-private fun SearchScrren(navHostController: NavHostController, searchViewModel: SearchViewModel) {
+private fun SearchScrren(
+    context: Context,
+    scope: CoroutineScope,
+    navHostController: NavHostController,
+    searchViewModel: SearchViewModel
+) {
 
+    //热搜标签
     val hotKeyList = searchViewModel.hotKeyListData.observeAsState().value
+
+    //搜索历史数据
+    val searchHistoryListData =
+        SearchHistoryHelper.getLiveDataAllSearchHistory(context).observeAsState()
 
     Column(
         modifier = Modifier.padding(10.dp).fillMaxSize()
@@ -84,7 +114,16 @@ private fun SearchScrren(navHostController: NavHostController, searchViewModel: 
             }
         }
 
-        TopTextIconScreen("搜索历史", true)
+        TopTextIconScreen("搜索历史", true) {
+            scope.launch {
+                //删除数据库内的数据
+                deleteAll(context)
+                "搜索历史记录已清除".toast(context)
+            }
+        }
+
+        //搜索历史列表数据，这里传入倒叙后的数据list
+        searchHistoryListData.value?.let { SearchHistoryScreen(context, it.reversed()) }
 
     }
 
@@ -97,7 +136,9 @@ private fun SearchScrren(navHostController: NavHostController, searchViewModel: 
 private fun TopTextIconScreen(
     text: String = "",
     //是否显示删除图标
-    showDeleteIcon: Boolean = false
+    showDeleteIcon: Boolean = false,
+    //删除图标点击事件
+    deleteClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier.height(30.dp).fillMaxWidth(),
@@ -110,9 +151,28 @@ private fun TopTextIconScreen(
             Icon(
                 Icons.Default.Delete,
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.clickable(
+                    onClick = deleteClick,
+                    indication = null,
+                    interactionSource = MutableInteractionSource()
+                ).size(16.dp),
                 tint = MaterialTheme.colors.primary
             )
+        }
+    }
+}
+
+/**
+ * 搜索历史列表
+ */
+@Composable
+private fun SearchHistoryScreen(context: Context, list: List<SearchHistoryData>) {
+    LazyColumn {
+        itemsIndexed(list) { index: Int, item: SearchHistoryData ->
+            RowTextIcon(item.text, paddingTop = 10.dp) {
+                delete(context, item.id ?: 0)
+                "已删除搜索历史：${item.text}".toast(context)
+            }
         }
     }
 }

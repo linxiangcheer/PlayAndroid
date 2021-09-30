@@ -165,9 +165,8 @@ private fun MineListComposable(
         modifier = Modifier.background(MaterialTheme.colors.background)
             .clickable(
                 onClick = onClick,
-                //波纹效果变淡 todo
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(color = MaterialTheme.colors.background)
+                interactionSource = MutableInteractionSource(),
+                indication = null
             )
             .padding(start = 20.dp, end = 20.dp, top = 13.dp, bottom = 13.dp)
             .height(26.dp)
@@ -227,9 +226,8 @@ private fun HeadAndName(name: String, id: String, rank: String, goLogin: () -> U
         modifier = Modifier
             .clickable(
                 onClick = goLogin,
-                //波纹效果变淡 todo
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(color = MaterialTheme.colors.primary)
+                interactionSource = MutableInteractionSource(),
+                indication = null
             ).height(80.dp).fillMaxWidth()
             .padding(start = 20.dp)
     ) {

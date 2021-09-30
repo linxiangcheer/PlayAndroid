@@ -135,9 +135,8 @@ fun AppBar(
                         lottieAnimationState,
                         modifier = Modifier.clickable(
                             onClick = onRightClick,
-                            //波纹效果变淡 todo
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = rememberRipple(color = MaterialTheme.colors.primary)
+                            interactionSource = MutableInteractionSource(),
+                            indication = null
                         ).size(60.dp)
                     )
                 }

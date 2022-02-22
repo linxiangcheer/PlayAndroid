@@ -52,7 +52,7 @@ fun AnimationCompose(navHostController: NavHostController) {
                     }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
-                })
+                }, backgroundColor = getThemeColor(themeType = themeTypeState.value).primary)
             },
             modifier = Modifier.fillMaxSize()
         ) {

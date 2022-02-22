@@ -35,7 +35,7 @@ buildscript {
 
         mmkv_version = "1.2.8"
 
-        room_version = "2.3.0"
+        room_version = "2.4.0-alpha04"
 
         //net
         retrofit_version = "2.9.0"

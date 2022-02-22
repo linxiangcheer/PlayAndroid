@@ -56,7 +56,7 @@ dependencies {
     api "androidx.compose.runtime:runtime-livedata:$compose_version"
 
     //Coil 核心库
-    api "com.google.accompanist:accompanist-coil:$coil_version"
+    api "io.coil-kt:coil-compose:$coil_version"
     //Coil 选择添加
 //    implementation("io.coil-kt:coil-gif:1.2.2")//支持GIF
 //    implementation("io.coil-kt:coil-svg:1.2.2")//支持SVG

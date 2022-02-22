@@ -54,8 +54,10 @@ fun MainCompose(
                 Column {
                     //内容不挡住状态栏 如果不设置颜色这里会自己适配，但可能产生闪烁
                     Spacer(
-                        modifier = Modifier.background(MaterialTheme.colors.primary)
-                            .statusBarsHeight().fillMaxWidth()
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.primary)
+                            .statusBarsHeight()
+                            .fillMaxWidth()
                     )
 
                     MainTopBar(Nav.bottomNavRoute.value, navHostController)
@@ -67,8 +69,10 @@ fun MainCompose(
                     BottomNavBar(Nav.bottomNavRoute.value, navHostController)
                     //内容不挡住导航栏 如果不设置颜色这里会自己适配，但可能产生闪烁
                     Spacer(
-                        modifier = Modifier.background(MaterialTheme.colors.primary)
-                            .navigationBarsHeight().fillMaxWidth()
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.primary)
+                            .navigationBarsHeight()
+                            .fillMaxWidth()
                     )
                 }
             },
@@ -132,11 +136,13 @@ private fun MainTopBar(bottomNavScreen: Nav.BottomNavScreen, navHostController: 
             PublicNumTab(Nav.publicNumIndex, publicNumChapterData)
 
         }
+        //学习
+        Nav.BottomNavScreen.LearnScreen -> {
+            AppBar("学习")
+        }
         //我的
         Nav.BottomNavScreen.MineScreen -> {
             AppBar(elevation = 0.dp)
-        }
-        else -> {
         }
     }
 }
@@ -173,7 +179,9 @@ private fun ProjectTab(
 
     if (projectTreeData.value == null) {
         Box(
-            modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxWidth()
+            modifier = Modifier
+                .background(MaterialTheme.colors.primary)
+                .fillMaxWidth()
                 .height(54.dp)
         )
         return
@@ -181,7 +189,9 @@ private fun ProjectTab(
 
     ScrollableTabRow(
         selectedTabIndex = projectTopBarIndex.value,
-        modifier = Modifier.fillMaxWidth().height(54.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(54.dp),
         //边缘padding
         edgePadding = 0.dp,
         backgroundColor = MaterialTheme.colors.primary
@@ -209,7 +219,9 @@ private fun SquareTab(squareTopBarIndex: MutableState<Int>) {
     //顶部指示器
     ScrollableTabRow(
         selectedTabIndex = squareTopBarIndex.value,
-        modifier = Modifier.fillMaxWidth().height(54.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(54.dp),
         backgroundColor = MaterialTheme.colors.primary
     ) {
         squareTopBarList.forEachIndexed { index, item ->
@@ -236,7 +248,9 @@ private fun PublicNumTab(
 
     if (publicNumChapterData.value == null) {
         Box(
-            modifier = Modifier.background(MaterialTheme.colors.primary).fillMaxWidth()
+            modifier = Modifier
+                .background(MaterialTheme.colors.primary)
+                .fillMaxWidth()
                 .height(54.dp)
         )
         return
@@ -244,7 +258,9 @@ private fun PublicNumTab(
 
     ScrollableTabRow(
         selectedTabIndex = publicNumIndex.value,
-        modifier = Modifier.fillMaxWidth().height(54.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(54.dp),
         //边缘padding
         edgePadding = 0.dp,
         backgroundColor = MaterialTheme.colors.primary
@@ -269,6 +285,7 @@ fun isMainScreen(route: String): Boolean = when (route) {
     Nav.BottomNavScreen.ProjectScreen.route,
     Nav.BottomNavScreen.SquareScreen.route,
     Nav.BottomNavScreen.PublicNumScreen.route,
+    Nav.BottomNavScreen.LearnScreen.route,
     Nav.BottomNavScreen.MineScreen.route -> true
     else -> false
 }

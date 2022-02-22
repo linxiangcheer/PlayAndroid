@@ -97,6 +97,18 @@ fun NavigationHost(
                         TwoBackFinish().execute(context, onFinish)
                     }
                 }
+                //学习页面
+                composable(Nav.BottomNavScreen.LearnScreen.route) {
+                    //系统颜色的状态栏
+                    StatsBarUtil().StatsBarColor(false)
+
+                    LearnCompose(navHostController)
+
+                    //点击两次返回才关闭app
+                    BackHandler {
+                        TwoBackFinish().execute(context, onFinish)
+                    }
+                }
                 //我的页面
                 composable(Nav.BottomNavScreen.MineScreen.route) {
 
@@ -199,6 +211,16 @@ fun NavigationHost(
                 BackHandler { navHostController.navigateUp() }
             }
 
+            //学习 - 动画页面
+            composable(KeyNavigationRoute.LEARN_ANIMATION.route) {
+                //系统颜色的状态栏
+                StatsBarUtil().StatsBarColor(false)
+
+                AnimationCompose(navHostController = navHostController)
+
+                BackHandler { navHostController.navigateUp() }
+            }
+
         }
     )
 }
@@ -234,7 +256,10 @@ enum class KeyNavigationRoute(
     WEBVIEW("webview"),
 
     //搜索
-    SEARCH("search")
+    SEARCH("search"),
+
+    //学习 - 动画
+    LEARN_ANIMATION("learn_animation")
 }
 
 

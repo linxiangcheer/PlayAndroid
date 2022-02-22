@@ -20,6 +20,7 @@ object Nav {
         object ProjectScreen: BottomNavScreen("project", R.string.bottom_project, R.mipmap.nav_project)
         object SquareScreen: BottomNavScreen("square", R.string.bottom_square, R.mipmap.nav_square)
         object PublicNumScreen: BottomNavScreen("publicNum", R.string.bottom_public_num, R.mipmap.nav_public_num)
+        object LearnScreen: BottomNavScreen("learn", R.string.bottom_learn, R.mipmap.nav_learn)
         object MineScreen: BottomNavScreen("mine", R.string.bottom_mine, R.mipmap.nav_mine)
     }
 

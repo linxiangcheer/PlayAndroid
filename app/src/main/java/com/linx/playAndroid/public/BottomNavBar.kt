@@ -19,6 +19,7 @@ val items = listOf(
     Nav.BottomNavScreen.ProjectScreen,
     Nav.BottomNavScreen.SquareScreen,
     Nav.BottomNavScreen.PublicNumScreen,
+    Nav.BottomNavScreen.LearnScreen,
     Nav.BottomNavScreen.MineScreen
 )
 

@@ -17,9 +17,26 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.linx.playAndroid.ui.theme.Typography
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+/**
+ * 标题
+ */
+@Composable
+fun TitleText(title: String, modifier: Modifier = Modifier) {
+    Text(text = title, modifier = modifier.padding(8.dp), style = Typography.h3.copy(fontSize = 14.sp))
+}
+
+/**
+ * 副标题
+ */
+@Composable
+fun SubtitleText(subtitle: String, modifier: Modifier = Modifier) {
+    Text(text = subtitle, style = Typography.subtitle2, modifier = modifier.padding(8.dp))
+}
 
 /**
  * 两个Text上下分布的布局

@@ -1,4 +1,7 @@
 # PlayAndroid
+
+## 已暂停维护
+
 :rocket::rocket:PlayAndroid是一个使用Jetpack Compose UI框架编写的App。
 
 ![页面](https://github.com/linxiangcheer/PlayAndroid/blob/master/github-image/details_1.png)
